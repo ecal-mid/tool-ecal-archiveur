@@ -12,7 +12,6 @@ login_manager = flask_login.LoginManager()
 ldap_server = ldap3.Server(config['ldap_server'], get_info=ldap3.ALL)
 
 users_infos = yaml.load(open('config/users.yaml'))
-print('loaded')
 
 
 def setup():
