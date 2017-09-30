@@ -15,8 +15,6 @@
 
 html,
 body {
-
-  /*margin: 0;*/
   font-family: 'Roboto', 'Helvetica', sans-serif;
   font-size: 0.95em;
   width: 100%;
@@ -28,33 +26,34 @@ h2 {
   font-weight: 100;
 }
 
-button,
 .btn {
   padding: 12px 50px;
   cursor: pointer;
   transition: all 0.1s linear;
   margin-top: 10px;
-  color: #6d6d6d;
+  color: black;
   font-size: 13px;
+  border-radius: 3px;
 }
 
-button:hover {
+.btn:hover {
   color: black;
   background-color: #f3f3f3;
 }
 
-button.disable {
+.btn.disable {
   cursor: default;
   opacity: 0;
 }
 
-button {
+/*.btn {
   border: none;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
   background: white;
-}
+  border-radius: 3px;
+}*/
 
-button .md-icon {
+.btn .md-icon {
   text-transform: none;
   font-size: 22px;
   margin-right: 10px;
@@ -83,187 +82,69 @@ input {
 
 .app main {
   width: 100%;
-	max-width: 680px; /* 800 */
+	max-width: 680px;
 	margin: 0 auto;
 }
 
-/* FILE UPLOAD */
-
-.box {
-  font-size: 1.25rem;
-  position: relative;
-  padding: 2em 0.5em;
-  background: white;
-  cursor: pointer;
-  margin: 1em;
-}
-
-.box.has-advanced-upload {
-  outline: 5px dashed rgba(0,0,0,0.15);
-  /*outline-offset: -10px;*/
-  -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
-  transition: outline-offset .15s ease-in-out, background-color .15s linear;
-}
-
-.box.is-dragover {
-  outline-offset: -20px;
-  outline: 5px dashed rgba(0,0,0,0.5);
-  background-color: #fdfdfd;
-}
-
-.box.is-error {
-  outline: 5px dashed rgba(255,0,0,0.5) !important;
-}
-
-.box.is-uploading {
-  text-align: center;
-}
-
-.js .box:hover,
-.box:focus,
-.box.has-focus {
-  color: #39bfd3;
-  outline: 5px dashed #39bfd3;
-}
-
-.js .box:hover .md-icon {
-  color: #39bfd3;
-}
-
-.box__dragndrop,
-.box__icon {
-  display: none;
-}
-
-.box.has-advanced-upload .box__dragndrop {
-  display: inline;
-}
-
-.box.has-advanced-upload .box__icon {
+.login {
+  position: absolute;
+  top: 0;
   width: 100%;
-  height: 80px;
-  fill: #92b0b3;
-  display: block;
-  margin-bottom: 40px;
-}
-
-.box__input {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.box__input .md-icon {
-  font-size: 2em;
-  margin-right: 0.2em;
-  color: rgba(0,0,0,0.5);
-}
-
-.box.is-uploading .box__input {
-  visibility: hidden;
-}
-
-.box__uploading {
-  display: none;
-}
-
-.box.is-uploading .box__uploading {
+.login input {
+  padding: 1em;
   display: block;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  left: 0;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+  margin: 1em 0 0;
+  font-size: 1em;
+  width: 100%;
 }
 
-@-webkit-keyframes appear-from-inside {
-  from {
-    -webkit-transform: translateY(-50%) scale(0);
-  }
-
-  75% {
-    -webkit-transform: translateY(-50%) scale(1.1);
-  }
-
-  to {
-    -webkit-transform: translateY(-50%) scale(1);
-  }
+.login form {
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 2em;
+  border-radius: 6px;
+  background: white;
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.05);
 }
 
-@keyframes appear-from-inside {
-  from {
-    transform: translateY(-50%) scale(0);
-  }
-
-  75% {
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  to {
-    transform: translateY(-50%) scale(1);
-  }
+.login h2 {
+  width: 100%;
+  margin-bottom: 1em;
 }
 
-.js .box__file {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+.login .login-error {
+  color: red;
 }
 
-.js .box__file + label {
-  max-width: 80%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+header {
+  background: white;
+  display: flex;
+  height: 60px;
+  align-items: center;
+  padding: 1em;
+}
+
+header .avatar {
   display: inline-block;
   overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-.js .box__file:focus + label,
-.js .box__file.has-focus + label {
-  outline: 1px dotted #000;
-  outline: -webkit-focus-ring-color auto 5px;
-}
-
-.js .box__file + label * {
-
-  /* pointer-events: none; */
-
-  /* in case of FastClick lib use */
-}
-
-.no-js .box__file + label {
-  display: none;
-}
-
-.no-js .box__button {
+header .avatar img {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.box__button {
-  font-weight: 700;
-  color: #e5edf1;
-  background-color: #39bfd3;
-  display: none;
-  padding: 8px 16px;
-  margin: 40px auto 0;
-}
-
-.box__button:hover,
-.box__button:focus {
-  background-color: #0f3c4b;
-}
-
-.box__error {
-  display: none;
-  color: red;
-  font-size: 0.75em;
-  font-weight: bold;
-}
-
-.box.is-error .box__error {
-  display: inherit;
+header .path {
+  flex-grow: 1;
 }

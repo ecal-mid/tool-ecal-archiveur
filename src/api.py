@@ -20,7 +20,7 @@ def upload():
     if 'file' in request.files:
         rfile = request.files['file']
         try:
-            result_filename = uploaded_files.save(rfile, folder='test')
+            result_filename = uploaded_files.save(rfile, folder='2017-2018')
             url = uploaded_files.url(result_filename)
             return json.dumps({'success': True, 'url': url})
         except UploadNotAllowed as err:

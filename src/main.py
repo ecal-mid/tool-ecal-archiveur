@@ -1,6 +1,8 @@
 """ Main """
 
 from flask import Blueprint, render_template
+import flask_login
+import login
 
 bp = Blueprint(
     'index',
@@ -10,6 +12,8 @@ bp = Blueprint(
 
 
 @bp.route('/')
-def hello():
+@flask_login.login_required
+def index():
     """Return the homepage."""
-    return render_template('index.html', year='2017-2018')
+    user = login.get_current_user_infos()
+    return render_template('index.html', user=user)

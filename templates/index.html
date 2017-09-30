@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 
+{% block header %}
+
+  <header>
+    <div class="logo"></div>
+    <div class="path"></div>
+    <div class="avatar"><img src="{{user.img}}"></div>
+  </header>
+
+{% endblock %}
+
+
 {% block main %}
+
   <section id="app" class="app">
     <main>
 

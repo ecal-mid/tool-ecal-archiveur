@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block header %}
+
+  <header>
+    <div class="logo"></div>
+    <div class="path"></div>
+  </header>
+
+{% endblock %}
+
+
+{% block main %}
+
+<div class="login">
+  <form action="login" method="POST">
+    <h2>Please login to continue</h2>
+    {% if error is defined %}
+      <p class="login-error">{{error}}</h2>
+    {% endif %}
+    <input type="text" name="id" id="id" placeholder="Your ECAL login"></input>
+    <input type="password" name="pw" id="pw" placeholder="Your Password"></input>
+    <input type="submit" name="submit" class="btn"></input>
+  </form>
+</div>
+
+{% endblock %}
