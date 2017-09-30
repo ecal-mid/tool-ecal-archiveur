@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>écal archiveur</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='res/icons/favicon-16x16.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='res/icons/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='res/icons/favicon-96x96.png') }}">
+  <link href="{{ url_for('static', filename='css/offline.css') }}" rel="stylesheet">
+</head>
+
+<body class="js" data-year="{{year}}">
+
+  {% block main %}
+  {% endblock %}
+
+  {% block scripts %}
+  {% endblock %}
+
+</body>
+
+</html>

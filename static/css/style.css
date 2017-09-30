@@ -1,0 +1,269 @@
+:focus {
+  outline-color: transparent;
+  outline-style: none;
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+
+  /*margin: 0;*/
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  font-size: 0.95em;
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+h1,
+h2 {
+  font-weight: 100;
+}
+
+button,
+.btn {
+  padding: 12px 50px;
+  cursor: pointer;
+  transition: all 0.1s linear;
+  margin-top: 10px;
+  color: #6d6d6d;
+  font-size: 13px;
+}
+
+button:hover {
+  color: black;
+  background-color: #f3f3f3;
+}
+
+button.disable {
+  cursor: default;
+  opacity: 0;
+}
+
+button {
+  border: none;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+button .md-icon {
+  text-transform: none;
+  font-size: 22px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+input {
+  font-weight: 300;
+  background: white;
+  color: black;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.md-icon {
+  font-family: 'Material Icons';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-style: normal;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+.app main {
+  width: 100%;
+	max-width: 680px; /* 800 */
+	margin: 0 auto;
+}
+
+/* FILE UPLOAD */
+
+.box {
+  font-size: 1.25rem;
+  position: relative;
+  padding: 2em 0.5em;
+  background: white;
+  cursor: pointer;
+  margin: 1em;
+}
+
+.box.has-advanced-upload {
+  outline: 5px dashed rgba(0,0,0,0.15);
+  /*outline-offset: -10px;*/
+  -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+  transition: outline-offset .15s ease-in-out, background-color .15s linear;
+}
+
+.box.is-dragover {
+  outline-offset: -20px;
+  outline: 5px dashed rgba(0,0,0,0.5);
+  background-color: #fdfdfd;
+}
+
+.box.is-error {
+  outline: 5px dashed rgba(255,0,0,0.5) !important;
+}
+
+.box.is-uploading {
+  text-align: center;
+}
+
+.js .box:hover,
+.box:focus,
+.box.has-focus {
+  color: #39bfd3;
+  outline: 5px dashed #39bfd3;
+}
+
+.js .box:hover .md-icon {
+  color: #39bfd3;
+}
+
+.box__dragndrop,
+.box__icon {
+  display: none;
+}
+
+.box.has-advanced-upload .box__dragndrop {
+  display: inline;
+}
+
+.box.has-advanced-upload .box__icon {
+  width: 100%;
+  height: 80px;
+  fill: #92b0b3;
+  display: block;
+  margin-bottom: 40px;
+}
+
+.box__input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box__input .md-icon {
+  font-size: 2em;
+  margin-right: 0.2em;
+  color: rgba(0,0,0,0.5);
+}
+
+.box.is-uploading .box__input {
+  visibility: hidden;
+}
+
+.box__uploading {
+  display: none;
+}
+
+.box.is-uploading .box__uploading {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+@-webkit-keyframes appear-from-inside {
+  from {
+    -webkit-transform: translateY(-50%) scale(0);
+  }
+
+  75% {
+    -webkit-transform: translateY(-50%) scale(1.1);
+  }
+
+  to {
+    -webkit-transform: translateY(-50%) scale(1);
+  }
+}
+
+@keyframes appear-from-inside {
+  from {
+    transform: translateY(-50%) scale(0);
+  }
+
+  75% {
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  to {
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.js .box__file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.js .box__file + label {
+  max-width: 80%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.js .box__file:focus + label,
+.js .box__file.has-focus + label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
+.js .box__file + label * {
+
+  /* pointer-events: none; */
+
+  /* in case of FastClick lib use */
+}
+
+.no-js .box__file + label {
+  display: none;
+}
+
+.no-js .box__button {
+  display: block;
+}
+
+.box__button {
+  font-weight: 700;
+  color: #e5edf1;
+  background-color: #39bfd3;
+  display: none;
+  padding: 8px 16px;
+  margin: 40px auto 0;
+}
+
+.box__button:hover,
+.box__button:focus {
+  background-color: #0f3c4b;
+}
+
+.box__error {
+  display: none;
+  color: red;
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+.box.is-error .box__error {
+  display: inherit;
+}
