@@ -24,19 +24,27 @@ function load() {
   let groupId = document.body.dataset['group'];
   if (!groupId) {
   }
+
+  if (docId == assignment.docId) {
+    assignment.render(assignment.data, docId, groupId);
+    return;
+  }
+
   // Load document file.
   let url = `/static/data/${docId}.json`;
   qwest.get(url)
       .then((xhr, data) => {
         assignment.render(data, docId, groupId);
-        mainEl.append(assignment.el);
+        if (!assignment.el.parentNode) {
+          mainEl.append(assignment.el);
+        }
       })
       .catch((e) => console.error(e));
 }
 
 function onPopState(ev) {
-  ev.preventDefault();
-  console.log(ev);
+  // ev.preventDefault();
+  setNav(ev.state.assignment, ev.state.group);
 }
 
 

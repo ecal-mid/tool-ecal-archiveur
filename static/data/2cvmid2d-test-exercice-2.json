@@ -53,16 +53,20 @@
             "name" : "Pietro Alberti"
         }
       ],
-      {
+      [
+        {
           "id": "pietro.alberti",
           "photo" : "AlbertiPietro.jpg",
           "name" : "Pietro Alberti"
-      },
-      {
-          "id": "pietro.alberti",
-          "photo" : "AlbertiPietro.jpg",
-          "name" : "Pietro Alberti"
-      },
+        }
+      ],
+      [
+        {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }
+      ],
       [
         {
             "id": "pietro.alberti",

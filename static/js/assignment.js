@@ -1,6 +1,8 @@
 class Assignment {
   constructor() {
     this.data = null;
+    this.docId = null;
+    this.groupId = null;
     this.el = document.createElement('div');
     this.el.classList.add('assignment');
     this.user = {
@@ -15,6 +17,8 @@ class Assignment {
 
   render(data, docId, groupId) {
     this.data = data;
+    this.docId = docId;
+    this.groupId = groupId;
     let processed = this.preprocess(data, docId, groupId);
     // Compile templates recursively
     let fn = ejs.compile(this.tpls['assignment-tpl'], {client: true});
@@ -25,7 +29,12 @@ class Assignment {
       }
     });
     this.el.innerHTML = html;
-    // returns rendered string
+    // activate group toggles
+    let groupEls = this.el.querySelectorAll('.groups .group');
+    for (let el of groupEls) {
+      el.addEventListener('click', this.onGroupClicked.bind(this), false);
+    }
+    // activate forms
     let formEls = this.el.querySelectorAll('.box');
     for (let el of formEls) {
       let uploadBox = new UploadBox(el);
@@ -41,13 +50,22 @@ class Assignment {
       users[u.id].is_admin = true;
     }
     for (let g of data.assignment.groups) {
-      if (Array.isArray(g)) {
-        for (let u of g) {
-          users[u.id] = u;
-        }
-      } else {
-        users[g.id] = g;
+      for (let u of g) {
+        users[u.id] = u;
       }
+    }
+    // Build custom group object with extra info such as progress.
+    let groups = [];
+    for (let i = 0; i < data.assignment.groups.length; i++) {
+      let g = data.assignment.groups[i];
+      let group = {classes: [], users: []};
+      for (let u of g) {
+        group.users.push(u);
+      }
+      if (i == groupId) {
+        group.classes.push('selected');
+      }
+      groups.push(group);
     }
     // Better date formatting.
     let due =
@@ -56,6 +74,7 @@ class Assignment {
     return {
       assignment: data.assignment,
       entries: data.entries,
+      groups: groups,
       user: user,
       users: users,
       due: due,
@@ -98,5 +117,11 @@ class Assignment {
 
   remove() {
     this.el.remove();
+  }
+
+  onGroupClicked(ev) {
+    let groupId = ev.currentTarget.dataset['id'];
+    let docId = document.body.dataset['assignment'];
+    setNav(docId, groupId);
   }
 }

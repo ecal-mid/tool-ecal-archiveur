@@ -264,11 +264,12 @@ header .path {
 }
 
 .assigned-entries {
-  border: 1px solid #c8c8c8;
+  /*border: 1px solid #c8c8c8;*/
   padding: 0.5em 1em;
-  margin-top: 2em;
   border-radius: 5px;
-  background: #ebebeb;
+  /*background: #ebebeb;*/
+  background: #355d72;
+  box-shadow: 0px -2px 2px rgba(0,0,0,0.05);
 }
 
 .assigned-entries .entry:not(.admin-entry):not(.new-entry) > * {
@@ -325,6 +326,36 @@ header .path {
   background-color: rgba(0,0,0,0.05);
 }
 
+/* GROUPS */
+
+.groups {
+  text-align: center;
+  padding: 1.5em 1em 0;
+}
+
+.groups .group {
+  display: inline-block;
+  /*margin: 0 0.2em;*/
+  cursor: pointer;
+  padding: 0.5em 1em;
+}
+
+.groups .group.selected {
+  /*border: 1px solid rgba(0,0,0,0.15);
+  margin-left: -1px;
+  margin-right: -1px;*/
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  background: #355d72;
+  color: white;
+  box-shadow: 2px -2px 2px rgba(0,0,0,0.05);
+}
+
+.groups .group .avatar:not(:first-child) {
+  margin-left: -20px;
+}
+
+/* MEDIA QUERIES */
 
 @media screen and (max-width:640px) {
   .entry .entry-user {
