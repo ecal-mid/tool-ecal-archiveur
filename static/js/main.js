@@ -10,10 +10,19 @@ function setup() {
   let avatarEl = document.querySelector('.avatar');
   avatarEl.addEventListener('click', () => window.location.href = '/logout');
   // Assignment
-  let url = '/static/data/test_assignment.json';
+  let docId = document.body.dataset['assignment'];
+  if (!docId) {
+    return;
+  }
+  // Group
+  let groupId = document.body.dataset['group'];
+  if (!groupId) {
+  }
+  // Load document file.
+  let url = `/static/data/${docId}.json`;
   qwest.get(url)
       .then((xhr, data) => {
-        let a = new Assignment(data);
+        let a = new Assignment(data, groupId);
         a.render();
         mainEl.append(a.el);
       })

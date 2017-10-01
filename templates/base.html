@@ -13,7 +13,10 @@
   <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='res/icons/favicon-96x96.png') }}">
 </head>
 
-<body class="js" data-user-id="{{user.id}}">
+<body class="js" data-user-id="{{user.id}}"
+  {% if assignment %} data-assignment="{{assignment}}" {% endif %}
+  {% if group %} data-group="{{group}}" {% endif %}
+  >
 
   {% block header %}
   {% endblock %}

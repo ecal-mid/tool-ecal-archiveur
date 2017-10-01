@@ -28,14 +28,14 @@
   <h2><%= assignment.name %>, due for <%= assignment['due-date'] %></h2>
   <div class="assignment-entries">
   <% for(var i=0; i<assignment['entries'].length; i++) { %>
-  	<%- include('entry-tpl', {assignment:assignment, entry: assignment.entries[i] }) -%>
+  	<%- include('entry-tpl', {assignment:assignment, entry:assignment.entries[i], is_assignment:true }) -%>
   <% } %>
   <%- include('new-entry-tpl', {user:user}) -%>
   </div>
 
   <div class="assigned-entries">
   <% for(var i=0; i<entries.length; i++) { %>
-  	<%- include('entry-tpl', {assignment:assignment, entry: entries[i] }) -%>
+  	<%- include('entry-tpl', {assignment:assignment, entry:entries[i] }) -%>
   <% } %>
   <%- include('new-entry-tpl', {user:user}) -%>
   </div>

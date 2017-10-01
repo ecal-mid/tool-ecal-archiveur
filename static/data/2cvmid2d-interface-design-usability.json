@@ -5,28 +5,36 @@
     "due-date" : "Ven Oct 27 2017 00:00:00 GMT+0200 (CEST)",
     "topic" : {
       "id" : "2cvmid2d",
-      "url" : "2cvmid2d-interface-design-usability",
       "label" : "Interface Design / Usability"
     },
     "name" : "Test Exercice #2",
     "entries" : [
       {
-        "user" : {
-            "id": "cyril.diagne",
-            "photo" : "DiagneCyril.jpg",
-            "name" : "Cyril Diagne"
-        },
+        "user": "cyril.diagne",
         "date" : "Sat Sep 29 2017 13:20:05 GMT+0200 (CEST)",
         "text" : "Comme vu lors du dernier cours, chaque groupe doit faire un pdf de présentation de leur exercice."
       },
       {
-        "user" : {
-            "id": "cyril.diagne",
-            "photo" : "DiagneCyril.jpg",
-            "name" : "Cyril Diagne"
-        },
+        "user": "cyril.diagne",
         "date" : "Sat Sep 29 2017 13:25:05 GMT+0200 (CEST)",
         "file" : "http://proxy-mid.ecal.ch:81/uploads/2017-2018/Etapes_projets.pdf"
+      }
+    ],
+    "admins" : [
+      {
+          "id": "cyril.diagne",
+          "photo" : "DiagneCyril.jpg",
+          "name" : "Cyril Diagne"
+      },
+      {
+          "id": "alain.bellet",
+          "photo" : "BelletAlain.jpg",
+          "name" : "Alain Bellet"
+      },
+      {
+          "id": "laura.perrenou",
+          "photo" : "PerrenoudLaura.jpg",
+          "name" : "Laura Perrenoud"
       }
     ],
     "groups" : [
@@ -74,74 +82,52 @@
   },
   "entries" : [
     {
-      "channel" : 0,
-      "user" : {
-          "id": "pietro.alberti",
-          "photo" : "AlbertiPietro.jpg",
-          "name" : "Pietro Alberti"
-      },
+      "group" : 0,
+      "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:40:24 GMT+0200 (CEST)",
       "text" : "Est-ce qu'on doit faire 1 ou plusieurs exemples?"
     },
     {
-      "channel" : 0,
-      "user" : {
-          "id": "cyril.diagne",
-          "photo" : "DiagneCyril.jpg",
-          "name" : "Cyril Diagne"
-      },
+      "group" : 0,
+      "user" : "cyril.diagne",
       "date" : "Sat Sep 30 2017 22:41:00 GMT+0200 (CEST)",
       "text" : "Vous êtes libres de choisir, mais 1 est censé suffire."
     },
     {
-      "channel" : 2,
-      "user" : {
-          "id": "pietro.alberti",
-          "photo" : "AlbertiPietro.jpg",
-          "name" : "Pietro Alberti"
-      },
+      "group" : 1,
+      "user" : "pietro.alberti",
+      "date" : "Sat Sep 30 2017 22:41:00 GMT+0200 (CEST)",
+      "text" : "Hello, j'envoie ça dès que l'export est termimé."
+    },
+    {
+      "group" : 2,
+      "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:42:24 GMT+0200 (CEST)",
       "file" : "http://proxy-mid.ecal.ch:81/uploads/2017-2018/Etapes_projets.pdf",
       "status" : "rejected"
     },
     {
-      "channel" : 2,
-      "user" : {
-          "id": "alain.bellet",
-          "photo" : "BelletAlain.jpg",
-          "name" : "Alain Belelt"
-      },
+      "group" : 2,
+      "user" : "alain.bellet",
       "date" : "Sat Sep 30 2017 22:42:45 GMT+0200 (CEST)",
       "text" : "Attention, la vidéo est floue à 3:40!"
     },
     {
-      "channel" : 0,
-      "user" : {
-          "id": "laura.perrenou",
-          "photo" : "PerrenoudLaura.jpg",
-          "name" : "Laura Perrenoud"
-      },
+      "group" : 0,
+      "user": "laura.perrenou",
       "date" : "Sat Sep 30 2017 22:43:24 GMT+0200 (CEST)",
-      "text" : "Et voilà!"
+      "text" : "Je t'ai envoyé un exemple par mail si jamais!"
     },
     {
-      "channel" : 0,
-      "user" : {
-          "id": "pietro.alberti",
-          "photo" : "AlbertiPietro.jpg",
-          "name" : "Pietro Alberti"
-      },
+      "group" : 3,
+      "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:43:24 GMT+0200 (CEST)",
       "file" : "http://proxy-mid.ecal.ch:81/uploads/2017-2018/Etapes_projets.pdf",
       "status" : "pending"
     },
     {
-      "channel" : 2,
-      "user" : {
-          "id": "pietro.alberti",
-          "photo" : "AlbertiPietro.jpg",
-          "name" : "Pietro Alberti"
-      },
+      "group" : 2,
+      "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:45:24 GMT+0200 (CEST)",
       "file" : "http://proxy-mid.ecal.ch:81/uploads/2017-2018/Etapes_projets.pdf",
       "status" : "accepted"
