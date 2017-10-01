@@ -1,14 +1,15 @@
 /* FILE UPLOAD */
 
 .box {
-  font-size: 1.25rem;
+  /*font-size: 1.25em;*/
   position: relative;
-  padding: 2em 0.5em;
+  padding: 1.4em 1.7em;
+  margin: 0.5em;
   background: white;
   cursor: pointer;
-  margin: 1em 0;
   transition: all 0.2s;
-  box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
 }
 
 .box.has-advanced-upload {
@@ -28,7 +29,7 @@
   text-align: center;
 }
 
-.js .box:hover,
+.box:hover,
 .box.is-dragover,
 .box:focus,
 .box.has-focus {
@@ -41,7 +42,7 @@
   transition: all 0.2s;
 }
 
-.js .box:hover .md-icon {
+.box:hover .md-icon {
   color: black;
 }
 
@@ -71,7 +72,6 @@
 .box__input .md-icon {
   font-size: 2em;
   margin-right: 0.2em;
-  color: rgba(0,0,0,0.5);
 }
 
 .box.is-uploading .box__input {
@@ -120,7 +120,7 @@
   }
 }
 
-.js .box__file {
+.box__file {
   width: 0.1px;
   height: 0.1px;
   opacity: 0;
@@ -129,7 +129,7 @@
   z-index: -1;
 }
 
-.js .box__file + label {
+.box__file + label {
   max-width: 80%;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -137,25 +137,10 @@
   overflow: hidden;
 }
 
-.js .box__file:focus + label,
-.js .box__file.has-focus + label {
+.box__file:focus + label,
+.box__file.has-focus + label {
   outline: 1px dotted #000;
   outline: -webkit-focus-ring-color auto 5px;
-}
-
-.js .box__file + label * {
-
-  /* pointer-events: none; */
-
-  /* in case of FastClick lib use */
-}
-
-.no-js .box__file + label {
-  display: none;
-}
-
-.no-js .box__button {
-  display: block;
 }
 
 .box__button {

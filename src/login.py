@@ -26,7 +26,11 @@ class User(flask_login.UserMixin):
 def get_current_user_infos():
     infos = users_infos[flask_login.current_user.id]
     url = config['users_img_prefix'] + '/' + infos['img']
-    return {'name': infos['name'], 'img': url}
+    return {
+        'name': infos['name'],
+        'img': url,
+        'id': flask_login.current_user.id
+    }
 
 
 @login_manager.user_loader

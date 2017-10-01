@@ -50,7 +50,6 @@ h2 {
   text-transform: none;
   font-size: 22px;
   margin-right: 10px;
-  vertical-align: middle;
 }
 
 input {
@@ -66,21 +65,39 @@ input {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-style: normal;
+  vertical-align: middle;
 }
 
 .hidden {
   display: none !important;
 }
 
+header {
+  display: flex;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  background: white;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  padding: 1em;
+  box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+header .logo {
+  height: 80%;
+}
+
 .app {
   display: flex;
   justify-content: center;
+  margin-top: 60px;
 }
 
 .app main {
   width: 100%;
 	max-width: 900px;
-	margin: 1em 1em;
 }
 
 .login {
@@ -118,19 +135,6 @@ input {
   color: red;
 }
 
-header {
-  background: white;
-  display: flex;
-  height: 60px;
-  align-items: center;
-  padding: 1em;
-  box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.2);
-}
-
-header .logo {
-  height: 80%;
-}
-
 .avatar {
   display: inline-block;
   overflow: hidden;
@@ -155,12 +159,12 @@ header .path {
   width: 100%;
 }
 
-.assignment h2 {
-  padding: 1em 0;
+.assignment > * {
+  padding: 1em 1em;
 }
 
-.assignment hr {
-  margin: 1em 0;
+.assignment > h2 {
+  padding-bottom: 0;
 }
 
 .entry-row {
@@ -170,20 +174,19 @@ header .path {
 }
 
 .entry {
-  /*width: 75%;*/
-  /*min-width: 480px;*/
-  padding: 1em;
+  padding: 0.5em 1em;
   background: white;
-  margin-bottom: 1em;
+  margin: 0.3em 0;
   border-radius: 5px;
   box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
   display: inline-flex;
   align-items: center;
+  position: relative;
 }
 
 .entry .entry-user {
   font-weight: 100;
-  width: 60px;
+  width: 100px;
   flex-shrink: 0;
 }
 
@@ -195,10 +198,40 @@ header .path {
   margin-right: 1em;
 }
 
+.entry > p {
+  max-width: 410px;
+}
+
 .entry .avatar {
   width: 60px;
   height: 60px;
   flex-shrink: 0;
+}
+
+.entry-editable:after {
+  content:'+';
+  width: 30px;
+  height: 30px;
+  display: block;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  cursor: pointer;
+  color: white;
+  background: red;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transform: scale(0.5) rotate(0deg);
+}
+
+.entry-editable:hover:after {
+  transform: rotate(45deg);
+  opacity: 1;
 }
 
 .file-entry a {
@@ -211,6 +244,11 @@ header .path {
   transition: all 0.3s;
 }
 
+.file-entry a {
+  padding: 1em 0.75em;
+  border-radius: 3px;
+}
+
 .file-entry a:hover {
   background-color: rgba(0,0,0,0.05);
 }
@@ -221,19 +259,30 @@ header .path {
 }
 
 .file-entry a .md-icon {
-  vertical-align: middle;
   font-size: 2.5em;
 }
 
-.assigned-entries .entry:not(.admin-entry) > * {
+.assigned-entries {
+  border: 1px solid #c8c8c8;
+  padding: 0.5em 1em;
+  margin-top: 2em;
+  border-radius: 5px;
+  background: #ebebeb;
+}
+
+.assigned-entries .entry:not(.admin-entry):not(.new-entry) > * {
   margin-right: 0;
 }
 
-.assigned-entries .entry:not(.admin-entry) > *:not(:last-child) {
-  margin-left: 1em;
+.assigned-entries .entry:not(.admin-entry) > p {
+  padding: 0em 1em;
 }
 
-.assigned-entries .entry:not(.admin-entry) {
+/*.assigned-entries .entry:not(.admin-entry) > *:not(:first-child) {
+  margin-left: 1em;
+}*/
+
+.assigned-entries .entry:not(.admin-entry):not(.new-entry) {
   margin-left: auto;
   flex-direction: row-reverse;
   text-align: right;
@@ -245,4 +294,52 @@ header .path {
 
 .entry.accepted {
   background-color: #ccffcc;
+}
+
+
+.new-entry {
+  display: inline-flex;
+}
+
+.new-entry-text {
+  width: 320px;
+  font-size: 1em;
+  font-weight: normal;
+  padding: 1em;
+}
+
+.entry__send-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5em;
+  margin: 0 -10px;
+}
+
+.entry__send-text:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+
+@media screen and (max-width:640px) {
+  .entry .entry-user {
+    display: none;
+  }
+
+  .entry .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .entry .new-entry-text {
+    width: 150px;
+  }
+
+  .box .box__file + label {
+    display: none;
+  }
 }

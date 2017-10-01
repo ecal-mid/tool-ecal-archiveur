@@ -26,20 +26,18 @@
 <!-- templates -->
 <script type="text/template" id="assignment-tpl">
   <h2><%= assignment.name %>, due for <%= assignment['due-date'] %></h2>
-  <p class="status"></p>
   <div class="assignment-entries">
   <% for(var i=0; i<assignment['entries'].length; i++) { %>
   	<%- include('entry-tpl', {assignment:assignment, entry: assignment.entries[i] }) -%>
   <% } %>
+  <%- include('new-entry-tpl', {user:user}) -%>
   </div>
-  <hr>
+
   <div class="assigned-entries">
   <% for(var i=0; i<entries.length; i++) { %>
   	<%- include('entry-tpl', {assignment:assignment, entry: entries[i] }) -%>
   <% } %>
-  </div>
-  <div>
-  	<%- include('upload_box-tpl') -%>
+  <%- include('new-entry-tpl', {user:user}) -%>
   </div>
 </script>
 
@@ -53,23 +51,32 @@
     <% if (entry.text) { %>
       <p><%= entry.text %></p>
     <% } else { %>
-      <a href="<%= entry.file %>"><%= entry.filename %></a>
-      <a href="<%= entry.file %>"><i class="md-icon">file_download</i></a>
+      <a href="<%= entry.file %>" target="_blank"><%= entry.filename %></a>
+      <a href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
     <% } %>
   </div>
 </div>
 </script>
 
-<script type="text/template" id="upload_box-tpl">
+<script type="text/template" id="new-entry-tpl">
+  <div class="entry-row">
+  <div class="entry new-entry">
+    <div class="avatar">
+      <img src="<%= user.img %>">
+    </div>
+    <input class="new-entry-text" type="text" placeholder="Add comment" />
+    <span class="entry__send-text"><i class="md-icon">send</i></span>
+  </div>
   <form method="post" action="/api/upload" enctype="multipart/form-data" novalidate class="box">
     <div class="box__input">
       <i class="md-icon">file_upload</i>
       <input type="file" name="file" id="file" class="box__file" />
-      <label for="file">Upload<span class="box__dragndrop"></span><br><span class="box__error"></span></label>
-      <button type="submit" class="box__button">Upload</button>
+      <label for="file">Add File<span class="box__dragndrop"></span><br><span class="box__error"></span></label>
+      <button type="submit" class="box__button">Add File</button>
     </div>
     <div class="box__uploading">Uploading&hellip;</div>
   </form>
+</div>
 </script>
 
 <!-- third parties -->

@@ -13,8 +13,8 @@ function setup() {
   let url = '/static/data/test_assignment.json';
   qwest.get(url)
       .then((xhr, data) => {
-        let a = new Assignment();
-        a.render(data);
+        let a = new Assignment(data);
+        a.render();
         mainEl.append(a.el);
       })
       .catch((e) => console.error(e));
