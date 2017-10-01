@@ -16,27 +16,68 @@
   <section id="app" class="app">
     <main>
 
-      <form method="post" action="/api/upload" enctype="multipart/form-data" novalidate class="box">
-    		<div class="box__input">
-    			<i class="md-icon">file_upload</i>
-    			<input type="file" name="file" id="file" class="box__file" />
-    			<label for="file"><strong>PDF</strong><span class="box__dragndrop"> (max 500ko)</span><br><span class="box__error"></span></label>
-    			<button type="submit" class="box__button">Upload</button>
-    		</div>
-    		<div class="box__uploading">Uploading&hellip;</div>
-    	</form>
-
     </main>
   </section>
 {% endblock %}
 
 
 {% block scripts %}
-  <!-- third parties -->
-  <script src="{{ url_for('static', filename='libs/qwest.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='libs/ejs.min.js') }}"></script>
-  <!-- scripts -->
-  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/upload_box.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<!-- templates -->
+<script type="text/template" id="assignment-tpl">
+  <h2><%= assignment.name %>, due for <%= assignment['due-date'] %></h2>
+  <p class="status"></p>
+  <div class="assignment-entries">
+  <% for(var i=0; i<assignment['entries'].length; i++) { %>
+  	<%- include('entry-tpl', {assignment:assignment, entry: assignment.entries[i] }) -%>
+  <% } %>
+  </div>
+  <hr>
+  <div class="assigned-entries">
+  <% for(var i=0; i<entries.length; i++) { %>
+  	<%- include('entry-tpl', {assignment:assignment, entry: entries[i] }) -%>
+  <% } %>
+  </div>
+  <div>
+  	<%- include('upload_box-tpl') -%>
+  </div>
+</script>
+
+<script type="text/template" id="entry-tpl">
+  <div class="entry-row">
+  <div class="entry <%= entry.classes.join(' ') %>">
+    <div class="avatar">
+      <img src="https://intranet.ecal.ch/img/photo/<%= entry['user']['photo'] %>">
+    </div>
+    <p class="entry-user"><%= entry.user.name %><br><span class="entry-date"><%= entry.date %></span></p>
+    <% if (entry.text) { %>
+      <p><%= entry.text %></p>
+    <% } else { %>
+      <a href="<%= entry.file %>"><%= entry.filename %></a>
+      <a href="<%= entry.file %>"><i class="md-icon">file_download</i></a>
+    <% } %>
+  </div>
+</div>
+</script>
+
+<script type="text/template" id="upload_box-tpl">
+  <form method="post" action="/api/upload" enctype="multipart/form-data" novalidate class="box">
+    <div class="box__input">
+      <i class="md-icon">file_upload</i>
+      <input type="file" name="file" id="file" class="box__file" />
+      <label for="file">Upload<span class="box__dragndrop"></span><br><span class="box__error"></span></label>
+      <button type="submit" class="box__button">Upload</button>
+    </div>
+    <div class="box__uploading">Uploading&hellip;</div>
+  </form>
+</script>
+
+<!-- third parties -->
+<script src="{{ url_for('static', filename='libs/qwest.min.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/ejs.min.js') }}"></script>
+<!-- scripts -->
+<script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+<script src="{{ url_for('static', filename='js/upload_box.js') }}"></script>
+<script src="{{ url_for('static', filename='js/assignment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
