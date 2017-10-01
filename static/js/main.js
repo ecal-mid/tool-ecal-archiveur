@@ -14,6 +14,9 @@ function setup() {
   load();
 }
 
+/**
+ * Load a new document (if needed) and group and update render.
+ */
 function load() {
   // Assignment
   let docId = document.body.dataset['assignment'];
@@ -42,12 +45,21 @@ function load() {
       .catch((e) => console.error(e));
 }
 
+/**
+ * Event handler for window pop state event. Handles navigation update.
+ * @param  {PopStateEvent} ev The popstate event.
+ */
 function onPopState(ev) {
   // ev.preventDefault();
   setNav(ev.state.assignment, ev.state.group);
 }
 
 
+/**
+ * Update navigation.
+ * @param {String} assignment The assignment id.
+ * @param {String} group      The group id.
+ */
 function setNav(assignment, group) {
   document.body.dataset['assignment'] = assignment;
   document.body.dataset['group'] = group;

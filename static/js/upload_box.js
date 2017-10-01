@@ -1,4 +1,11 @@
+/**
+ * Class that manages uploads.
+ */
 class UploadBox {
+  /**
+   * Constructor.
+   * @param  {Element} el The dom element that will contain the uploader.
+   */
   constructor(el) {
     this.el = el;
     this.droppedFiles = null;
@@ -24,30 +31,49 @@ class UploadBox {
     this.inputEl.addEventListener('change', this.submitForm.bind(this), false);
   }
 
+  /**
+   * Shortcut to disable event defaults.
+   * @param  {event} ev event
+   */
   disableDefault(ev) {
     ev.preventDefault();
     ev.stopPropagation();
   }
 
+  /**
+   * Handles drag enter event.
+   * @param  {event} ev event
+   */
   dragEnter(ev) {
     this.disableDefault(ev);
     this.el.classList.add('is-dragover');
   }
 
+  /**
+   * Handles drag leave event.
+   * @param  {event} ev event
+   */
   dragLeave(ev) {
     this.disableDefault(ev);
     this.el.classList.remove('is-dragover');
   }
 
+  /**
+   * Handles drop event.
+   * @param  {event} ev event
+   */
   drop(ev) {
     this.disableDefault(ev);
     this.droppedFiles = ev.dataTransfer.files;
     this.submitForm();
   }
 
+  /**
+   * Submit form data to backend.
+   */
   submitForm() {
     if (this.el.classList.contains('is-uploading')) {
-      return false;
+      return;
     }
     this.el.classList.add('is-uploading');
     this.el.classList.remove('is-error');
@@ -71,12 +97,19 @@ class UploadBox {
     }
   }
 
+  /**
+   * Resets the upload widget.
+   */
   reset() {
     this.droppedFiles = null;
     this.el.classList.remove('is-uploading');
     this.inputEl.value = '';
   }
 
+  /**
+   * Callback for fileupload completion.
+   * @param  {Object} response The backend response.
+   */
   onFileUploaded(response) {
     this.reset();
     if (response.error) {
@@ -84,6 +117,10 @@ class UploadBox {
     }
   }
 
+  /**
+   * Handler for upload errors.
+   * @param  {error} error The upload error.
+   */
   onFileUploadError(error) {
     this.el.classList.remove('is-uploading');
     this.el.classList.add('is-error');

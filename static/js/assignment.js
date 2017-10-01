@@ -1,4 +1,10 @@
+/**
+ * Class that manages data cleansing and preprocessing to render sssignments.
+ */
 class Assignment {
+  /**
+   * Constructor.
+   */
   constructor() {
     this.data = null;
     this.docId = null;
@@ -15,6 +21,13 @@ class Assignment {
     }
   }
 
+  /**
+   * Renders the assignment template using provided data.
+   * @param  {object} data    A data object. The rendering pipeline shouldnt
+   *                          make modification to this object.
+   * @param  {[type]} docId   The document id being rendered.
+   * @param  {[type]} groupId The group id requested
+   */
   render(data, docId, groupId) {
     this.data = data;
     this.docId = docId;
@@ -37,10 +50,17 @@ class Assignment {
     // activate forms
     let formEls = this.el.querySelectorAll('.box');
     for (let el of formEls) {
-      let uploadBox = new UploadBox(el);
+      new UploadBox(el);
     }
   }
 
+  /**
+   * Preprocess data to simplify the template rendering.
+   * @param  {object} data    The data to render.
+   * @param  {String} docId   Current document id.
+   * @param  {String} groupId Current group id.
+   * @return {object}         An extended version of the input data
+   */
   preprocess(data, docId, groupId) {
     let user = this.user;
     // Build a dictionnary with details of all active users details
@@ -81,6 +101,14 @@ class Assignment {
     };
   }
 
+  /**
+   * Preprocess a template data to simplify the its rendering.
+   * @param  {String} tpl         The template being rendered.
+   * @param  {Object} processed   The preprocessed assignment data object.
+   * @param  {Object} data        The template data.
+   * @param  {String} groupId     The current group id.
+   * @return {Object}         An extended version of the input data
+   */
   preprocessTemplateData(tpl, processed, data, groupId) {
     switch (tpl) {
       case 'entry-tpl':
@@ -115,10 +143,10 @@ class Assignment {
     return data;
   }
 
-  remove() {
-    this.el.remove();
-  }
-
+  /**
+   * Handles clicks on group button.
+   * @param  {MouseEvent} ev The MouseEvent object.
+   */
   onGroupClicked(ev) {
     let groupId = ev.currentTarget.dataset['id'];
     let docId = document.body.dataset['assignment'];
