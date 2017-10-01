@@ -44,9 +44,13 @@ function load() {
     return;
   }
 
+  mainEl.classList.add('loading');
+
   assignmentRef = database.ref(`${year}/${docId}`);
   assignmentRef.off();
   assignmentRef.on('value', (data) => {
+    mainEl.classList.remove('loading');
+
     let val = data.val();
     if (val == null) {
       console.error('Assignment not found.');

@@ -72,6 +72,22 @@ input {
   display: none !important;
 }
 
+.preloader {
+  position: absolute;
+  margin: auto;
+  transition: all 0.2s;
+  opacity: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.4);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.loading .preloader {
+  opacity: 1;
+}
+
 header {
   display: flex;
   position: fixed;
@@ -157,6 +173,11 @@ header .path {
 
 .assignment {
   width: 100%;
+  transition: all 0.2s;
+  transition-delay: 0.5s;
+}
+.loading .assignment {
+  opacity: 0;
 }
 
 .assignment > * {
