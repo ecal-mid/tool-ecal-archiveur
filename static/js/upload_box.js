@@ -89,6 +89,12 @@ class UploadBox {
         }
       }
 
+      let path = assignment.docId;
+      if (!this.el.classList.contains('is-assignment')) {
+        path += '/' + assignment.groupId;
+      }
+      data.set('path', path);
+
       api.upload(data)
           .then(this.onFileUploaded.bind(this))
           .catch(this.onFileUploadError.bind(this));
