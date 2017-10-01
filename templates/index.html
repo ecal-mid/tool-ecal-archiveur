@@ -25,7 +25,7 @@
 
 <!-- templates -->
 <script type="text/template" id="assignment-tpl">
-  <h2><%= assignment.name %>, due for <%= assignment['due-date'] %></h2>
+  <h2><%= assignment.name %>, due for <%= due %></h2>
   <div class="assignment-entries">
   <% for(var i=0; i<assignment['entries'].length; i++) { %>
   	<%- include('entry-tpl', {assignment:assignment, entry:assignment.entries[i], is_assignment:true }) -%>
@@ -43,15 +43,15 @@
 
 <script type="text/template" id="entry-tpl">
   <div class="entry-row">
-  <div class="entry <%= entry.classes.join(' ') %>">
+  <div class="entry <%= classes.join(' ') %>">
     <div class="avatar">
-      <img src="https://intranet.ecal.ch/img/photo/<%= entry['user']['photo'] %>">
+      <img src="https://intranet.ecal.ch/img/photo/<%= user.photo %>">
     </div>
-    <p class="entry-user"><%= entry.user.name %><br><span class="entry-date"><%= entry.date %></span></p>
+    <p class="entry-user"><%= user.name %><br><span class="entry-date"><%= date %></span></p>
     <% if (entry.text) { %>
       <p><%= entry.text %></p>
     <% } else { %>
-      <a href="<%= entry.file %>" target="_blank"><%= entry.filename %></a>
+      <a href="<%= entry.file %>" target="_blank"><%= filename %></a>
       <a href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
     <% } %>
   </div>

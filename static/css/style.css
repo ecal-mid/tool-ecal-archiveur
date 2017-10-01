@@ -165,6 +165,7 @@ header .path {
 
 .assignment > h2 {
   padding-bottom: 0;
+  padding-top: 2em;
 }
 
 .entry-row {
@@ -203,8 +204,8 @@ header .path {
 }
 
 .entry .avatar {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
 }
 
@@ -328,11 +329,6 @@ header .path {
 @media screen and (max-width:640px) {
   .entry .entry-user {
     display: none;
-  }
-
-  .entry .avatar {
-    width: 40px;
-    height: 40px;
   }
 
   .entry .new-entry-text {

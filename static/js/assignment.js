@@ -1,9 +1,8 @@
 class Assignment {
-  constructor(data, groupId) {
-    this.groupId = groupId;
+  constructor() {
+    this.data = null;
     this.el = document.createElement('div');
     this.el.classList.add('assignment');
-    this.data = data;
     this.user = {
       id: document.body.dataset['userId'],
       img: document.body.querySelector('.avatar img').src,
@@ -14,33 +13,16 @@ class Assignment {
     }
   }
 
-  render() {
-    this.data.user = this.user;
-    this.data.users = {};
-    for (let u of this.data.assignment.admins) {
-      this.data.users[u.id] = u;
-      this.data.users[u.id].is_admin = true;
-    }
-    for (let g of this.data.assignment.groups) {
-      if (Array.isArray(g)) {
-        for (let u of g) {
-          this.data.users[u.id] = u;
-        }
-      } else {
-        this.data.users[g.id] = g;
-      }
-    }
-    // TODO: move this in preprocess
-    this.data.assignment['due-date'] =
-        new Date(this.data.assignment['due-date'])
-            .toISOString()
-            .substring(0, 10);
-    // Compite templates recursively
+  render(data, docId, groupId) {
+    this.data = data;
+    let processed = this.preprocess(data, docId, groupId);
+    // Compile templates recursively
     let fn = ejs.compile(this.tpls['assignment-tpl'], {client: true});
-    let html = fn(this.data, null, (path, d) => {
-      if (this.preprocess(path, d)) {
-        return ejs.render(this.tpls[path], d);
-      };
+    let html = fn(processed, null, (path, d) => {
+      let pTplData = this.preprocessTemplateData(path, processed, d, groupId);
+      if (pTplData) {
+        return ejs.render(this.tpls[path], pTplData);
+      }
     });
     this.el.innerHTML = html;
     // returns rendered string
@@ -50,35 +32,71 @@ class Assignment {
     }
   }
 
-  preprocess(tpl, data) {
+  preprocess(data, docId, groupId) {
+    let user = this.user;
+    // Build a dictionnary with details of all active users details
+    let users = {};
+    for (let u of data.assignment.admins) {
+      users[u.id] = u;
+      users[u.id].is_admin = true;
+    }
+    for (let g of data.assignment.groups) {
+      if (Array.isArray(g)) {
+        for (let u of g) {
+          users[u.id] = u;
+        }
+      } else {
+        users[g.id] = g;
+      }
+    }
+    // Better date formatting.
+    let due =
+        new Date(data.assignment['due-date']).toISOString().substring(0, 10);
+    // Return our processed data object
+    return {
+      assignment: data.assignment,
+      entries: data.entries,
+      user: user,
+      users: users,
+      due: due,
+    };
+  }
+
+  preprocessTemplateData(tpl, processed, data, groupId) {
     switch (tpl) {
       case 'entry-tpl':
-        if (this.groupId && data.entry.group != this.groupId &&
-            !data.is_assignment) {
-          return false;
+        if (groupId && data.entry.group != groupId && !data.is_assignment) {
+          return;
         }
         // Date
-        data.entry.date =
-            new Date(data.entry.date).toISOString().substring(0, 10);
-        data.entry.classes = [];
+        let date = new Date(data.entry.date).toISOString().substring(0, 10);
+        let classes = [];
+        let result = {
+          entry: data.entry,
+          date: date,
+          classes: classes,
+          user: processed.users[data.entry.user],
+        };
         // Status
-        data.entry.classes.push(data.entry.status);
-        // User
-        data.entry.user = this.data.users[data.entry.user];
-        if (data.entry.user.id == this.user.id) {
-          data.entry.classes.push('entry-editable');
+        classes.push(data.entry.status);
+        if (result.user.id == this.user.id) {
+          classes.push('entry-editable');
         }
-        if (data.entry.user.is_admin) {
-          data.entry.classes.push('admin-entry');
+        if (result.user.is_admin) {
+          classes.push('admin-entry');
         }
         if (data.entry.file) {
-          data.entry.filename =
+          result.filename =
               data.entry.file.substr(data.entry.file.lastIndexOf('/') + 1);
-          data.entry.classes.push('file-entry');
+          classes.push('file-entry');
         }
-        break;
+        return result;
       default:
     }
-    return true;
+    return data;
+  }
+
+  remove() {
+    this.el.remove();
   }
 }
