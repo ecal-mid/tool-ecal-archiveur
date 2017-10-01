@@ -20,8 +20,7 @@ def upload():
     if 'file' in request.files:
         rfile = request.files['file']
         try:
-            path = request.form.get('path')
-            folder = os.path.join('2017-2018', path)
+            folder = request.form.get('path')
             result_filename = uploaded_files.save(rfile, folder=folder)
             url = uploaded_files.url(result_filename)
             return json.dumps({'success': True, 'url': url})
