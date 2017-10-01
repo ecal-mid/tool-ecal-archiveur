@@ -30,8 +30,11 @@
   <% for(var i=0; i<assignment.entries.length; i++) { %>
   	<%- include('entry-tpl', {assignment:assignment, entry:assignment.entries[i], is_assignment:true }) -%>
   <% } %>
+  <% if (user.is_admin) { %>
   <%- include('new-entry-tpl', {user:user, is_assignment:true}) -%>
+  <% } %>
   </div>
+  <% if (user.is_admin) { %>
   <div class="groups">
     <% for(var i=0; i<groups.length; i++) { %>
       <div class="group <%= groups[i].classes.join(' ') %>" data-id="<%= i %>">
@@ -43,11 +46,13 @@
       </div>
     <% } %>
   </div>
-  <div class="assigned-entries">
-  <% for(var i=0; i<entries.length; i++) { %>
-  	<%- include('entry-tpl', {assignment:assignment, entry:entries[i] }) -%>
   <% } %>
-  <%- include('new-entry-tpl', {user:user}) -%>
+  <div class="assigned-entries">
+    <div class="group-names"><%= group.join(', ') %></div>
+    <% for(var i=0; i<entries.length; i++) { %>
+    	<%- include('entry-tpl', {assignment:assignment, entry:entries[i] }) -%>
+    <% } %>
+    <%- include('new-entry-tpl', {user:user}) -%>
   </div>
 </script>
 
@@ -73,7 +78,7 @@
   <div class="entry-row">
     <div class="entry new-entry <%= classes.join(' ') %>">
       <div class="avatar">
-        <img src="<%= user.img %>">
+        <img src="https://intranet.ecal.ch/img/photo/<%= user.photo %>">
       </div>
       <input class="new-entry-text" type="text" placeholder="Add comment" />
       <span class="entry__send-text"><i class="md-icon">send</i></span>

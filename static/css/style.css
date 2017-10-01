@@ -313,9 +313,16 @@ header .path {
 }*/
 
 .assigned-entries .entry:not(.admin-entry):not(.new-entry) {
-  margin-left: auto;
   flex-direction: row-reverse;
   text-align: right;
+}
+
+.assigned-entries .entry:not(.admin-entry) {
+  margin-left: auto;
+}
+
+.assigned-entries .entry:not(.admin-entry) + .box {
+  margin-right: 0;
 }
 
 .assigned-entries .entry:not(.admin-entry):not(.new-entry) > .avatar {
@@ -404,6 +411,12 @@ header .path {
 
 .groups .group .avatar:not(:first-child) {
   margin-left: -15px;
+}
+
+.group-names {
+  color: rgba(255, 255, 255, 0.53);
+  text-align: right;
+  padding: 0.5em;
 }
 
 /* MEDIA QUERIES */

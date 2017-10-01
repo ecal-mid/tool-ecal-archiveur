@@ -17,6 +17,9 @@ function setup() {
   let year = document.body.dataset['year'];
   let docId = document.body.dataset['assignment'];
   let groupId = document.body.dataset['group'];
+  if (!year || !docId) {
+    return;
+  }
   setNav(year, docId, groupId);
 }
 
@@ -56,9 +59,22 @@ function load() {
       console.error('Assignment not found.');
       return;
     }
+
     // We need to refresh the closure variables
     docId = document.body.dataset['assignment'];
     groupId = document.body.dataset['group'];
+
+    // Redirect to correct group if user is not admin and in the wrong group.
+    let userId = document.body.dataset.userId;
+    if (!isAdmin(userId, val)) {
+      let g = getUserGroup(userId, val);
+      if (groupId != g) {
+        setNav(year, docId, g);
+        return;
+      }
+    }
+
+    // Render the template
     assignment.render(data.val(), docId, groupId);
   });
 
@@ -66,6 +82,40 @@ function load() {
     mainEl.append(assignment.el);
   }
 }
+
+/**
+ * Returns the first group found in this assignment with the input user
+ * @param  {String} userId The user id.
+ * @param  {Object} data The data object.
+ * @return {Int}           The group id.
+ */
+function getUserGroup(userId, data) {
+  for (let i = 0; i < data.assignment.groups.length; i++) {
+    const g = data.assignment.groups[i];
+    for (let u of g) {
+      if (u.id == userId) {
+        return i;
+      }
+    }
+  }
+  return -1;
+}
+
+/**
+ * Returns true if the user is admin.
+ * @param  {String} userId The user id.
+ * @param  {Object} data The data object.
+ * @return {Int}           The group id.
+ */
+function isAdmin(userId, data) {
+  for (let u of data.assignment.admins) {
+    if (u.id == userId) {
+      return true;
+    }
+  }
+  return false;
+}
+
 
 /**
  * Temporary util to push data to firebase.

@@ -13,7 +13,7 @@ class Assignment {
     this.el.classList.add('assignment');
     this.user = {
       id: document.body.dataset['userId'],
-      img: document.body.querySelector('.avatar img').src,
+      // img: document.body.querySelector('.avatar img').src,
     };
     this.tpls = {};
     for (let tpl of ['assignment-tpl', 'entry-tpl', 'new-entry-tpl']) {
@@ -72,7 +72,6 @@ class Assignment {
    * @return {object}         An extended version of the input data
    */
   preprocess(data, docId, groupId) {
-    let user = this.user;
     // Build a dictionnary with details of all active users details
     let users = {};
     for (let u of data.assignment.admins) {
@@ -84,6 +83,7 @@ class Assignment {
         users[u.id] = u;
       }
     }
+    this.user = users[this.user.id];
     // Build custom group object with extra info such as progress.
     let groups = [];
     for (let i = 0; i < data.assignment.groups.length; i++) {
@@ -105,7 +105,8 @@ class Assignment {
       assignment: data.assignment,
       entries: data.entries,
       groups: groups,
-      user: user,
+      group: data.assignment.groups[groupId].map((g) => g.name),
+      user: this.user,
       users: users,
       due: due,
     };
@@ -125,6 +126,9 @@ class Assignment {
         let classe = [];
         if (data.is_assignment) {
           classe.push('is-assignment');
+        }
+        if (this.user.is_admin) {
+          classe.push('admin-entry');
         }
         return {user: data.user, classes: classe};
 
