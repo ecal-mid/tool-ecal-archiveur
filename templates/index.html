@@ -78,7 +78,7 @@
       <input class="new-entry-text" type="text" placeholder="Add comment" />
       <span class="entry__send-text"><i class="md-icon">send</i></span>
     </div>
-    <form method="post" action="/api/upload" enctype="multipart/form-data" novalidate class="box">
+    <form method="post" action="/api/upload" enctype="multipart/form-data" novalidate class="box  <%= classes.join(' ') %>">
       <div class="box__input">
         <i class="md-icon">file_upload</i>
         <input type="file" name="file" id="file" class="box__file" />

@@ -114,7 +114,26 @@ class UploadBox {
     this.reset();
     if (response.error) {
       this.onFileUploadError(response.error);
+    };
+
+    if (!response.success) {
+      return;
     }
+
+    // Create Entry if upload was successful
+    let entry = {
+      'id': generateGUUID(),
+      'user': assignment.user.id,
+      'date': new Date().toString(),
+      'file': response.url,
+    };
+    if (this.el.classList.contains('is-assignment')) {
+      assignment.data.assignment.entries.push(entry);
+    } else {
+      entry.group = assignment.groupId;
+      assignment.data.entries.push(entry);
+    }
+    assignment.onDataUpdate(assignment.data);
   }
 
   /**
