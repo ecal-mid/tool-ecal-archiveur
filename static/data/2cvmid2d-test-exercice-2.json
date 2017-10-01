@@ -10,11 +10,13 @@
     "name" : "Test Exercice #2",
     "entries" : [
       {
+        "id": "uniqueId0",
         "user": "cyril.diagne",
         "date" : "Sat Sep 29 2017 13:20:05 GMT+0200 (CEST)",
         "text" : "Comme vu lors du dernier cours, chaque groupe doit faire un pdf de présentation de leur exercice."
       },
       {
+        "id": "uniqueId1",
         "user": "cyril.diagne",
         "date" : "Sat Sep 29 2017 13:25:05 GMT+0200 (CEST)",
         "file" : "http://proxy-mid.ecal.ch:81/uploads/2017-2018/Etapes_projets.pdf"
@@ -81,30 +83,78 @@
             "photo" : "AlbertiPietro.jpg",
             "name" : "Pietro Alberti"
         }
+      ],
+      [
+        {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }, {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }
+      ],
+      [
+        {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }, {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }
+      ],
+      [
+        {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }, {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }
+      ],
+      [
+        {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }, {
+            "id": "pietro.alberti",
+            "photo" : "AlbertiPietro.jpg",
+            "name" : "Pietro Alberti"
+        }
       ]
     ]
   },
   "entries" : [
     {
       "group" : 0,
+      "id": "uniqueId3",
       "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:40:24 GMT+0200 (CEST)",
       "text" : "Est-ce qu'on doit faire 1 ou plusieurs exemples?"
     },
     {
       "group" : 0,
+      "id": "uniqueId4",
       "user" : "cyril.diagne",
       "date" : "Sat Sep 30 2017 22:41:00 GMT+0200 (CEST)",
       "text" : "Vous êtes libres de choisir, mais 1 est censé suffire."
     },
     {
       "group" : 1,
+      "id": "uniqueId5",
       "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:41:00 GMT+0200 (CEST)",
       "text" : "Hello, j'envoie ça dès que l'export est termimé."
     },
     {
       "group" : 2,
+      "id": "uniqueId6",
       "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:42:24 GMT+0200 (CEST)",
       "file" : "http://proxy-mid.ecal.ch:81/uploads/2017-2018/Etapes_projets.pdf",
@@ -112,18 +162,21 @@
     },
     {
       "group" : 2,
+      "id": "uniqueId7",
       "user" : "alain.bellet",
       "date" : "Sat Sep 30 2017 22:42:45 GMT+0200 (CEST)",
       "text" : "Attention, la vidéo est floue à 3:40!"
     },
     {
       "group" : 0,
+      "id": "uniqueId8",
       "user": "laura.perrenou",
       "date" : "Sat Sep 30 2017 22:43:24 GMT+0200 (CEST)",
       "text" : "Je t'ai envoyé un exemple par mail si jamais!"
     },
     {
       "group" : 3,
+      "id": "uniqueId9",
       "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:43:24 GMT+0200 (CEST)",
       "file" : "http://proxy-mid.ecal.ch:81/uploads/2017-2018/Etapes_projets.pdf",
@@ -131,6 +184,7 @@
     },
     {
       "group" : 2,
+      "id": "uniqueId10",
       "user" : "pietro.alberti",
       "date" : "Sat Sep 30 2017 22:45:24 GMT+0200 (CEST)",
       "file" : "http://proxy-mid.ecal.ch:81/uploads/2017-2018/Etapes_projets.pdf",

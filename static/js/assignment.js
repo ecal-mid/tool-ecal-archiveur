@@ -47,6 +47,16 @@ class Assignment {
     for (let el of groupEls) {
       el.addEventListener('click', this.onGroupClicked.bind(this), false);
     }
+    // activate entries
+    let entryEls = this.el.querySelectorAll('.entry-editable');
+    for (let el of entryEls) {
+      new Entry(el);
+    }
+    // activate new entry forms
+    let newEntryEls = this.el.querySelectorAll('.new-entry');
+    for (let el of newEntryEls) {
+      new NewEntry(el);
+    }
     // activate forms
     let formEls = this.el.querySelectorAll('.box');
     for (let el of formEls) {
@@ -111,6 +121,13 @@ class Assignment {
    */
   preprocessTemplateData(tpl, processed, data, groupId) {
     switch (tpl) {
+      case 'new-entry-tpl':
+        let classe = [];
+        if (data.is_assignment) {
+          classe.push('is-assignment');
+        }
+        return {user: data.user, classes: classe};
+
       case 'entry-tpl':
         if (groupId && data.entry.group != groupId && !data.is_assignment) {
           return;
@@ -129,6 +146,9 @@ class Assignment {
         if (result.user.id == this.user.id) {
           classes.push('entry-editable');
         }
+        if (data.is_assignment) {
+          classes.push('is-assignment');
+        }
         if (result.user.is_admin) {
           classes.push('admin-entry');
         }
@@ -141,6 +161,14 @@ class Assignment {
       default:
     }
     return data;
+  }
+
+  /**
+   * Handler for data updates.
+   * @param  {object} data The new data file.
+   */
+  onDataUpdate(data) {
+    this.render(data, this.docId, this.groupId);
   }
 
   /**

@@ -3,13 +3,13 @@
 .box {
   /*font-size: 1.25em;*/
   position: relative;
-  padding: 1.4em 1.7em;
+  padding: 1.25em 1.7em;
   margin: 0.5em;
   background: white;
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .box.has-advanced-upload {

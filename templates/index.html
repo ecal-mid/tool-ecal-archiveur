@@ -30,7 +30,7 @@
   <% for(var i=0; i<assignment.entries.length; i++) { %>
   	<%- include('entry-tpl', {assignment:assignment, entry:assignment.entries[i], is_assignment:true }) -%>
   <% } %>
-  <%- include('new-entry-tpl', {user:user}) -%>
+  <%- include('new-entry-tpl', {user:user, is_assignment:true}) -%>
   </div>
   <div class="groups">
     <% for(var i=0; i<groups.length; i++) { %>
@@ -53,7 +53,7 @@
 
 <script type="text/template" id="entry-tpl">
   <div class="entry-row">
-    <div class="entry <%= classes.join(' ') %>">
+    <div class="entry <%= classes.join(' ') %>" data-id="<%= entry.id %>">
       <div class="avatar">
         <img src="https://intranet.ecal.ch/img/photo/<%= user.photo %>">
       </div>
@@ -62,15 +62,16 @@
         <p><%= entry.text %></p>
       <% } else { %>
         <a href="<%= entry.file %>" target="_blank"><%= filename %></a>
-        <a href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
+        <a class="download-icon" href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
       <% } %>
+      <div class="entry__delete-bt">+</div>
     </div>
   </div>
 </script>
 
 <script type="text/template" id="new-entry-tpl">
   <div class="entry-row">
-    <div class="entry new-entry">
+    <div class="entry new-entry <%= classes.join(' ') %>">
       <div class="avatar">
         <img src="<%= user.img %>">
       </div>
@@ -95,6 +96,8 @@
 <!-- scripts -->
 <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
 <script src="{{ url_for('static', filename='js/upload_box.js') }}"></script>
+<script src="{{ url_for('static', filename='js/entry.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new_entry.js') }}"></script>
 <script src="{{ url_for('static', filename='js/assignment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
