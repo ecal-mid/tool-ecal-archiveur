@@ -2,6 +2,8 @@
 
 let mainEl = document.querySelector('.app main');
 let assignment = new Assignment();
+let assignmentRef;
+let database = firebase.database();
 
 /**
  * Setup the application.
@@ -11,13 +13,22 @@ function setup() {
   avatarEl.addEventListener('click', () => window.location.href = '/logout');
   window.addEventListener('popstate', onPopState, false);
   window.onpopstate = onPopState;
-  load();
+  //
+  let year = document.body.dataset['year'];
+  let docId = document.body.dataset['assignment'];
+  let groupId = document.body.dataset['group'];
+  setNav(year, docId, groupId);
 }
 
 /**
  * Load a new document (if needed) and group and update render.
  */
 function load() {
+  // Year
+  let year = document.body.dataset['year'];
+  if (!year) {
+    return;
+  }
   // Assignment
   let docId = document.body.dataset['assignment'];
   if (!docId) {
@@ -28,21 +39,36 @@ function load() {
   if (!groupId) {
   }
 
-  if (docId == assignment.docId) {
+  if (document.body.dataset['assignment'] == assignment.docId) {
     assignment.render(assignment.data, docId, groupId);
     return;
   }
 
-  // Load document file.
-  let url = `/static/data/${docId}.json`;
-  qwest.get(url)
-      .then((xhr, data) => {
-        assignment.render(data, docId, groupId);
-        if (!assignment.el.parentNode) {
-          mainEl.append(assignment.el);
-        }
-      })
-      .catch((e) => console.error(e));
+  assignmentRef = database.ref(`${year}/${docId}`);
+  assignmentRef.off();
+  assignmentRef.on('value', (data) => {
+    let val = data.val();
+    if (val == null) {
+      console.error('Assignment not found.');
+      return;
+    }
+    // We need to refresh the closure variables
+    docId = document.body.dataset['assignment'];
+    groupId = document.body.dataset['group'];
+    assignment.render(data.val(), docId, groupId);
+  });
+
+  if (!assignment.el.parentNode) {
+    mainEl.append(assignment.el);
+  }
+}
+
+/**
+ * Temporary util to push data to firebase.
+ * @param  {Object} data the full assignment data.
+ */
+function pushData(data) {
+  assignmentRef.set(assignment.data);
 }
 
 /**
@@ -51,22 +77,25 @@ function load() {
  */
 function onPopState(ev) {
   // ev.preventDefault();
-  setNav(ev.state.assignment, ev.state.group);
+  setNav(ev.state.year, ev.state.assignment, ev.state.group);
 }
 
 
 /**
  * Update navigation.
+ * @param {String} year       The current academic year.
  * @param {String} assignment The assignment id.
  * @param {String} group      The group id.
  */
-function setNav(assignment, group) {
+function setNav(year, assignment, group) {
+  document.body.dataset['year'] = year;
   document.body.dataset['assignment'] = assignment;
   document.body.dataset['group'] = group;
   window.history.pushState(
-      {assignment: assignment, group: group}, assignment + group,
-      `/a/${assignment}/${group}`);
+      {year: year, assignment: assignment, group: group},
+      year + assignment + group, `/a/${year}/${assignment}/${group}`);
   load();
 }
+
 
 setup();

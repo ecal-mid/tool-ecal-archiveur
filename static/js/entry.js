@@ -39,6 +39,7 @@ class Entry {
     }
     entries.splice(index, 1);
     // Inform data update.
-    assignment.onDataUpdate(assignment.data);
+    // assignment.onDataUpdate(assignment.data);
+    pushData();
   }
 }

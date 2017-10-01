@@ -14,9 +14,9 @@
 </head>
 
 <body class="js" data-user-id="{{user.id}}"
-  {% if year %} data-year="{{year}}" {% endif %}
-  {% if assignment %} data-assignment="{{assignment}}" {% endif %}
-  {% if group %} data-group="{{group}}" {% endif %}>
+  {% if year is defined %} data-year="{{year}}" {% endif %}
+  {% if assignment is defined %} data-assignment="{{assignment}}" {% endif %}
+  {% if group is defined %} data-group="{{group}}" {% endif %}>
 
   {% block header %}
   {% endblock %}

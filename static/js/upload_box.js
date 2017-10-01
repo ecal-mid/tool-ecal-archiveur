@@ -147,7 +147,7 @@ class UploadBox {
       entry.group = assignment.groupId;
       assignment.data.entries.push(entry);
     }
-    assignment.onDataUpdate(assignment.data);
+    pushData();
   }
 
   /**

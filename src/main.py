@@ -17,6 +17,8 @@ bp = Blueprint(
 def assignment(year, assignment_id, group_id=None):
     """Return a specific assignment."""
     user = login.get_current_user_infos()
+    if group_id is None:
+        group_id = 0
     return render_template(
         'index.html',
         year=year,

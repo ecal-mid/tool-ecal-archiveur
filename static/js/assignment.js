@@ -164,20 +164,13 @@ class Assignment {
   }
 
   /**
-   * Handler for data updates.
-   * @param  {object} data The new data file.
-   */
-  onDataUpdate(data) {
-    this.render(data, this.docId, this.groupId);
-  }
-
-  /**
    * Handles clicks on group button.
    * @param  {MouseEvent} ev The MouseEvent object.
    */
   onGroupClicked(ev) {
+    let year = document.body.dataset['year'];
     let groupId = ev.currentTarget.dataset['id'];
     let docId = document.body.dataset['assignment'];
-    setNav(docId, groupId);
+    setNav(year, docId, groupId);
   }
 }

@@ -37,7 +37,8 @@ class NewEntry {
       entry.group = assignment.groupId;
       assignment.data.entries.push(entry);
     }
-    assignment.onDataUpdate(assignment.data);
+    // assignment.onDataUpdate(assignment.data);
+    pushData();
   }
 
   /**
