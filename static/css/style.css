@@ -19,7 +19,6 @@ body {
   font-size: 0.95em;
   width: 100%;
   height: 100%;
-  /*background-color: #f1f1f1;*/
 }
 
 h1,
@@ -262,6 +261,20 @@ header .path {
   color: #365e72;
 }
 
+.assignment > h2 .due-date {
+  color: #b4b4b0;
+  font-size: .8em;
+}
+
+.module-name {
+  padding: 0.4em 0.7em;
+  font-size: 0.7em;
+  background: rgba(54, 94, 114, 0.11);
+  border-radius: 4px;
+  border: 1px solid rgba(54, 94, 114, 0.15);
+  margin-right: 0.75em;
+}
+
 .entries-list {
   transition: all 0.3s;
 }
@@ -352,6 +365,11 @@ header .path {
   transition: all 0.3s;
 }
 
+.file-entry.is-assignment a,
+.file-entry.entry-align-alt {
+  margin-left: -0.75em;
+}
+
 .file-entry a {
   padding: 1em 0.75em;
   border-radius: 3px;
@@ -378,17 +396,9 @@ header .path {
   margin: 0 1em;
 }
 
-/*.assigned-entries .entry:not(.entry-align-alt):not(.new-entry) > * {
-  margin-right: 0;
-}*/
-
 .assigned-entries .entry:not(.entry-align-alt) > p {
   padding: 0em 1em;
 }
-
-/*.assigned-entries .entry:not(.entry-align-alt) > *:not(:first-child) {
-  margin-left: 1em;
-}*/
 
 .assigned-entries .entry:not(.entry-align-alt):not(.new-entry) {
   flex-direction: row-reverse;
@@ -458,6 +468,7 @@ header .path {
   transition: 0.2s all;
   font-size: 0.8em;
   margin-bottom: -2px;
+  border: 1px solid white;
 }
 
 .groups .group:hover {
@@ -470,7 +481,6 @@ header .path {
 }
 
 .groups .group.selected {
-  padding: 0.5em 1em;
   background: #f9f9f9;
   border: 1px solid rgba(192, 192, 192, 0.5);
   border-bottom: 0;

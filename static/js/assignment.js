@@ -99,6 +99,7 @@ class Assignment {
     // Return our processed data object
     return {
       assignment: data.assignment,
+      module: this.docId.split('-')[0],
       entries: data.entries,
       groups: groups,
       group: data.assignment.groups[this.groupId].map((g) => g.name),

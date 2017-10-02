@@ -22,7 +22,9 @@ def assignment(year, assignment_id=None, group_id=None):
     user = login.get_current_user_infos()
     if group_id is None:
         group_id = 0
+    # Look if user is admin
     is_admin = user['id'] in config['admins']
+    # Retrieve list of assignments available on the server
     full_path = os.path.join(config['root_path'], 'assignments', year)
     assignments = os.listdir(full_path)
     # Remove extensions

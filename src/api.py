@@ -31,22 +31,6 @@ def upload():
     return json.dumps({'error': 'Missing img parameter.'})
 
 
-@bp.route('/ls')
-def ls():
-    """List a directory."""
-    return json.dumps(os.listdir(ROOT_PATH))
-
-
-@bp.route('/ls/<path>')
-def ls_path(path):
-    """List a directory."""
-    full_path = os.path.join(ROOT_PATH, path)
-    if os.path.exists(full_path):
-        return json.dumps(os.listdir(full_path))
-    else:
-        return json.dumps({'error': 404})
-
-
 @bp.route('/a/<year>/<assignment_id>')
 def get_assignment(year, assignment_id):
     """Return assignment data."""

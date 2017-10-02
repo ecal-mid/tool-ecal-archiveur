@@ -2,13 +2,6 @@
  * Simplify I/O calls from the api.
  */
 const api = {
-  ls: (url) => {
-    return new Promise((resolve, error) => {
-      qwest.get('/api/ls/' + url)
-          .then((xhr, data) => resolve(JSON.parse(data)))
-          .catch(error);
-    });
-  },
   upload: (data) => {
     return new Promise((resolve, error) => {
       qwest.post('/api/upload', data)
