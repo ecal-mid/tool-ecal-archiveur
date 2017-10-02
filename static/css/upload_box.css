@@ -15,6 +15,7 @@
 .box.has-advanced-upload {
   outline: 2px dashed rgba(0,0,0,0.15);
   outline-offset: -8px;
+  border: 1px solid rgba(0,0,0,0.1);
 }
 
 .box.is-error {
