@@ -48,6 +48,11 @@ function load() {
       }
       gps[assignment.groupId].classList.add('selected');
     }
+    // Update list of group names.
+    let groupNames = document.body.querySelector('.group-names');
+    let groups = assignment.data.assignment.groups;
+    let names = groups[assignment.groupId].map((g) => g.name);
+    groupNames.innerHTML = names.join(', ');
     return;
   } else {
     assignment.docId = document.body.dataset['assignment'];
