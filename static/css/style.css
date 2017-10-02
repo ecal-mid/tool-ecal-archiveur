@@ -37,6 +37,7 @@ h2 {
   border-radius: 3px;
   background: white;
   border: none;
+  text-decoration: none;
 }
 
 .btn:hover {
@@ -51,7 +52,7 @@ h2 {
 
 .btn .md-icon {
   text-transform: none;
-  font-size: 22px;
+  font-size: 2em;
   margin-right: 10px;
 }
 
@@ -121,22 +122,49 @@ header .logo {
 
 nav {
   padding: 1em;
-  background: #fafafa;
+  background: #eaeaea;
   border-right: 1px solid rgba(0,0,0,0.1);
   height: 100%;
   transition: all 0.2s;
-  width: 200px;
+  width: 250px;
 }
 
 .fold nav {
-  margin-left: -200px;
+  margin-left: -250px;
 }
 
-nav .btn {
+nav .btn-new {
   background: #355d72;
   color: white;
   border: none;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2em;
+}
+
+nav ul {
+  list-style: none;
+}
+
+nav ul li {
+  margin: 1.1em 0;
+}
+
+nav ul li a.btn {
+  white-space:nowrap;
+  background: none;
+  padding: 0.7em 1em;
+  font-weight: bold;
+}
+
+nav ul li a.btn.selected {
+  background: #cccccc;
+}
+
+nav h1 {
+  /*margin: 1em -1em;
+  padding: 0.5em 1em;*/
+  /*background: #f0f0f0;*/
+  /*border-bottom: 1px solid grey;*/
 }
 
 .app {
@@ -152,6 +180,7 @@ nav .btn {
   overflow: scroll;
 	display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .login {
@@ -224,7 +253,7 @@ header .path {
 }
 
 .assignment > h2 {
-  padding: 2em 0.5em 0.5em 0.5em;
+  padding: 1em 0.5em 0.5em 0.5em;
   font-size: 2em;
 }
 
@@ -331,16 +360,17 @@ header .path {
 }
 
 .file-entry a .md-icon {
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 .assigned-entries {
-  /*border: 1px solid #c8c8c8;*/
   padding: 0.5em 1em;
   border-radius: 5px;
-  /*background: #ebebeb;*/
   background: #355d72;
   box-shadow: 0px -2px 2px rgba(0,0,0,0.05);
+  margin-bottom: 1em;
+  /*border: 1px solid #c8c8c8;
+  background: #ebebeb;*/
 }
 
 /*.assigned-entries .entry:not(.admin-entry):not(.new-entry) > * {

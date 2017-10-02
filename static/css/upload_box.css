@@ -7,7 +7,7 @@
   margin: 0.5em;
   background: white;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s;
   box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
 }
@@ -30,9 +30,9 @@
 .box:focus,
 .box.has-focus {
   color: black;
-  outline: 2px dashed black;
+  outline: 2px dashed #777;
   background-color: #fdfdfd;
-  outline-offset: 0;
+  outline-offset: -4px;
 }
 
 .box .md-icon {

@@ -167,6 +167,9 @@ class Assignment {
    * @param  {Boolean} isAssignment If these entries are part of the assignment.
    */
   renderEntries(data, isAssignment) {
+    if (!data) {
+      data = [];
+    }
     let el;
     if (isAssignment) {
       this.assignmentEntries = data;
@@ -178,6 +181,9 @@ class Assignment {
     let tpl = 'entry-tpl';
     let render = '';
     for (let d of data) {
+      if (!d) {
+        continue;
+      }
       d.is_assignment = isAssignment;
       let processed = this.preprocessTemplateData(tpl, d);
       if (processed) {

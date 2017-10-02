@@ -31,6 +31,9 @@ class Entry {
     // Remove from array.
     let index = -1;
     for (let i = 0; i < entries.length; i++) {
+      if (!entries[i]) {
+        continue;
+      }
       if (entries[i].id == id) {
         index = i;
         break;

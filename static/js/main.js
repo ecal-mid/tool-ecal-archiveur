@@ -19,7 +19,8 @@ function setup() {
   let year = document.body.dataset['year'];
   let docId = document.body.dataset['assignment'];
   let groupId = document.body.dataset['group'];
-  if (!year || !docId) {
+  if (!docId) {
+    appEl.classList.remove('fold');
     return;
   }
   setNav(year, docId, groupId);
@@ -191,12 +192,19 @@ function onPopState(ev) {
  * @param {String} group      The group id.
  */
 function setNav(year, assignment, group) {
-  document.body.dataset['year'] = year;
-  document.body.dataset['assignment'] = assignment;
-  document.body.dataset['group'] = group;
+  if (year) {
+    document.body.dataset['year'] = year;
+  }
+  if (assignment) {
+    document.body.dataset['assignment'] = assignment;
+  }
+  if (group || group == 0) {
+    document.body.dataset['group'] = group;
+  }
   window.history.pushState(
       {year: year, assignment: assignment, group: group},
-      year + assignment + group, `/a/${year}/${assignment}/${group}`);
+      year + assignment + group,
+      `/a/${year}/${assignment}/` + (group || group == 0 ? group : ''));
   load();
 }
 

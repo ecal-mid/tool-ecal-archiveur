@@ -18,8 +18,8 @@
 <body class="js"
   {% if user is defined %} data-user-id="{{user.id}}" {% endif %}
   {% if year is defined %} data-year="{{year}}" {% endif %}
-  {% if assignment is defined %} data-assignment="{{assignment}}" {% endif %}
-  {% if group is defined %} data-group="{{group}}" {% endif %}>
+  {% if assignment is not none %} data-assignment="{{assignment}}" {% endif %}
+  {% if group is not none %} data-group="{{group}}" {% endif %}>
 
   {% block header %}
   {% endblock %}

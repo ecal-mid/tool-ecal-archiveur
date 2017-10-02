@@ -16,7 +16,13 @@
 
   <section id="app" class="app fold">
     <nav>
-      <button class="btn">New</button>
+      <button class="btn btn-new">New</button>
+      <h1>2017-2018</h1>
+      <ul>
+        {% for a in assignments %}
+          <li><a href="/a/{{year}}/{{a[:-5]}}" class="btn {% if assignment == a[:-5] %}selected{% endif %}" data-year={{year}} data-assignment-id="{{a[:-5]}}">{{ a[:-5] }}</a></li>
+        {% endfor %}
+      </ul>
     </nav>
     <main>
       <img src="/static/res/preloader.svg" class="preloader">
@@ -114,5 +120,6 @@
 <script src="{{ url_for('static', filename='js/entry.js') }}"></script>
 <script src="{{ url_for('static', filename='js/new_entry.js') }}"></script>
 <script src="{{ url_for('static', filename='js/assignment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/nav.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
