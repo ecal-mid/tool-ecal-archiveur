@@ -166,10 +166,8 @@ nav ul li a.btn.selected {
 }
 
 nav h1 {
-  /*margin: 1em -1em;
-  padding: 0.5em 1em;*/
-  /*background: #f0f0f0;*/
-  /*border-bottom: 1px solid grey;*/
+  color: grey;
+  padding: 0.5em 0.3em;
 }
 
 .app {
@@ -287,9 +285,10 @@ header .path {
 }
 
 .entry .entry-user {
-  font-weight: 100;
   width: 100px;
   flex-shrink: 0;
+  font-size: 0.9em;
+  color: #768185;
 }
 
 .entry .entry-date {
