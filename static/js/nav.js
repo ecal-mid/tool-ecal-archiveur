@@ -23,6 +23,12 @@ function onNavItemClicked(ev) {
   // console.log(ev.currentTarget.href);
   let a = ev.currentTarget;
   a.classList.add('selected');
+
+  console.log(window.innerWidth);
+  if (window.innerWidth < 800) {
+    appEl.classList.add('fold');
+  }
+
   setNav(a.dataset['year'], a.dataset['assignmentId'], 0);
 }
 

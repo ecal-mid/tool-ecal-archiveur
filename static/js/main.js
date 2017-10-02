@@ -79,7 +79,9 @@ function load() {
           mainEl.append(assignment.el);
         }
         // Show left menu
-        appEl.classList.remove('fold');
+        if (window.innerWidth > 800) {
+          appEl.classList.remove('fold');
+        }
         // Redirect to correct group if user is not admin and in the wrong
         // group.
         let userId = document.body.dataset.userId;
