@@ -83,7 +83,7 @@ input {
   opacity: 0;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(0.4);
+  transform: translate(-50%, -75%) scale(0.3);
   z-index: 3;
   pointer-events: none;
 }
@@ -116,7 +116,7 @@ header .logo {
   margin: 0;
   border-radius: 50%;
   font-size: 1.5em;
-  margin-right: 1em;
+  margin-right: 0.5em;
   cursor: pointer;
 }
 
@@ -134,11 +134,16 @@ nav {
 }
 
 nav .btn-new {
+  width: 100%;
   background: #355d72;
   color: white;
   border: none;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
   margin-bottom: 2em;
+}
+nav .btn-new:hover {
+  color:white;
+  background: #628ea5;
 }
 
 nav ul {

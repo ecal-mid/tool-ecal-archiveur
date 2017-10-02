@@ -90,34 +90,6 @@
   transform: translateY(-50%);
 }
 
-@-webkit-keyframes appear-from-inside {
-  from {
-    -webkit-transform: translateY(-50%) scale(0);
-  }
-
-  75% {
-    -webkit-transform: translateY(-50%) scale(1.1);
-  }
-
-  to {
-    -webkit-transform: translateY(-50%) scale(1);
-  }
-}
-
-@keyframes appear-from-inside {
-  from {
-    transform: translateY(-50%) scale(0);
-  }
-
-  75% {
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  to {
-    transform: translateY(-50%) scale(1);
-  }
-}
-
 .box__file {
   width: 0.1px;
   height: 0.1px;

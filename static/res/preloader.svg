@@ -14,10 +14,10 @@
       </circle>
     </g>
     <g ng-attr-transform="translate({{config.showBeanOffset}} 0)" transform="translate(-15 0)">
-      <path d="M50 50L20 50A30 30 0 0 0 80 50Z" ng-attr-fill="{{config.c1}}" fill="#AAA" transform="rotate(36.4286 50 50)">
+      <path d="M50 50L20 50A30 30 0 0 0 80 50Z" ng-attr-fill="{{config.c1}}" fill="#355d72" transform="rotate(36.4286 50 50)">
         <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;45 50 50;0 50 50" keyTimes="0;0.5;1" dur="0.7s" begin="0s" repeatCount="indefinite"></animateTransform>
       </path>
-      <path d="M50 50L20 50A30 30 0 0 1 80 50Z" ng-attr-fill="{{config.c1}}" fill="#AAA" transform="rotate(-36.4286 50 50)">
+      <path d="M50 50L20 50A30 30 0 0 1 80 50Z" ng-attr-fill="{{config.c1}}" fill="#355d72" transform="rotate(-36.4286 50 50)">
         <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;-45 50 50;0 50 50" keyTimes="0;0.5;1" dur="0.7s" begin="0s" repeatCount="indefinite"></animateTransform>
       </path>
     </g>
