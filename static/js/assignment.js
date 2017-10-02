@@ -94,8 +94,11 @@ class Assignment {
       groups.push(group);
     }
     // Better date formatting.
-    let due =
-        new Date(data.assignment['due-date']).toISOString().substring(0, 10);
+    let due;
+    if (data.assignment['due-date']) {
+      due =
+          new Date(data.assignment['due-date']).toISOString().substring(0, 10);
+    }
     // Return our processed data object
     return {
       assignment: data.assignment,

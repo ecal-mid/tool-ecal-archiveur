@@ -38,7 +38,7 @@
 
 <!-- templates -->
 <script type="text/template" id="assignment-tpl">
-  <h2><span class="module-name"><%= module %></span><%= assignment.name %><span class="due-date">, due for <%= due %></span></h2>
+  <h2><span class="module-name"><%= module %></span><%= assignment.name %><% if (due) { %><span class="due-date">, due for <%= due %></span> <% } %></h2>
   <div class="assignment-entries">
     <div class="entries-list">
       <% for(var i=0; i<assignment.entries.length; i++) { %>
