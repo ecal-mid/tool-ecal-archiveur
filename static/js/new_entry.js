@@ -31,6 +31,9 @@ class NewEntry {
       'date': new Date().toString(),
       'text': this.input.value,
     };
+    if (document.body.dataset['admin']) {
+      entry.is_admin = true;
+    }
     if (this.el.classList.contains('is-assignment')) {
       entry.is_assignment = true;
       // assignment.data.assignment.entries.push(entry);

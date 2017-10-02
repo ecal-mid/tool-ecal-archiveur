@@ -52,7 +52,6 @@ def get_assignment(year, assignment_id):
     """Return assignment data."""
     full_path = os.path.join(config['root_path'], 'assignments', year,
                              assignment_id + '.json')
-    print(full_path)
     if os.path.exists(full_path):
         return open(full_path).read()
     else:

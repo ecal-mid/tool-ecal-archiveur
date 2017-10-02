@@ -371,39 +371,39 @@ header .path {
 }
 
 .assigned-entries {
-  padding: 0.5em 1em;
   border-radius: 5px;
   background: #f9f9f9;
   margin-bottom: 1em;
   border: 1px solid rgba(192, 192, 192, 0.5);
+  margin: 0 1em;
 }
 
-/*.assigned-entries .entry:not(.admin-entry):not(.new-entry) > * {
+/*.assigned-entries .entry:not(.entry-align-alt):not(.new-entry) > * {
   margin-right: 0;
 }*/
 
-.assigned-entries .entry:not(.admin-entry) > p {
+.assigned-entries .entry:not(.entry-align-alt) > p {
   padding: 0em 1em;
 }
 
-/*.assigned-entries .entry:not(.admin-entry) > *:not(:first-child) {
+/*.assigned-entries .entry:not(.entry-align-alt) > *:not(:first-child) {
   margin-left: 1em;
 }*/
 
-.assigned-entries .entry:not(.admin-entry):not(.new-entry) {
+.assigned-entries .entry:not(.entry-align-alt):not(.new-entry) {
   flex-direction: row-reverse;
   text-align: right;
 }
 
-.assigned-entries .entry:not(.admin-entry) {
+.assigned-entries .entry:not(.entry-align-alt) {
   margin-left: auto;
 }
 
-.assigned-entries .entry:not(.admin-entry) + .box {
+.assigned-entries .entry:not(.entry-align-alt) + .box {
   margin-right: 0;
 }
 
-.assigned-entries .entry:not(.admin-entry):not(.new-entry) > .avatar {
+.assigned-entries .entry:not(.entry-align-alt):not(.new-entry) > .avatar {
   margin-right: 0;
 }
 
@@ -471,9 +471,7 @@ header .path {
 
 .groups .group.selected {
   padding: 0.5em 1em;
-  /*border-radius: 5px;*/
   background: #f9f9f9;
-  /*margin-bottom: 1em;*/
   border: 1px solid rgba(192, 192, 192, 0.5);
   border-bottom: 0;
 }
@@ -484,13 +482,13 @@ header .path {
 }
 
 .groups .group .avatar {
-  width: 35px;
-  height: 35px;
+  width: 24px;
+  height: 24px;
   background-color: white;
 }
 
 .groups .group .avatar:not(:first-child) {
-  margin-left: -15px;
+  margin-left: -12px;
 }
 
 .group-names {

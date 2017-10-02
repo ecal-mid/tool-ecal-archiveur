@@ -16,11 +16,13 @@
 
   <section id="app" class="app fold">
     <nav>
-      <button class="btn btn-new">New</button>
+      {% if is_admin %}
+        <button class="btn btn-new">New</button>
+      {% endif %}
       <h1>2017-2018</h1>
       <ul>
         {% for a in assignments %}
-          <li><a href="/a/{{year}}/{{a[:-5]}}" class="btn {% if assignment == a[:-5] %}selected{% endif %}" data-year={{year}} data-assignment-id="{{a[:-5]}}">{{ a[:-5] }}</a></li>
+          <li><a href="/a/{{year}}/{{a}}" class="btn {% if assignment == a %}selected{% endif %}" data-year={{year}} data-assignment-id="{{a}}">{{ a }}</a></li>
         {% endfor %}
       </ul>
     </nav>
@@ -28,6 +30,7 @@
       <img src="/static/res/preloader.svg" class="preloader">
     </main>
   </section>
+
 {% endblock %}
 
 
@@ -42,23 +45,23 @@
       	<%- include('entry-tpl', assignment.entries[i]) -%>
       <% } %>
     </div>
-  <% if (user.is_admin) { %>
-  <%- include('new-entry-tpl', {user:user, is_assignment:true}) -%>
-  <% } %>
+  {% if is_admin %}
+    <%- include('new-entry-tpl', {user:user, is_assignment:true}) -%>
+  {% endif %}
   </div>
-  <% if (user.is_admin) { %>
-  <div class="groups">
-    <% for(var i=0; i<groups.length; i++) { %>
-      <div class="group <%= groups[i].classes.join(' ') %>" data-id="<%= i %>">
-        <% for(var j=0; j<groups[i].users.length; j++) { %>
-          <% var u = groups[i].users[j]; %>
-          <div class="avatar"><img src="https://intranet.ecal.ch/img/photo/<%= u.photo %>"></div>
-        <% } %>
-        <p>Group <%= i %></p>
-      </div>
-    <% } %>
-  </div>
-  <% } %>
+  {% if is_admin %}
+    <div class="groups">
+      <% for(var i=0; i<groups.length; i++) { %>
+        <div class="group <%= groups[i].classes.join(' ') %>" data-id="<%= i %>">
+          <% for(var j=0; j<groups[i].users.length; j++) { %>
+            <% var u = groups[i].users[j]; %>
+            <div class="avatar"><img src="https://intranet.ecal.ch/img/photo/<%= u.photo %>"></div>
+          <% } %>
+          <p>Group <%= i %></p>
+        </div>
+      <% } %>
+    </div>
+  {% endif %}
   <div class="assigned-entries">
     <div class="group-names"><%= group.join(', ') %></div>
     <div class="entries-list">
@@ -77,9 +80,9 @@
         <img src="https://intranet.ecal.ch/img/photo/<%= user.photo %>">
       </div>
       <p class="entry-user"><%= user.name %><br><span class="entry-date"><%= date %></span></p>
-      <% if (entry.text) { %>
-        <p><%= entry.text %></p>
-      <% } else { %>
+        <% if (entry.text) { %>
+          <p><%= entry.text %></p>
+        <% } else { %>
         <a href="<%= entry.file %>" target="_blank"><%= filename %></a>
         <a class="download-icon" href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
       <% } %>
@@ -90,7 +93,7 @@
 
 <script type="text/template" id="new-entry-tpl">
   <div class="entry-row">
-    <div class="entry new-entry <%= classes.join(' ') %>">
+    <div class="entry new-entry entry-align-alt <%= classes.join(' ') %>">
       <div class="avatar">
         <img src="https://intranet.ecal.ch/img/photo/<%= user.photo %>">
       </div>

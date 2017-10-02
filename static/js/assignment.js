@@ -73,7 +73,6 @@ class Assignment {
     let users = {};
     for (let u of data.assignment.admins) {
       users[u.id] = u;
-      users[u.id].is_admin = true;
     }
     for (let g of data.assignment.groups) {
       for (let u of g) {
@@ -122,9 +121,6 @@ class Assignment {
         if (data.is_assignment) {
           classe.push('is-assignment');
         }
-        if (this.user.is_admin) {
-          classe.push('admin-entry');
-        }
         return {user: data.user, classes: classe};
 
       case 'entry-tpl':
@@ -148,11 +144,16 @@ class Assignment {
         if (data.is_assignment) {
           classes.push('is-assignment');
         }
-        if (result.user.is_admin) {
-          classes.push('admin-entry');
+        if (data.is_admin) {
+          classes.push('entry-align-alt');
         }
         if (data.file) {
           result.filename = data.file.substr(data.file.lastIndexOf('/') + 1);
+          if (result.filename.length > 30) {
+            let ext = result.filename.substr(result.filename.lastIndexOf('.'));
+            result.filename = result.filename.substr(0, 30 - ext.length);
+            result.filename += '...' + ext;
+          }
           classes.push('file-entry');
         }
         return result;

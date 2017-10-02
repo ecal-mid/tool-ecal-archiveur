@@ -141,6 +141,9 @@ class UploadBox {
       'date': new Date().toString(),
       'file': response.url,
     };
+    if (document.body.dataset['admin']) {
+      entry.is_admin = true;
+    }
     if (this.el.classList.contains('is-assignment')) {
       // assignment.data.assignment.entries.push(entry);
       entry.is_assignment = true;

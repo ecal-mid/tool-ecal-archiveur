@@ -22,12 +22,27 @@ def assignment(year, assignment_id=None, group_id=None):
     user = login.get_current_user_infos()
     if group_id is None:
         group_id = 0
+    is_admin = user['id'] in config['admins']
     full_path = os.path.join(config['root_path'], 'assignments', year)
     assignments = os.listdir(full_path)
+    # Remove extensions
+    assignments = [a[:-5] for a in assignments]
+    # Add a few restrictions if the user is not admin
+    if not is_admin:
+        # Filter accessible assignments using the assignments_access dict
+        assignments = [
+            a for a in assignments
+            if user['id'] in config['assignments_access'][a]
+        ]
+        # Discard assignment if it's not accessible by this user
+        if assignment_id and assignment_id not in assignments:
+            return redirect('/a/2017-2018')
+
     return render_template(
         'index.html',
         year=year,
         user=user,
+        is_admin=is_admin,
         assignment=assignment_id,
         group=group_id,
         assignments=assignments)
@@ -37,6 +52,4 @@ def assignment(year, assignment_id=None, group_id=None):
 @flask_login.login_required
 def index():
     """Return the homepage."""
-    # user = login.get_current_user_infos()
     return redirect('/a/2017-2018')
-    # return render_template('index.html', user=user, year='2017-2018')
