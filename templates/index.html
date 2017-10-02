@@ -3,6 +3,7 @@
 {% block header %}
 
   <header>
+    <button class="btn" id="toggle-menu">☰</button>
     <img class="logo" src="/static/res/logo.svg">
     <div class="path"></div>
     <div class="avatar"><img src="{{user.img}}"></div>
@@ -13,7 +14,10 @@
 
 {% block main %}
 
-  <section id="app" class="app">
+  <section id="app" class="app fold">
+    <nav>
+      <button class="btn">New</button>
+    </nav>
     <main>
       <img src="/static/res/preloader.svg" class="preloader">
     </main>

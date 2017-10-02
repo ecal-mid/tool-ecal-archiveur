@@ -1,6 +1,7 @@
 'use strict';
 
-let mainEl = document.querySelector('.app main');
+let appEl = document.querySelector('.app');
+let mainEl = appEl.querySelector('.app main');
 let assignment = new Assignment();
 let assignmentEntriesRef;
 let entriesRef;
@@ -76,6 +77,8 @@ function load() {
         if (!assignment.el.parentNode) {
           mainEl.append(assignment.el);
         }
+        // Show left menu
+        appEl.classList.remove('fold');
         // Redirect to correct group if user is not admin and in the wrong
         // group.
         let userId = document.body.dataset.userId;
@@ -197,5 +200,7 @@ function setNav(year, assignment, group) {
   load();
 }
 
+let foldEl = document.body.querySelector('#toggle-menu');
+foldEl.addEventListener('click', () => appEl.classList.toggle('fold'), false);
 
 setup();
