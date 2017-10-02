@@ -253,8 +253,10 @@ header .path {
 }
 
 .assignment > h2 {
-  padding: 1em 0.5em 0.5em 0.5em;
-  font-size: 2em;
+  font-size: 1em;
+  padding: 2em 1em 1em;
+  font-weight: normal;
+  color: #365e72;
 }
 
 .entries-list {
@@ -367,7 +369,7 @@ header .path {
 .assigned-entries {
   padding: 0.5em 1em;
   border-radius: 5px;
-  background: #eaeaea;
+  background: #f9f9f9;
   margin-bottom: 1em;
   border: 1px solid rgba(192, 192, 192, 0.5);
 }
@@ -466,7 +468,7 @@ header .path {
 .groups .group.selected {
   padding: 0.5em 1em;
   /*border-radius: 5px;*/
-  background: #eaeaea;
+  background: #f9f9f9;
   /*margin-bottom: 1em;*/
   border: 1px solid rgba(192, 192, 192, 0.5);
   border-bottom: 0;
