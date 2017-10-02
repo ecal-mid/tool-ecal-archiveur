@@ -142,12 +142,13 @@ class UploadBox {
       'file': response.url,
     };
     if (this.el.classList.contains('is-assignment')) {
-      assignment.data.assignment.entries.push(entry);
+      // assignment.data.assignment.entries.push(entry);
+      entry.is_assignment = true;
     } else {
       entry.group = assignment.groupId;
-      assignment.data.entries.push(entry);
+      // assignment.data.entries.push(entry);
     }
-    pushData();
+    pushEntry(entry);
   }
 
   /**

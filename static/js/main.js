@@ -2,7 +2,8 @@
 
 let mainEl = document.querySelector('.app main');
 let assignment = new Assignment();
-let assignmentRef;
+let assignmentEntriesRef;
+let entriesRef;
 let database = firebase.database();
 
 /**
@@ -28,59 +29,102 @@ function setup() {
  */
 function load() {
   // Year
-  let year = document.body.dataset['year'];
-  if (!year) {
+  assignment.year = document.body.dataset['year'];
+  if (!assignment.year) {
     return;
-  }
-  // Assignment
-  let docId = document.body.dataset['assignment'];
-  if (!docId) {
-    return;
-  }
-  // Group
-  let groupId = document.body.dataset['group'];
-  if (!groupId) {
   }
 
+  // Group
+  assignment.groupId = document.body.dataset['group'];
+
   if (document.body.dataset['assignment'] == assignment.docId) {
-    assignment.render(assignment.data, docId, groupId);
+    assignment.renderEntries(assignment.entries, false);
+    // update selected group in menu
+    let gps = document.body.querySelectorAll('.groups .group');
+    for (let g of gps) {
+      g.classList.remove('selected');
+    }
+    gps[assignment.groupId].classList.add('selected');
     return;
+  } else {
+    assignment.docId = document.body.dataset['assignment'];
+    if (!assignment.docId) {
+      return;
+    }
   }
 
   mainEl.classList.add('loading');
 
-  assignmentRef = database.ref(`${year}/${docId}`);
-  assignmentRef.off();
-  assignmentRef.on('value', (data) => {
-    mainEl.classList.remove('loading');
+  // retrieve assignment description
+  let url = `/api/a/${assignment.year}/${assignment.docId}`;
+  qwest.get(url)
+      .then((xhr, data) => {
+        data = JSON.parse(data)[assignment.year][assignment.docId];
+        // Redirect to correct group if user is not admin and in the wrong
+        // group.
+        let userId = document.body.dataset.userId;
+        if (!isAdmin(userId, data)) {
+          let g = getUserGroup(userId, data);
+          if (groupId != g) {
+            setNav(assignment.year, assignment.docId, g);
+            return;
+          }
+        }
+        // Render assignment.
+        assignment.render(data);
+        // connect to firebase entries endpoints
+        assignmentEntriesRef = database.ref(
+            `${assignment.year}/${assignment.docId}/assignment/entries`);
+        assignmentEntriesRef.off();
+        assignmentEntriesRef.on('value', (data) => {
+          // Remove loader.
+          mainEl.classList.remove('loading');
+          // Render entries.
+          assignment.renderEntries(data.val(), true);
+        });
+        entriesRef =
+            database.ref(`${assignment.year}/${assignment.docId}/entries`);
+        entriesRef.off();
+        entriesRef.on('value', (data) => {
+          // Render entries.
+          assignment.renderEntries(data.val(), false);
+        });
+        // Add view if not added yet.
+        if (!assignment.el.parentNode) {
+          mainEl.append(assignment.el);
+        }
+      })
+      .catch((e) => console.error(e));
 
-    let val = data.val();
-    if (val == null) {
-      console.error('Assignment not found.');
-      return;
-    }
 
-    // We need to refresh the closure variables
-    docId = document.body.dataset['assignment'];
-    groupId = document.body.dataset['group'];
-
-    // Redirect to correct group if user is not admin and in the wrong group.
-    let userId = document.body.dataset.userId;
-    if (!isAdmin(userId, val)) {
-      let g = getUserGroup(userId, val);
-      if (groupId != g) {
-        setNav(year, docId, g);
-        return;
-      }
-    }
-
-    // Render the template
-    assignment.render(data.val(), docId, groupId);
-  });
-
-  if (!assignment.el.parentNode) {
-    mainEl.append(assignment.el);
-  }
+  // assignmentRef = database.ref(`${year}/${docId}`);
+  // assignmentRef.off();
+  // assignmentRef.on('value', (data) => {
+  //   mainEl.classList.remove('loading');
+  //
+  //   let val = data.val();
+  //   if (val == null) {
+  //     console.error('Assignment not found.');
+  //     return;
+  //   }
+  //
+  //   // We need to refresh the closure variables
+  //   docId = document.body.dataset['assignment'];
+  //   groupId = document.body.dataset['group'];
+  //
+  //   // Redirect to correct group if user is not admin and in the wrong group.
+  //   let userId = document.body.dataset.userId;
+  //   if (!isAdmin(userId, val)) {
+  //     let g = getUserGroup(userId, val);
+  //     if (groupId != g) {
+  //       setNav(year, docId, g);
+  //       return;
+  //     }
+  //   }
+  //
+  //   // Render the template
+  //   assignment.render(data.val(), docId, groupId);
+  // });
 }
 
 /**
@@ -116,13 +160,32 @@ function isAdmin(userId, data) {
   return false;
 }
 
-
 /**
  * Temporary util to push data to firebase.
- * @param  {Object} data the full assignment data.
+ * @param  {Object} entry the entry data.
  */
-function pushData(data) {
-  assignmentRef.set(assignment.data);
+function pushEntry(entry) {
+  if (entry.is_assignment) {
+    assignment.assignmentEntries.push(entry);
+    updateAssignmentEntries();
+  } else {
+    assignment.entries.push(entry);
+    updateEntries();
+  }
+}
+
+/**
+ * Updates assignment entries on firebase.
+ */
+function updateAssignmentEntries() {
+  assignmentEntriesRef.set(assignment.assignmentEntries);
+}
+
+/**
+ * Updates entries on firebase.
+ */
+function updateEntries() {
+  entriesRef.set(assignment.entries);
 }
 
 /**

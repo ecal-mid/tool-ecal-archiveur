@@ -32,13 +32,16 @@ class NewEntry {
       'text': this.input.value,
     };
     if (this.el.classList.contains('is-assignment')) {
-      assignment.data.assignment.entries.push(entry);
+      entry.is_assignment = true;
+      // assignment.data.assignment.entries.push(entry);
     } else {
       entry.group = assignment.groupId;
-      assignment.data.entries.push(entry);
+      // assignment.data.entries.push(entry);
     }
     // assignment.onDataUpdate(assignment.data);
-    pushData();
+    // pushData();
+    pushEntry(entry);
+    this.input.value = '';
   }
 
   /**

@@ -21,10 +21,12 @@ class Entry {
     ev.preventDefault();
     let id = this.el.dataset['id'];
     let entries;
+    let isAssignment = false;
     if (this.el.classList.contains('is-assignment')) {
-      entries = assignment.data.assignment.entries;
+      entries = assignment.assignmentEntries;
+      isAssignment = true;
     } else {
-      entries = assignment.data.entries;
+      entries = assignment.entries;
     }
     // Remove from array.
     let index = -1;
@@ -39,7 +41,10 @@ class Entry {
     }
     entries.splice(index, 1);
     // Inform data update.
-    // assignment.onDataUpdate(assignment.data);
-    pushData();
+    if (isAssignment) {
+      updateAssignmentEntries();
+    } else {
+      updateEntries();
+    }
   }
 }

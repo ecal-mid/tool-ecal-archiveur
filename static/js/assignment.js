@@ -7,8 +7,11 @@ class Assignment {
    */
   constructor() {
     this.data = null;
+    this.year = null;
     this.docId = null;
     this.groupId = null;
+    this.entries = [];
+    this.assignmentEntries = [];
     this.el = document.createElement('div');
     this.el.classList.add('assignment');
     this.user = {
@@ -25,18 +28,14 @@ class Assignment {
    * Renders the assignment template using provided data.
    * @param  {object} data    A data object. The rendering pipeline shouldnt
    *                          make modification to this object.
-   * @param  {[type]} docId   The document id being rendered.
-   * @param  {[type]} groupId The group id requested
    */
-  render(data, docId, groupId) {
+  render(data) {
     this.data = data;
-    this.docId = docId;
-    this.groupId = groupId;
-    let processed = this.preprocess(data, docId, groupId);
+    let processed = this.processed = this.preprocess(data);
     // Compile templates recursively
     let fn = ejs.compile(this.tpls['assignment-tpl'], {client: true});
     let html = fn(processed, null, (path, d) => {
-      let pTplData = this.preprocessTemplateData(path, processed, d, groupId);
+      let pTplData = this.preprocessTemplateData(path, d);
       if (pTplData) {
         return ejs.render(this.tpls[path], pTplData);
       }
@@ -67,11 +66,9 @@ class Assignment {
   /**
    * Preprocess data to simplify the template rendering.
    * @param  {object} data    The data to render.
-   * @param  {String} docId   Current document id.
-   * @param  {String} groupId Current group id.
    * @return {object}         An extended version of the input data
    */
-  preprocess(data, docId, groupId) {
+  preprocess(data) {
     // Build a dictionnary with details of all active users details
     let users = {};
     for (let u of data.assignment.admins) {
@@ -92,7 +89,7 @@ class Assignment {
       for (let u of g) {
         group.users.push(u);
       }
-      if (i == groupId) {
+      if (i == this.groupId) {
         group.classes.push('selected');
       }
       groups.push(group);
@@ -105,7 +102,7 @@ class Assignment {
       assignment: data.assignment,
       entries: data.entries,
       groups: groups,
-      group: data.assignment.groups[groupId].map((g) => g.name),
+      group: data.assignment.groups[this.groupId].map((g) => g.name),
       user: this.user,
       users: users,
       due: due,
@@ -115,12 +112,10 @@ class Assignment {
   /**
    * Preprocess a template data to simplify the its rendering.
    * @param  {String} tpl         The template being rendered.
-   * @param  {Object} processed   The preprocessed assignment data object.
    * @param  {Object} data        The template data.
-   * @param  {String} groupId     The current group id.
    * @return {Object}         An extended version of the input data
    */
-  preprocessTemplateData(tpl, processed, data, groupId) {
+  preprocessTemplateData(tpl, data) {
     switch (tpl) {
       case 'new-entry-tpl':
         let classe = [];
@@ -133,20 +128,20 @@ class Assignment {
         return {user: data.user, classes: classe};
 
       case 'entry-tpl':
-        if (groupId && data.entry.group != groupId && !data.is_assignment) {
+        if (data.group != this.groupId && !data.is_assignment) {
           return;
         }
         // Date
-        let date = new Date(data.entry.date).toISOString().substring(0, 10);
+        let date = new Date(data.date).toISOString().substring(0, 10);
         let classes = [];
         let result = {
-          entry: data.entry,
+          entry: data,
           date: date,
           classes: classes,
-          user: processed.users[data.entry.user],
+          user: this.processed.users[data.user],
         };
         // Status
-        classes.push(data.entry.status);
+        classes.push(data.status);
         if (result.user.id == this.user.id) {
           classes.push('entry-editable');
         }
@@ -156,9 +151,8 @@ class Assignment {
         if (result.user.is_admin) {
           classes.push('admin-entry');
         }
-        if (data.entry.file) {
-          result.filename =
-              data.entry.file.substr(data.entry.file.lastIndexOf('/') + 1);
+        if (data.file) {
+          result.filename = data.file.substr(data.file.lastIndexOf('/') + 1);
           classes.push('file-entry');
         }
         return result;
@@ -168,13 +162,43 @@ class Assignment {
   }
 
   /**
+   * Renders the assignment entries.
+   * @param  {Object} data The entries data array.
+   * @param  {Boolean} isAssignment If these entries are part of the assignment.
+   */
+  renderEntries(data, isAssignment) {
+    let el;
+    if (isAssignment) {
+      this.assignmentEntries = data;
+      el = this.el.querySelector('.assignment-entries .entries-list');
+    } else {
+      this.entries = data;
+      el = this.el.querySelector('.assigned-entries .entries-list');
+    }
+    let tpl = 'entry-tpl';
+    let render = '';
+    for (let d of data) {
+      d.is_assignment = isAssignment;
+      let processed = this.preprocessTemplateData(tpl, d);
+      if (processed) {
+        render += ejs.render(this.tpls[tpl], processed);
+      }
+    }
+    el.innerHTML = render;
+
+    // activate entries
+    let entryEls = el.querySelectorAll('.entry-editable');
+    for (let eel of entryEls) {
+      new Entry(eel);
+    }
+  }
+
+  /**
    * Handles clicks on group button.
    * @param  {MouseEvent} ev The MouseEvent object.
    */
   onGroupClicked(ev) {
-    let year = document.body.dataset['year'];
     let groupId = ev.currentTarget.dataset['id'];
-    let docId = document.body.dataset['assignment'];
-    setNav(year, docId, groupId);
+    setNav(this.year, this.docId, groupId);
   }
 }

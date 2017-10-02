@@ -27,9 +27,11 @@
 <script type="text/template" id="assignment-tpl">
   <h2><%= assignment.name %>, due for <%= due %></h2>
   <div class="assignment-entries">
-  <% for(var i=0; i<assignment.entries.length; i++) { %>
-  	<%- include('entry-tpl', {assignment:assignment, entry:assignment.entries[i], is_assignment:true }) -%>
-  <% } %>
+    <div class="entries-list">
+      <% for(var i=0; i<assignment.entries.length; i++) { %>
+      	<%- include('entry-tpl', assignment.entries[i]) -%>
+      <% } %>
+    </div>
   <% if (user.is_admin) { %>
   <%- include('new-entry-tpl', {user:user, is_assignment:true}) -%>
   <% } %>
@@ -49,9 +51,11 @@
   <% } %>
   <div class="assigned-entries">
     <div class="group-names"><%= group.join(', ') %></div>
-    <% for(var i=0; i<entries.length; i++) { %>
-    	<%- include('entry-tpl', {assignment:assignment, entry:entries[i] }) -%>
-    <% } %>
+    <div class="entries-list">
+      <% for(var i=0; i<entries.length; i++) { %>
+      	<%- include('entry-tpl', entries[i]) -%>
+      <% } %>
+    </div>
     <%- include('new-entry-tpl', {user:user}) -%>
   </div>
 </script>

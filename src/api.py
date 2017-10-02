@@ -4,6 +4,7 @@ from flask import (Blueprint, request, current_app)
 from flask_uploads import (UploadSet, configure_uploads, UploadNotAllowed)
 import os
 import json
+from .config import config
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -42,5 +43,17 @@ def ls_path(path):
     full_path = os.path.join(ROOT_PATH, path)
     if os.path.exists(full_path):
         return json.dumps(os.listdir(full_path))
+    else:
+        return json.dumps({'error': 404})
+
+
+@bp.route('/a/<year>/<assignment_id>')
+def get_assignment(year, assignment_id):
+    """Return assignment data."""
+    full_path = os.path.join(config['root_path'], 'assignments', year,
+                             assignment_id + '.json')
+    print(full_path)
+    if os.path.exists(full_path):
+        return open(full_path).read()
     else:
         return json.dumps({'error': 404})
