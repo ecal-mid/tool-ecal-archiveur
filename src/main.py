@@ -1,9 +1,11 @@
 """ Main """
 
-from flask import Blueprint, render_template, url_for, redirect
+from flask import Blueprint, render_template, url_for, redirect, request
 import flask_login
 import login
 import os
+import re
+import json
 from .config import config
 
 bp = Blueprint(
@@ -27,7 +29,6 @@ def assignment(year, assignment_id=None, group_id=None):
     # Retrieve list of assignments available on the server
     full_path = os.path.join(config['root_path'], 'assignments', year)
     assignments = os.listdir(full_path)
-    # Remove extensions
     assignments = [a[:-5] for a in assignments]
     # Add a few restrictions if the user is not admin
     if not is_admin:
@@ -48,6 +49,28 @@ def assignment(year, assignment_id=None, group_id=None):
         assignment=assignment_id,
         group=group_id,
         assignments=assignments)
+
+
+@bp.route('/new/<year>', methods=['POST'])
+@flask_login.login_required
+def create_new(year):
+    """Creates a new assignment."""
+    user = login.get_current_user_infos()
+    # Look if user is admin
+    is_admin = user['id'] in config['admins']
+    if not is_admin:
+        return redirect('/a/' + year)
+    # Create the assignment
+    a_id = request.form['course-id'] + '-' + request.form['assignment-name']
+    a_id = re.sub('[^a-z0-9 -]+', '', a_id.lower())
+    a_id = a_id.replace(' ', '-')
+    template = json.load(open('config/empty_assignment.json'))
+    template['assignment']['name'] = request.form['assignment-name']
+    assignment = {year: {a_id: template}}
+    full_path = os.path.join(config['root_path'], 'assignments', year,
+                             a_id + '.json')
+    json.dump(assignment, open(full_path, 'w'), indent=2)
+    return redirect('/a/' + year + '/' + a_id)
 
 
 @bp.route('/')

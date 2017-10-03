@@ -59,10 +59,17 @@ h2 {
   margin-right: 10px;
 }
 
+.btn-strong {
+  background: #355d72;
+  color: white;
+  border: none;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
 input {
   font-weight: 300;
   color: black;
-  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.05); 
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0,0,0,0.1);
 }
 
@@ -138,10 +145,6 @@ nav {
 
 nav .btn-new {
   width: 100%;
-  background: #355d72;
-  color: white;
-  border: none;
-  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
   margin-bottom: 2em;
 }
 nav .btn-new:hover {
@@ -554,6 +557,17 @@ header .path {
   color: rgba(0, 0, 0, 0.4);
   text-align: right;
   padding: 0.5em;
+}
+
+
+.new-assignment-form {
+  display: none;
+  padding: 1em;
+}
+
+.new-assignment-form input {
+  margin-top: 0.5em;
+  width: 100%;
 }
 
 /* MEDIA QUERIES */

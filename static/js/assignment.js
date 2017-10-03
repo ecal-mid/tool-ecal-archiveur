@@ -99,13 +99,17 @@ class Assignment {
       due =
           new Date(data.assignment['due-date']).toISOString().substring(0, 10);
     }
+    let group;
+    if (data.assignment.groups[this.groupId]) {
+      group = data.assignment.groups[this.groupId];
+    }
     // Return our processed data object
     return {
       assignment: data.assignment,
       module: this.docId.split('-')[0],
       entries: data.entries,
       groups: groups,
-      group: data.assignment.groups[this.groupId].map((g) => g.name),
+      group: group ? group.map((g) => g.name) : null,
       user: this.user,
       users: users,
       due: due,

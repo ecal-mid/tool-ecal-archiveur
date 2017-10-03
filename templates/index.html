@@ -17,7 +17,7 @@
   <section id="app" class="app fold">
     <nav>
       {% if is_admin %}
-        <button class="btn btn-new">New</button>
+        <button class="btn btn-strong btn-new">New</button>
       {% endif %}
       <h1>2017-2018</h1>
       <ul>
@@ -28,6 +28,13 @@
     </nav>
     <main>
       <img src="/static/res/preloader.svg" class="preloader">
+      {% if is_admin %}
+      <form method="post" action="/new/{{year}}" class="new-assignment-form">
+        <input type="text" name="course-id" class="new-entry-text" placeholder="Course" />
+        <input type="text" name="assignment-name" class="new-entry-text" placeholder="Name" />
+        <button class="btn btn-strong">Create</button>
+      </form>
+      {% endif %}
     </main>
   </section>
 
@@ -66,7 +73,9 @@
   </div>
   {% endif %}
   <div class="assigned-entries">
-    <div class="group-names"><%= group.join(', ') %></div>
+    <% if (group) { %>
+      <div class="group-names"><%= group.join(', ') %></div>
+    <% } %>
     <div class="entries-list">
       <% for(var i=0; i<entries.length; i++) { %>
       	<%- include('entry-tpl', entries[i]) -%>
@@ -127,5 +136,6 @@
 <script src="{{ url_for('static', filename='js/new_entry.js') }}"></script>
 <script src="{{ url_for('static', filename='js/assignment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new_assignment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
