@@ -30,8 +30,12 @@
       <img src="/static/res/preloader.svg" class="preloader">
       {% if is_admin %}
       <form method="post" action="/new/{{year}}" class="new-assignment-form">
-        <input type="text" name="course-id" class="new-entry-text" placeholder="Course" />
-        <input type="text" name="assignment-name" class="new-entry-text" placeholder="Name" />
+        <select name="course-id" class="new-entry-text">
+          <option value="2cvmid22a">Interaction Design</option>
+          <option value="2cvmid22b">Interface Design</option>
+          <option value="2cvmid22c">Network Related Design</option>
+        </select>
+        <input type="text" name="assignment-name" class="new-entry-text" placeholder="Assignment Name" />
         <button class="btn btn-strong">Create</button>
       </form>
       {% endif %}

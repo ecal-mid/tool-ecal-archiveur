@@ -7,7 +7,9 @@ newAEl.addEventListener('click', startNewAssignment);
  */
 function startNewAssignment() {
   let aEl = mainEl.querySelector('.assignment');
-  aEl.style.display = 'none';
+  if (aEl) {
+    aEl.style.display = 'none';
+  }
 
   let formEl = mainEl.querySelector('.new-assignment-form');
   formEl.style.display = 'block';

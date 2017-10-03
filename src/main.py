@@ -30,6 +30,9 @@ def assignment(year, assignment_id=None, group_id=None):
     full_path = os.path.join(config['root_path'], 'assignments', year)
     assignments = os.listdir(full_path)
     assignments = [a[:-5] for a in assignments]
+    # Detect if assignment exists
+    if assignment_id and assignment_id not in assignments:
+        return redirect('/a/' + year)
     # Add a few restrictions if the user is not admin
     if not is_admin:
         # Filter accessible assignments using the assignments_access dict
@@ -39,7 +42,7 @@ def assignment(year, assignment_id=None, group_id=None):
         ]
         # Discard assignment if it's not accessible by this user
         if assignment_id and assignment_id not in assignments:
-            return redirect('/a/2017-2018')
+            return redirect('/a/' + year)
 
     return render_template(
         'index.html',
@@ -69,6 +72,8 @@ def create_new(year):
     assignment = {year: {a_id: template}}
     full_path = os.path.join(config['root_path'], 'assignments', year,
                              a_id + '.json')
+    if os.path.exists(full_path):
+        return 'assignment already exists'
     json.dump(assignment, open(full_path, 'w'), indent=2)
     return redirect('/a/' + year + '/' + a_id)
 

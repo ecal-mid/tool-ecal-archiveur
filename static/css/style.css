@@ -563,6 +563,7 @@ header .path {
 .new-assignment-form {
   display: none;
   padding: 1em;
+  margin-top: 1em;
 }
 
 .new-assignment-form input {
