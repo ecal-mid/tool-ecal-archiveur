@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
 :focus {
   outline-color: transparent;
   outline-style: none;
@@ -57,10 +61,9 @@ h2 {
 
 input {
   font-weight: 300;
-  background: white;
   color: black;
-  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
-  border: none;
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.05); 
+  border: 1px solid rgba(0,0,0,0.1);
 }
 
 .md-icon {
@@ -69,6 +72,7 @@ input {
   text-rendering: optimizeLegibility;
   font-style: normal;
   vertical-align: middle;
+  color: #365e72;
 }
 
 .hidden {
@@ -94,7 +98,7 @@ input {
 header {
   display: flex;
   position: fixed;
-  z-index: 3;
+  z-index: 10;
   top: 0;
   background: white;
   width: 100%;
@@ -245,6 +249,7 @@ header .path {
   max-width: 900px;
   transition: all 0.1s;
   transition-delay: 50ms;
+  position: relative;
 }
 .loading .assignment {
   opacity: 0;
@@ -379,7 +384,7 @@ header .path {
   background-color: rgba(0,0,0,0.05);
 }
 
-.file-entry a.download-icon {
+.file-entry a.download-icon, .icon-btn {
   padding: 0.5em;
   border-radius: 50%;
 }
@@ -389,11 +394,12 @@ header .path {
 }
 
 .assigned-entries {
-  border-radius: 5px;
+  border-radius: 0 5px 5px;
   background: #f9f9f9;
   margin-bottom: 1em;
   border: 1px solid rgba(192, 192, 192, 0.5);
-  margin: 0 1em;
+  margin: 0 1em 1em;
+  position: relative;
 }
 
 .assigned-entries .entry:not(.entry-align-alt) > p {
@@ -455,20 +461,62 @@ header .path {
 
 /* GROUPS */
 
+.groups-container {
+  margin: 1.5em 1em 0;
+  padding: 0;
+  position: relative;
+  margin-bottom: -1px;
+  z-index: 2;
+}
+
+.groups-container > .icon-btn {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  display: inline-block;
+  width: 3.2em;
+  height: 3.2em;
+  margin-right: 0.5em;
+}
+
+.groups-container > .icon-btn .md-icon {
+  margin-right: 0;
+}
+
+.groups-container::after {
+  content: '';
+  display: block;
+  width: 5em;
+  height: 50px;
+  position: absolute;
+  right: 4em;
+  background: linear-gradient(to right, rgba(255,255,255,0), white);
+  top: 0;
+  pointer-events: none;
+}
+
 .groups {
-  text-align: center;
-  padding: 1.5em 1em 0;
+  white-space: nowrap;
+  overflow: scroll;
+  padding: 0;
+  /*padding-left: 4.5em;*/
+  -webkit-scrollbar: none;
+  overflow-y: hidden;
+  margin-right: 4em;
 }
 
 .groups .group {
   display: inline-block;
+  text-align: center;
   cursor: pointer;
   padding: 0.5em 1em;
   border-radius: 5px 5px 0 0;
-  transition: 0.2s all;
   font-size: 0.8em;
-  margin-bottom: -2px;
-  border: 1px solid white;
+  border: 1px solid rgba(255,255,255,0);
+}
+
+.groups .group:last-child {
+  margin-right: 4em;
 }
 
 .groups .group:hover {
@@ -484,6 +532,7 @@ header .path {
   background: #f9f9f9;
   border: 1px solid rgba(192, 192, 192, 0.5);
   border-bottom: 0;
+  border-bottom:1px solid #f9f9f9;
 }
 
 .groups .group.selected .avatar > img,
@@ -514,7 +563,7 @@ header .path {
   nav {
     position: absolute;
     left: 0;
-    z-index: 2;
+    z-index: 9;
     box-shadow: 2px -2px 2px rgba(0,0,0,0.05);
   }
 
@@ -526,12 +575,18 @@ header .path {
     width: 150px;
   }
 
+  .assigned-entries {
+    margin:0 0 1em 0;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
   .box .box__file + label {
     display: none;
   }
 
-  .groups .group {
-    border-radius: 5px;
-    margin-bottom: 5px;
+  .assigned-entries::before {
+    right: 6em;
   }
 }

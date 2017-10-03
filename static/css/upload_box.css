@@ -1,25 +1,21 @@
 /* FILE UPLOAD */
 
 .box {
-  /*font-size: 1.25em;*/
   position: relative;
   padding: 1.25em 1.7em;
   margin: 0.5em;
   background: white;
   cursor: pointer;
   transition: all 0.15s;
-  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
 }
 
 .box.has-advanced-upload {
-  outline: 2px dashed rgba(0,0,0,0.15);
-  outline-offset: -8px;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1.5px dashed rgba(0,0,0,0.2);
 }
 
 .box.is-error {
-  outline: 2px dashed rgba(255,0,0,0.5) !important;
+  border: 2px dashed red;
 }
 
 .box.is-uploading {
@@ -31,9 +27,8 @@
 .box:focus,
 .box.has-focus {
   color: black;
-  outline: 2px dashed #777;
-  background-color: #fdfdfd;
-  outline-offset: -4px;
+  background-color: rgba(0,0,0,0.05);
+  border: 1.5px dashed rgba(0,0,0,0.3);
 }
 
 .box .md-icon {
