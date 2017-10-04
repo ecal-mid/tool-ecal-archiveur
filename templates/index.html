@@ -31,9 +31,9 @@
       {% if is_admin %}
       <form method="post" action="/new/{{year}}" class="new-assignment-form">
         <select name="course-id" class="new-entry-text">
-          <option value="2cvmid22a">Interaction Design</option>
-          <option value="2cvmid22b">Interface Design</option>
-          <option value="2cvmid22c">Network Related Design</option>
+          {% for k, c in courses.iteritems() %}
+            <option value="{{k}}">{{k}} - {{c}}</option>
+          {% endfor %}
         </select>
         <input type="text" name="assignment-name" class="new-entry-text" placeholder="Assignment Name" />
         <button class="btn btn-strong">Create</button>
@@ -67,9 +67,9 @@
         <div class="group <%= groups[i].classes.join(' ') %>" data-id="<%= i %>">
           <% for(var j=0; j<groups[i].users.length; j++) { %>
             <% var u = groups[i].users[j]; %>
-            <div class="avatar"><img src="https://intranet.ecal.ch/img/photo/<%= u.photo %>"></div>
+            <div class="avatar"><img src="https://intranet.ecal.ch/img/photo/<%= u.img %>"></div>
           <% } %>
-          <p>Group <%= i %></p>
+          <p><%= groups[i].name %></p>
         </div>
       <% } %>
     </div>
@@ -93,7 +93,7 @@
   <div class="entry-row">
     <div class="entry <%= classes.join(' ') %>" data-id="<%= entry.id %>">
       <div class="avatar">
-        <img src="https://intranet.ecal.ch/img/photo/<%= user.photo %>">
+        <img src="https://intranet.ecal.ch/img/photo/<%= user.img %>">
       </div>
       <p class="entry-user"><%= user.name %><br><span class="entry-date"><%= date %></span></p>
         <% if (entry.text) { %>
@@ -111,7 +111,7 @@
   <div class="entry-row">
     <div class="entry new-entry entry-align-alt <%= classes.join(' ') %>">
       <div class="avatar">
-        <img src="https://intranet.ecal.ch/img/photo/<%= user.photo %>">
+        <img src="https://intranet.ecal.ch/img/photo/<%= user.img %>">
       </div>
       <input class="new-entry-text" type="text" placeholder="Add comment" />
       <span class="entry__send-text"><i class="md-icon">send</i></span>
@@ -126,6 +126,10 @@
       <div class="box__uploading">Uploading&hellip;</div>
     </form>
   </div>
+</script>
+
+<script>
+let users = {{ users_dict|tojson|safe }};
 </script>
 
 <!-- third parties -->

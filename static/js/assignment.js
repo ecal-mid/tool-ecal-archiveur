@@ -10,14 +10,14 @@ class Assignment {
     this.year = null;
     this.docId = null;
     this.groupId = null;
+    this.userId = document.body.dataset['userId'];
     this.entries = [];
     this.assignmentEntries = [];
     this.el = document.createElement('div');
     this.el.classList.add('assignment');
-    this.user = {
-      id: document.body.dataset['userId'],
-      // img: document.body.querySelector('.avatar img').src,
-    };
+    this.userId = document.body.dataset['userId'];
+    // img: document.body.querySelector('.avatar img').src,
+    // };
     this.tpls = {};
     for (let tpl of ['assignment-tpl', 'entry-tpl', 'new-entry-tpl']) {
       this.tpls[tpl] = document.getElementById(tpl).innerHTML;
@@ -69,25 +69,19 @@ class Assignment {
    * @return {object}         An extended version of the input data
    */
   preprocess(data) {
-    // Build a dictionnary with details of all active users details
-    let users = {};
-    for (let u of data.assignment.admins) {
-      users[u.id] = u;
-    }
-    for (let g of data.assignment.groups) {
-      for (let u of g) {
-        users[u.id] = u;
-      }
-    }
-    this.user = users[this.user.id];
+    this.user = usersById[this.userId];
     // Build custom group object with extra info such as progress.
     let groups = [];
     for (let i = 0; i < data.assignment.groups.length; i++) {
+      let group = {classes: [], users: [], name: ''};
       let g = data.assignment.groups[i];
-      let group = {classes: [], users: []};
       for (let u of g) {
-        group.users.push(u);
+        group.users.push(usersById[u]);
+        group.name += u.split('.')[0][0].toUpperCase() + '.' +
+            u.split('.')[1][0].toUpperCase() + u.split('.')[1].substr(1, 2) +
+            ' ';
       }
+      group.name = group.name.substr(0, group.name.length - 1);
       if (i == this.groupId) {
         group.classes.push('selected');
       }
@@ -109,7 +103,7 @@ class Assignment {
       module: this.docId.split('-')[0],
       entries: data.entries,
       groups: groups,
-      group: group ? group.map((g) => g.name) : null,
+      group: group ? group.map((u) => usersById[u].name) : null,
       user: this.user,
       users: users,
       due: due,
@@ -142,11 +136,11 @@ class Assignment {
           entry: data,
           date: date,
           classes: classes,
-          user: this.processed.users[data.user],
+          user: usersById[data.user],
         };
         // Status
         classes.push(data.status);
-        if (result.user.id == this.user.id) {
+        if (data.user == this.userId) {
           classes.push('entry-editable');
         }
         if (data.is_assignment) {
@@ -200,6 +194,14 @@ class Assignment {
       }
     }
     el.innerHTML = render;
+
+    // Update list of group names.
+    let groupNames = document.body.querySelector('.group-names');
+    let groups = this.data.assignment.groups;
+    if (groups[this.groupId]) {
+      let names = groups[this.groupId].map((u) => usersById[u].name);
+      groupNames.innerHTML = names.join(', ');
+    }
 
     // activate entries
     let entryEls = el.querySelectorAll('.entry-editable');

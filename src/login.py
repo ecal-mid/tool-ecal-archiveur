@@ -11,8 +11,6 @@ bp = Blueprint('login', __name__)
 login_manager = flask_login.LoginManager()
 ldap_server = ldap3.Server(config['ldap_server'], get_info=ldap3.ALL)
 
-users_infos = yaml.load(open('config/users.yaml'))
-
 
 def setup():
     login_manager.init_app(current_app)
@@ -24,7 +22,7 @@ class User(flask_login.UserMixin):
 
 
 def get_current_user_infos():
-    infos = users_infos[flask_login.current_user.id]
+    infos = config['users'][flask_login.current_user.id]
     url = config['users_img_prefix'] + '/' + infos['img']
     return {
         'name': infos['name'],

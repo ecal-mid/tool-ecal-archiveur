@@ -7,6 +7,18 @@ let assignmentEntriesRef;
 let entriesRef;
 let database = firebase.database();
 
+// Build full users by id dictionary
+let usersById = {};
+for (let k in users) {
+  if (k) {
+    for (let u in users[k]) {
+      if (u) {
+        usersById[u] = users[k][u];
+      }
+    }
+  }
+}
+
 /**
  * Setup the application.
  */
@@ -50,11 +62,6 @@ function load() {
       }
       gps[assignment.groupId].classList.add('selected');
     }
-    // Update list of group names.
-    let groupNames = document.body.querySelector('.group-names');
-    let groups = assignment.data.assignment.groups;
-    let names = groups[assignment.groupId].map((g) => g.name);
-    groupNames.innerHTML = names.join(', ');
     return;
   } else {
     assignment.docId = document.body.dataset['assignment'];
@@ -85,7 +92,7 @@ function load() {
         // Redirect to correct group if user is not admin and in the wrong
         // group.
         let userId = document.body.dataset.userId;
-        if (!isAdmin(userId, data)) {
+        if (!document.body.dataset.admin) {
           let g = getUserGroup(userId, data);
           if (assignment.groupId != g) {
             setNav(assignment.year, document.body.dataset['assignment'], g);
@@ -132,21 +139,6 @@ function getUserGroup(userId, data) {
     }
   }
   return -1;
-}
-
-/**
- * Returns true if the user is admin.
- * @param  {String} userId The user id.
- * @param  {Object} data The data object.
- * @return {Int}           The group id.
- */
-function isAdmin(userId, data) {
-  for (let u of data.assignment.admins) {
-    if (u.id == userId) {
-      return true;
-    }
-  }
-  return false;
 }
 
 /**

@@ -91,15 +91,15 @@ class UploadBox {
 
       let path = '2017-2018/' + assignment.docId;
       if (!this.el.classList.contains('is-assignment')) {
-        path += '/' + assignment.groupId + '-';
+        // path += '/' + assignment.groupId + '-';
         // Create nice prefix with names
         let groups = assignment.data.assignment.groups[assignment.groupId];
         let names = [];
         for (let u of groups) {
-          let n = u.name.split(' ');
+          let n = usersById[u].name.split(' ');
           names.push(n[0][0] + n[1]);
         }
-        path += names.join('_');
+        path += '/' + names.join('_');
       }
       data.set('path', path);
 
@@ -137,7 +137,7 @@ class UploadBox {
     // Create Entry if upload was successful
     let entry = {
       'id': generateGUUID(),
-      'user': assignment.user.id,
+      'user': assignment.userId,
       'date': new Date().toString(),
       'file': response.url,
     };

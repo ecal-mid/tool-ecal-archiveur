@@ -27,7 +27,7 @@ class NewEntry {
     }
     let entry = {
       'id': generateGUUID(),
-      'user': assignment.user.id,
+      'user': assignment.userId,
       'date': new Date().toString(),
       'text': this.input.value,
     };

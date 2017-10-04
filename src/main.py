@@ -6,7 +6,7 @@ import login
 import os
 import re
 import json
-from .config import config
+from .config import config, users_dict
 
 bp = Blueprint(
     'index',
@@ -43,11 +43,13 @@ def assignment(year, assignment_id=None, group_id=None):
         # Discard assignment if it's not accessible by this user
         if assignment_id and assignment_id not in assignments:
             return redirect('/a/' + year)
-
+    # Process the template
     return render_template(
         'index.html',
         year=year,
         user=user,
+        users_dict=users_dict,
+        courses=config['courses'],
         is_admin=is_admin,
         assignment=assignment_id,
         group=group_id,
@@ -63,12 +65,16 @@ def create_new(year):
     is_admin = user['id'] in config['admins']
     if not is_admin:
         return redirect('/a/' + year)
+    # Create default groups
+    classe_id = request.form['course-id'].split('_')[0]
+    groups = [[u] for u in config['classes'][classe_id]]
     # Create the assignment
     a_id = request.form['course-id'] + '-' + request.form['assignment-name']
     a_id = re.sub('[^a-z0-9 -]+', '', a_id.lower())
     a_id = a_id.replace(' ', '-')
     template = json.load(open('config/empty_assignment.json'))
     template['assignment']['name'] = request.form['assignment-name']
+    template['assignment']['groups'] = groups
     assignment = {year: {a_id: template}}
     full_path = os.path.join(config['root_path'], 'assignments', year,
                              a_id + '.json')

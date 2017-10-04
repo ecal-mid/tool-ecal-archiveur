@@ -13,4 +13,10 @@ function startNewAssignment() {
 
   let formEl = mainEl.querySelector('.new-assignment-form');
   formEl.style.display = 'block';
+
+  let btEl = mainEl.querySelector('.new-assignment-form .btn');
+  btEl.addEventListener('click', () => {
+    formEl.style.display = 'none';
+    document.body.classList.add('loading');
+  })
 }

@@ -373,11 +373,6 @@ header .path {
   transition: all 0.3s;
 }
 
-.file-entry.is-assignment a,
-.file-entry.entry-align-alt {
-  margin-left: -0.75em;
-}
-
 .file-entry a {
   padding: 1em 0.75em;
   border-radius: 3px;
