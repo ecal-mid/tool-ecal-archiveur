@@ -18,5 +18,5 @@ function startNewAssignment() {
   btEl.addEventListener('click', () => {
     formEl.style.display = 'none';
     document.body.classList.add('loading');
-  })
+  });
 }
