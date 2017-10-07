@@ -45,8 +45,10 @@ class Assignment {
       el.addEventListener('click', this.onGroupClicked.bind(this), false);
     }
     let editGroupsBtn = this.el.querySelector('.edit-groups-btn');
-    editGroupsBtn.addEventListener(
-        'click', () => Groups.edit(this.data), false);
+    if (editGroupsBtn) {
+      editGroupsBtn.addEventListener(
+          'click', () => Groups.edit(this.data), false);
+    }
     // activate entries
     let entryEls = this.el.querySelectorAll('.entry-editable');
     for (let el of entryEls) {

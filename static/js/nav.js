@@ -28,7 +28,7 @@ function onNavItemClicked(ev) {
     appEl.classList.add('fold');
   }
 
-  setNav(a.dataset['year'], a.dataset['assignmentId'], 0);
+  setNav(a.dataset['year'], a.dataset['assignmentId']);
 }
 
 

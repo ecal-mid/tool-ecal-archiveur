@@ -1,5 +1,7 @@
 let newAEl = document.querySelector('.app nav .btn-new');
-newAEl.addEventListener('click', startNewAssignment);
+if (newAEl) {
+  newAEl.addEventListener('click', startNewAssignment);
+}
 
 
 /**

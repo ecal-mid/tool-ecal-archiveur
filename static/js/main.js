@@ -143,8 +143,8 @@ function getUserGroup(userId, data) {
   for (let i = 0; i < data.assignment.groups.length; i++) {
     const g = data.assignment.groups[i];
     for (let u of g) {
-      if (u.id == userId) {
-        return i;
+      if (u == userId) {
+        return Groups.getGroupId(g);
       }
     }
   }
@@ -196,19 +196,21 @@ function onPopState(ev) {
  * @param {String} group      The group id.
  */
 function setNav(year, assignment, group) {
-  if (year) {
-    document.body.dataset['year'] = year;
-  }
-  if (assignment) {
-    document.body.dataset['assignment'] = assignment;
-  }
-  if (group || group == 0) {
+  // if (year) {
+  document.body.dataset['year'] = year;
+  // }
+  // if (assignment) {
+  document.body.dataset['assignment'] = assignment;
+  // }
+  if (group) {
     document.body.dataset['group'] = group;
+  } else {
+    delete document.body.dataset['group'];
   }
   window.history.pushState(
       {year: year, assignment: assignment, group: group},
       year + assignment + group,
-      `/a/${year}/${assignment}/` + (group || group == 0 ? group : ''));
+      `/a/${year}/${assignment}` + (group ? '/' + group : ''));
   load();
 }
 

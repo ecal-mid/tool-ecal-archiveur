@@ -414,6 +414,10 @@ header .path {
   position: relative;
 }
 
+body:not([data-group]) .assigned-entries {
+  display: none;
+}
+
 .assigned-entries .entry:not(.entry-align-alt) > p {
   padding: 0em 1em;
 }

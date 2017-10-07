@@ -47,11 +47,12 @@ def request_loader(request):
     if user is None:
         return None
     try:
-        conn = ldap3.Connection(
-            ldap_server,
-            'ade\\' + user_id,
-            request.form.get('pw'),
-            auto_bind=True)
+        if not current_app.debug:
+            conn = ldap3.Connection(
+                ldap_server,
+                'ade\\' + user_id,
+                request.form.get('pw'),
+                auto_bind=True)
         return user
     except ldap3.core.exceptions.LDAPBindError as e:
         print(e)

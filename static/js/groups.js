@@ -5,6 +5,22 @@ const Groups = (function() {
   let hasChanged = false;
 
   /**
+   * Compute a group id from the names.
+   * @param  {Array} group An array of user ids.
+   * @return {String}      An id based on the user ids
+   */
+  function getGroupId(group) {
+    let gid = '';
+    for (let u of group) {
+      let firstName = u.split('.')[0];
+      let lastName = u.split('.')[1];
+      gid += firstName[0] + lastName[0] + lastName.substr(1) + '_';
+    }
+    gid = gid.substr(0, gid.length - 1);
+    return gid;
+  }
+
+  /**
    * Preprocess groups data.
    * @param  {Object} data Assignment data object.
    * @return {Array}      The preprocessed groups data array
@@ -20,10 +36,9 @@ const Groups = (function() {
         let lastName = u.split('.')[1];
         group.name += firstName[0].toUpperCase() + '.' +
             lastName[0].toUpperCase() + lastName.substr(1, 2) + ' ';
-        group.id += firstName[0] + lastName[0] + lastName.substr(1) + '_';
       }
       group.name = group.name.substr(0, group.name.length - 1);
-      group.id = group.id.substr(0, group.id.length - 1);
+      group.id = getGroupId(g);
       if (group.id == assignment.groupId) {
         group.classes.push('selected');
       }
@@ -120,5 +135,5 @@ const Groups = (function() {
     }
   }, false);
 
-  return {edit: edit, preprocess: preprocess};
+  return {edit: edit, preprocess: preprocess, getGroupId: getGroupId};
 })();
