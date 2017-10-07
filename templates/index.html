@@ -64,7 +64,7 @@
   <div class="groups-container">
     <div class="groups">
       <% for(var i=0; i<groups.length; i++) { %>
-        <div class="group <%= groups[i].classes.join(' ') %>" data-id="<%= groups[i].id %>">
+        <div class="group <%= groups[i].classes.join(' ') %>" data-id="<%= groups[i].id %>" data-num="0">
           <% for(var j=0; j<groups[i].users.length; j++) { %>
             <% var u = groups[i].users[j]; %>
             <div class="avatar"><img src="<%= u.img %>"></div>
@@ -88,7 +88,7 @@
         	<%- include('entry-tpl', entries[i]) -%>
         <% } %>
       </div>
-      <%- include('new-entry-tpl', {user:user}) -%>
+      <%- include('new-entry-tpl', {user:user, is_assignment:false}) -%>
   </div>
 
 </script>
@@ -101,11 +101,11 @@
       </div>
       <p class="entry-user"><%= user.name %><br><span class="entry-date"><%= date %></span></p>
         <% if (entry.text) { %>
-          <p><%= entry.text %></p>
+        <p><%= entry.text %></p>
         <% } else { %>
         <a href="<%= entry.file %>" target="_blank"><%= filename %></a>
         <a class="download-icon" href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
-      <% } %>
+        <% } %>
       <div class="entry__delete-bt">+</div>
     </div>
   </div>
@@ -129,6 +129,11 @@
       </div>
       <div class="box__uploading">Uploading&hellip;</div>
     </form>
+    {% if is_admin %}
+    <% if (!is_assignment) { %>
+    <button class="btn btn-strong review-btn" style="display:none"><i class="md-icon">check</i>Reviewed</button>
+    <% } %>
+    {% endif %}
   </div>
 </script>
 

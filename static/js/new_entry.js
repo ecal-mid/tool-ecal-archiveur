@@ -36,13 +36,9 @@ class NewEntry {
     }
     if (this.el.classList.contains('is-assignment')) {
       entry.is_assignment = true;
-      // assignment.data.assignment.entries.push(entry);
     } else {
       entry.group = assignment.groupId;
-      // assignment.data.entries.push(entry);
     }
-    // assignment.onDataUpdate(assignment.data);
-    // pushData();
     pushEntry(entry);
     this.input.value = '';
   }

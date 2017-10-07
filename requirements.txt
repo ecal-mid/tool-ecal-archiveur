@@ -9,3 +9,4 @@ MarkupSafe==1.0
 pyasn1==0.3.6
 PyYAML==3.12
 Werkzeug==0.12.2
+Flask-Mail==0.9.1

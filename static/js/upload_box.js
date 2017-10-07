@@ -141,7 +141,9 @@ class UploadBox {
       entry.is_assignment = true;
     } else {
       entry.group = assignment.groupId;
-      // assignment.data.entries.push(entry);
+      if (!entry.is_admin) {
+        entry.status = 'pending';
+      }
     }
     pushEntry(entry);
   }

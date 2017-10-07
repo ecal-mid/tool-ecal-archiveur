@@ -76,6 +76,13 @@ h2 {
   border: none;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
 }
+.btn-strong .md-icon {
+  color: white;
+}
+.btn-strong:hover {
+  color: white;
+  background: #628ea5;
+}
 
 input {
   font-weight: 300;
@@ -157,10 +164,6 @@ nav {
 nav .btn-new {
   width: 100%;
   margin-bottom: 2em;
-}
-nav .btn-new:hover {
-  color:white;
-  background: #628ea5;
 }
 
 nav ul {
@@ -443,20 +446,29 @@ body:not([data-group]) .assigned-entries {
   background-color: #ffdacc;
 }
 
-.entry.accepted {
+.entry.reviewed {
   background-color: #ccffcc;
 }
 
 
 .new-entry {
   display: inline-flex;
+  width: 100%;
+  max-width: 400px;
 }
 
 .new-entry-text {
-  width: 320px;
   font-size: 1em;
   font-weight: normal;
   padding: 0.7em 1em;
+  width: 100%;
+  max-width: 360px;
+  min-width: 160px;
+}
+
+.assigned-entries .new-entry-text,
+.assigned-entries .new-entry {
+  max-width: 100%;
 }
 
 .entry__send-text {
@@ -469,10 +481,17 @@ body:not([data-group]) .assigned-entries {
   cursor: pointer;
   font-size: 1.5em;
   margin: 0 -0.5em 0 0.2em;
+  padding: 0 1em;
 }
 
 .entry__send-text:hover {
   background-color: rgba(0,0,0,0.05);
+}
+
+.review-btn {
+  padding: 1.6em;
+  margin: 0.5em 0 0.5em 0.5em;
+  border-radius: 5px;
 }
 
 /* GROUPS */
@@ -529,6 +548,7 @@ body:not([data-group]) .assigned-entries {
   border-radius: 5px 5px 0 0;
   font-size: 0.8em;
   border: 1px solid rgba(255,255,255,0);
+  position: relative;
 }
 
 .groups .group:last-child {
@@ -540,7 +560,6 @@ body:not([data-group]) .assigned-entries {
 }
 
 .groups .group .avatar > img {
-  opacity: 0.3;
   transition: all 0.3s;
 }
 
@@ -560,10 +579,50 @@ body:not([data-group]) .assigned-entries {
   width: 24px;
   height: 24px;
   background-color: white;
+  position: relative;
+}
+
+.groups .group:not(.selected) .avatar::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .groups .group .avatar:not(:first-child) {
-  margin-left: -12px;
+  margin-left: -5px;
+}
+
+.groups .group:not([data-num='0'])::after {
+  content: attr(data-num);
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+  font-size: 0.75em;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #c5c5c5;
+  color: white;
+}
+
+.groups .group.pending:not([data-num='0'])::after {
+  content: '1';
+  background: #ff3838;;
+}
+
+.groups .group.reviewed::after {
+  font-family: 'Material Icons';
+  content: 'check' !important;
+  background: #8cce8c !important;
 }
 
 .group-names {
@@ -676,6 +735,10 @@ body:not([data-group]) .assigned-entries {
 
   .entry .new-entry-text {
     width: 150px;
+  }
+
+  .assigned-entries .entry .new-entry-text {
+    width: 100%;
   }
 
   .assigned-entries {

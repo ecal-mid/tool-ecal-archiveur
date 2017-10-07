@@ -4,5 +4,6 @@
     "ecmaVersion": 6
   },
   "rules": {
+    "guard-for-in": false
   }
 }

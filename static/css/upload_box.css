@@ -4,6 +4,7 @@
   position: relative;
   padding: 1.25em 1.7em;
   margin: 0.5em;
+  margin-right: 0;
   background: white;
   cursor: pointer;
   transition: all 0.15s;

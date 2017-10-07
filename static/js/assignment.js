@@ -64,6 +64,12 @@ class Assignment {
     for (let el of formEls) {
       new UploadBox(el);
     }
+    // activate review btn
+    let rvbtn = this.el.querySelector('.review-btn');
+    if (rvbtn) {
+      rvbtn.addEventListener(
+          'click', this.onReviewButtonClicked.bind(this), false);
+    }
   }
 
   /**
@@ -114,7 +120,11 @@ class Assignment {
         if (data.is_assignment) {
           classe.push('is-assignment');
         }
-        return {user: data.user, classes: classe};
+        return {
+          user: data.user,
+          classes: classe,
+          is_assignment: data.is_assignment
+        };
 
       case 'entry-tpl':
         if (data.group != this.groupId && !data.is_assignment) {
@@ -158,6 +168,73 @@ class Assignment {
   /**
    * Renders the assignment entries.
    * @param  {Object} data The entries data array.
+   */
+  updateGroupsNumbers(data) {
+    let histogram = {};
+    for (let entry of data) {
+      if (histogram[entry.group] === undefined) {
+        histogram[entry.group] = {h: 0};
+      }
+      if (entry.status == 'pending') {
+        histogram[entry.group].pending = true;
+      }
+      if (entry.status == 'reviewed') {
+        histogram[entry.group].reviewed = true;
+      }
+      if (!entry.is_admin) {
+        histogram[entry.group].h++;
+      }
+    }
+    for (let h in histogram) {
+      let el = this.el.querySelector('.group[data-id="' + h + '"]');
+      if (el) {
+        el.dataset['num'] = histogram[h].h;
+        el.classList.remove('pending');
+        if (histogram[h].pending) {
+          el.classList.add('pending');
+        }
+        el.classList.remove('reviewed');
+        if (histogram[h].reviewed) {
+          el.classList.add('reviewed');
+        }
+      }
+    }
+  }
+
+  updateAccepBtnVisibility(data) {
+    let btn = this.el.querySelector('.review-btn');
+    if (btn) {
+      btn.style.display = 'none';
+      for (let entry of data) {
+        if (entry.group == this.groupId && entry.status == 'pending') {
+          btn.style.display = 'inline';
+          return;
+        }
+      }
+    }
+  }
+
+  /**
+   * On review button clicked.
+   * @param  {MouseEvent} ev The event.
+   */
+  onReviewButtonClicked(ev) {
+    // get file entry
+    let entryId = this.el.querySelector('.file-entry.pending').dataset['id'];
+    for (let i = 0; i < this.entries.length; i++) {
+      if (this.entries[i].id == entryId) {
+        // mark entry as accepted
+        let url = `${this.year}/${this.docId}/entries/${i}/status`;
+        let ref = database.ref(url);
+        ref.set('reviewed');
+        break;
+      }
+    }
+  }
+
+  /**
+   * Renders the assignment entries.
+   * @param  {Object} data The entries data array.
    * @param  {Boolean} isAssignment If these entries are part of the assignment.
    */
   renderEntries(data, isAssignment) {
@@ -172,10 +249,6 @@ class Assignment {
     } else {
       this.entries = data;
       el = this.el.querySelector('.assigned-entries .entries-list');
-      // // The element won't be there if its not a valid group.
-      // if (!el) {
-      //   return;
-      // }
     }
     let tpl = 'entry-tpl';
     let render = '';
@@ -190,6 +263,9 @@ class Assignment {
       }
     }
     el.innerHTML = render;
+
+    this.updateGroupsNumbers(data);
+    this.updateAccepBtnVisibility(data);
 
     // Update list of group names.
     let groupNames = document.body.querySelector('.group-names');
