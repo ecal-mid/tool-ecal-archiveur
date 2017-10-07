@@ -13,7 +13,13 @@ for (let k in users) {
   if (k) {
     for (let u in users[k]) {
       if (u) {
-        usersById[u] = users[k][u];
+        let user = usersById[u] = users[k][u];
+        user.id = u;
+        if (user.img == '?') {
+          user.img = '/static/res/user.svg';
+        } else {
+          user.img = 'https://intranet.ecal.ch/img/photo/' + user.img;
+        }
       }
     }
   }
@@ -40,8 +46,9 @@ function setup() {
 
 /**
  * Load a new document (if needed) and group and update render.
+ * @param  {Boolean} force Force re-rendering of the assignment.
  */
-function load() {
+function load(force) {
   // Year
   assignment.year = document.body.dataset['year'];
   if (!assignment.year) {
@@ -51,16 +58,19 @@ function load() {
   // Group
   assignment.groupId = document.body.dataset['group'];
 
-  if (assignment.docId &&
+  if (!force && assignment.docId &&
       document.body.dataset['assignment'] == assignment.docId) {
     assignment.renderEntries(assignment.entries, false);
     // Update selected group in menu for admins.
     let gps = document.body.querySelectorAll('.groups .group');
     if (gps.length) {
       for (let g of gps) {
-        g.classList.remove('selected');
+        if (g.dataset['id'] == assignment.groupId) {
+          g.classList.add('selected');
+        } else {
+          g.classList.remove('selected');
+        }
       }
-      gps[assignment.groupId].classList.add('selected');
     }
     return;
   } else {

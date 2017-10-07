@@ -19,7 +19,6 @@ config.update(yaml.load(open(users_file)))
 # Replace user ids by dicts with full data
 users_dict = {}
 for k, v in config['classes'].iteritems():
-    print k, v
     users_dict[k] = {u: config['users'][u] for u in v}
 users_dict['admins'] = {u: config['users'][u] for u in config['admins']}
 

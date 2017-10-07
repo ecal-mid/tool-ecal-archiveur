@@ -9,6 +9,13 @@ const api = {
           .catch(error);
     });
   },
+  update: (year, assignmentId, data) => {
+    return new Promise((resolve, error) => {
+      qwest.post(`/api/a/${year}/${assignmentId}`, data, {dataType: 'json'})
+          .then((xhr, resp) => resolve(JSON.parse(resp)))
+          .catch(error);
+    });
+  },
 };
 
 /**

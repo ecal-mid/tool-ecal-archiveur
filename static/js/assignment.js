@@ -16,8 +16,6 @@ class Assignment {
     this.el = document.createElement('div');
     this.el.classList.add('assignment');
     this.userId = document.body.dataset['userId'];
-    // img: document.body.querySelector('.avatar img').src,
-    // };
     this.tpls = {};
     for (let tpl of ['assignment-tpl', 'entry-tpl', 'new-entry-tpl']) {
       this.tpls[tpl] = document.getElementById(tpl).innerHTML;
@@ -46,6 +44,9 @@ class Assignment {
     for (let el of groupEls) {
       el.addEventListener('click', this.onGroupClicked.bind(this), false);
     }
+    let editGroupsBtn = this.el.querySelector('.edit-groups-btn');
+    editGroupsBtn.addEventListener(
+        'click', () => Groups.edit(this.data), false);
     // activate entries
     let entryEls = this.el.querySelectorAll('.entry-editable');
     for (let el of entryEls) {
@@ -71,22 +72,7 @@ class Assignment {
   preprocess(data) {
     this.user = usersById[this.userId];
     // Build custom group object with extra info such as progress.
-    let groups = [];
-    for (let i = 0; i < data.assignment.groups.length; i++) {
-      let group = {classes: [], users: [], name: ''};
-      let g = data.assignment.groups[i];
-      for (let u of g) {
-        group.users.push(usersById[u]);
-        group.name += u.split('.')[0][0].toUpperCase() + '.' +
-            u.split('.')[1][0].toUpperCase() + u.split('.')[1].substr(1, 2) +
-            ' ';
-      }
-      group.name = group.name.substr(0, group.name.length - 1);
-      if (i == this.groupId) {
-        group.classes.push('selected');
-      }
-      groups.push(group);
-    }
+    let groups = Groups.preprocess(data);
     // Better date formatting.
     let due;
     if (data.assignment['due-date']) {
@@ -94,8 +80,11 @@ class Assignment {
           new Date(data.assignment['due-date']).toISOString().substring(0, 10);
     }
     let group;
-    if (data.assignment.groups[this.groupId]) {
-      group = data.assignment.groups[this.groupId];
+    for (let g of groups) {
+      if (g.id == this.groupId) {
+        group = g;
+        break;
+      }
     }
     // Return our processed data object
     return {
@@ -103,7 +92,7 @@ class Assignment {
       module: this.docId.split('-')[0],
       entries: data.entries,
       groups: groups,
-      group: group ? group.map((u) => usersById[u].name) : null,
+      group: group ? group.users.map((u) => u.name) : null,
       user: this.user,
       users: users,
       due: due,
@@ -173,6 +162,7 @@ class Assignment {
     if (!data) {
       data = [];
     }
+
     let el;
     if (isAssignment) {
       this.assignmentEntries = data;
@@ -180,6 +170,10 @@ class Assignment {
     } else {
       this.entries = data;
       el = this.el.querySelector('.assigned-entries .entries-list');
+      // // The element won't be there if its not a valid group.
+      // if (!el) {
+      //   return;
+      // }
     }
     let tpl = 'entry-tpl';
     let render = '';
@@ -197,10 +191,12 @@ class Assignment {
 
     // Update list of group names.
     let groupNames = document.body.querySelector('.group-names');
-    let groups = this.data.assignment.groups;
-    if (groups[this.groupId]) {
-      let names = groups[this.groupId].map((u) => usersById[u].name);
-      groupNames.innerHTML = names.join(', ');
+    let groups = Groups.preprocess(this.data);
+    for (let g of groups) {
+      if (g.id == this.groupId) {
+        groupNames.innerHTML = g.users.map((u) => u.name).join(', ');
+        break;
+      }
     }
 
     // activate entries

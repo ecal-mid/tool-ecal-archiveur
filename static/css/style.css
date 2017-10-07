@@ -17,6 +17,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+img {
+  user-drag: none;
+  user-select: none;
+}
+
 html,
 body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
@@ -25,9 +30,15 @@ body {
   height: 100%;
 }
 
-h1,
-h2 {
+h1 {
   font-weight: 100;
+}
+
+h2 {
+  font-size: 1em;
+  padding: 0.5em;
+  font-weight: normal;
+  color: #365e72;
 }
 
 .btn {
@@ -176,9 +187,10 @@ nav ul li a.btn.selected {
   background: #e9e9e9;
 }
 
-nav h1 {
+h1 {
   color: grey;
   padding: 0.5em 0.3em;
+  text-transform: uppercase;
 }
 
 .app {
@@ -268,10 +280,7 @@ header .path {
 }
 
 .assignment > h2 {
-  font-size: 1em;
   padding: 2em 1em 1em;
-  font-weight: normal;
-  color: #365e72;
 }
 
 .assignment > h2 .due-date {
@@ -443,7 +452,7 @@ header .path {
   width: 320px;
   font-size: 1em;
   font-weight: normal;
-  padding: 1em;
+  padding: 0.7em 1em;
 }
 
 .entry__send-text {
@@ -571,6 +580,81 @@ header .path {
   width: 100%;
 }
 
+
+.modal-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  background: rgba(255,255,255,0.8);
+}
+
+.modal {
+  width: 50%;
+  background: white;
+  padding: 0.5em;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.groups-editor .group {
+  display: inline-block;
+  padding: 0.5em;
+  background: rgb(249, 249, 249);
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+  margin: 0.5em;
+  /*transition: all 0.1s;*/
+}
+
+.groups-editor .group.dragover {
+  background: #dee5e9;
+  border: 1px dashed #355d72;
+}
+
+.groups-editor .group .avatar {
+  transition: all 0.2s;
+}
+
+.groups-editor .group .avatar.dragged-out {
+  opacity: 0.1;
+}
+
+.groups-editor .group .avatar:hover {
+  z-index: 10;
+  position: relative;
+  cursor: move;
+  cursor: grab;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.groups-editor .group .md-icon {
+  vertical-align: bottom;
+  font-size: 2em;
+  width: 40px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.groups-editor .group-new,
+.groups-editor .group-remove {
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.dragging .group-new,
+.dragging .group-remove {
+  opacity: 1;
+  pointer-events: all;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width:800px) {
@@ -603,5 +687,9 @@ header .path {
 
   .assigned-entries::before {
     right: 6em;
+  }
+
+  .modal {
+    width: auto;
   }
 }

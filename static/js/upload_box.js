@@ -89,17 +89,9 @@ class UploadBox {
         }
       }
 
-      let path = '2017-2018/' + assignment.docId;
+      let path = assignment.year + '/' + assignment.docId;
       if (!this.el.classList.contains('is-assignment')) {
-        // path += '/' + assignment.groupId + '-';
-        // Create nice prefix with names
-        let groups = assignment.data.assignment.groups[assignment.groupId];
-        let names = [];
-        for (let u of groups) {
-          let n = usersById[u].name.split(' ');
-          names.push(n[0][0] + n[1]);
-        }
-        path += '/' + names.join('_');
+        path += '/' + assignment.groupId;
       }
       data.set('path', path);
 

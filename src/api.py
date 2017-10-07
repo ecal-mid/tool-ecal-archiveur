@@ -2,8 +2,10 @@
 
 from flask import (Blueprint, request, current_app)
 from flask_uploads import (UploadSet, configure_uploads, UploadNotAllowed)
+import flask_login
 import os
 import json
+import login
 from .config import config
 
 bp = Blueprint('api', __name__, url_prefix='/api')
@@ -40,3 +42,21 @@ def get_assignment(year, assignment_id):
         return open(full_path).read()
     else:
         return json.dumps({'error': 404})
+
+
+@bp.route('/a/<year>/<assignment_id>', methods=['POST'])
+@flask_login.login_required
+def update_assignment(year, assignment_id):
+    """Creates a new assignment."""
+    user = login.get_current_user_infos()
+    # Look if user is admin
+    is_admin = user['id'] in config['admins']
+    if not is_admin:
+        return redirect('/a/' + year)
+    # Load the dest assignment
+    full_path = os.path.join(config['root_path'], 'assignments', year,
+                             assignment_id + '.json')
+    assignment = json.load(open(full_path))
+    assignment[year][assignment_id] = request.get_json()
+    json.dump(assignment, open(full_path, 'w'), indent=2)
+    return json.dumps({'status': 'success.'})
