@@ -101,10 +101,12 @@
       </div>
       <p class="entry-user"><%= user.name %><br><span class="entry-date"><%= date %></span></p>
         <% if (entry.text) { %>
-        <p><%= entry.text %></p>
+        <p class="entry-content"><%= entry.text %></p>
         <% } else { %>
-        <a href="<%= entry.file %>" target="_blank"><%= filename %></a>
-        <a class="download-icon" href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
+        <p class="entry-content">
+          <a href="<%= entry.file %>" target="_blank"><%= filename %></a>
+          <a class="download-icon" href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
+        </p>
         <% } %>
       <div class="entry__delete-bt">+</div>
     </div>
@@ -114,9 +116,6 @@
 <script type="text/template" id="new-entry-tpl">
   <div class="entry-row">
     <div class="entry new-entry entry-align-alt <%= classes.join(' ') %>">
-      <div class="avatar">
-        <img src="<%= user.img %>">
-      </div>
       <input class="new-entry-text" type="text" placeholder="Add comment" />
       <span class="entry__send-text"><i class="md-icon">send</i></span>
     </div>

@@ -269,7 +269,7 @@ header .path {
 
 .assignment {
   width: 100%;
-  max-width: 900px;
+  max-width: 1024px;
   transition: all 0.1s;
   transition-delay: 50ms;
   position: relative;
@@ -311,14 +311,17 @@ header .path {
 }
 
 .entry {
-  padding: 0.5em 1em;
-  background: white;
-  margin: 0.3em 0;
-  border-radius: 5px;
+  margin: 0.5em 0 0;
   /*box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);*/
   display: inline-flex;
   align-items: center;
   position: relative;
+}
+
+.entry .entry-content, .new-entry {
+  padding: 0.5em 1em;
+  background: white;
+  border-radius: 5px;
   border: 1px solid rgba(0,0,0,0.1);
 }
 
@@ -326,15 +329,17 @@ header .path {
   width: 100px;
   flex-shrink: 0;
   font-size: 0.9em;
-  color: #768185;
+  margin-left: 1em;
+  color: #98a2a6;
+}
+
+.entry:not(.entry-align-alt) .entry-user {
+  margin-left: 0;
+  margin-right: 1em;
 }
 
 .entry .entry-date {
   font-size: 0.75em;
-}
-
-.entry > *:not(.download-icon):not(.entry__delete-bt):not(.entry__send-text):not(.new-entry-text) {
-  margin-right: 1em;
 }
 
 .entry > p {
@@ -402,6 +407,7 @@ header .path {
 .file-entry a.download-icon, .icon-btn {
   padding: 0.5em;
   border-radius: 50%;
+  display: inline-block;
 }
 
 .file-entry a .md-icon {
@@ -421,9 +427,9 @@ body:not([data-group]) .assigned-entries {
   display: none;
 }
 
-.assigned-entries .entry:not(.entry-align-alt) > p {
+/*.assigned-entries .entry:not(.entry-align-alt) > p {
   padding: 0em 1em;
-}
+}*/
 
 .assigned-entries .entry:not(.entry-align-alt):not(.new-entry) {
   flex-direction: row-reverse;
@@ -442,11 +448,11 @@ body:not([data-group]) .assigned-entries {
   margin-right: 0;
 }
 
-.entry.pending {
+.entry.pending .entry-content {
   background-color: #ffdacc;
 }
 
-.entry.reviewed {
+.entry.reviewed .entry-content{
   background-color: #ccffcc;
 }
 
@@ -490,7 +496,7 @@ body:not([data-group]) .assigned-entries {
 
 .review-btn {
   padding: 1.6em;
-  margin: 0.5em 0 0.5em 0.5em;
+  margin: 0.5em 0 0 0.5em;
   border-radius: 5px;
 }
 
@@ -500,7 +506,7 @@ body:not([data-group]) .assigned-entries {
   margin: 1.5em 1em 0;
   padding: 0;
   position: relative;
-  margin-bottom: -1px;
+  margin-bottom: -2px;
   z-index: 2;
 }
 
@@ -626,7 +632,7 @@ body:not([data-group]) .assigned-entries {
 }
 
 .group-names {
-  color: rgba(0, 0, 0, 0.4);
+  color: #98a2a6;
   text-align: right;
   padding: 0.5em;
 }
