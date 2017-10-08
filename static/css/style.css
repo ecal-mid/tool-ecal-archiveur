@@ -622,7 +622,7 @@ body:not([data-group]) .assigned-entries {
   font-family: 'Material Icons';
   content: 'assignment';
   background: none;
-  color: #ff8d38;
+  color: #365e72;
   font-size: 1.3em;
   right: 4px;
   top: 4px;
@@ -639,7 +639,7 @@ body:not([data-group]) .assigned-entries {
 }
 
 .entry.pending .entry-content .md-icon {
-  color: #ff8d38;
+  color: #365e72;
 }
 
 .entry.reviewed .entry-content .md-icon {
