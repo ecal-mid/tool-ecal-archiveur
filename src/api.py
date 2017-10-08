@@ -1,7 +1,8 @@
 """ API """
 
-from flask import (Blueprint, request, current_app)
+from flask import (Blueprint, request, current_app, render_template)
 from flask_uploads import (UploadSet, configure_uploads, UploadNotAllowed)
+from flask_mail import Mail, Message
 import flask_login
 import os
 import json
@@ -11,6 +12,8 @@ from .config import config
 bp = Blueprint('api', __name__, url_prefix='/api')
 
 uploaded_files = UploadSet('uploads', ('zip', 'pdf', 'jpg', 'png', 'mov'))
+
+mail = Mail(current_app)
 
 
 def setup():
@@ -59,4 +62,67 @@ def update_assignment(year, assignment_id):
     assignment = json.load(open(full_path))
     assignment[year][assignment_id] = request.get_json()
     json.dump(assignment, open(full_path, 'w'), indent=2)
+    return json.dumps({'status': 'success.'})
+
+
+@bp.route('/notify/<notification_type>', methods=['POST'])
+@flask_login.login_required
+def mail_test(notification_type):
+    """Mail."""
+    resp = request.get_json()
+    assignment_id = resp['assignment']
+    year = resp['year']
+    entry = resp['entry']
+    # if resp['user'] == entry['user']:
+    #     user_name = 'You'
+    # else:
+    user_name = config['users'][resp['user']]['name']
+    file_name = entry['file'].split('/')[-1]
+    # load the assignment infos
+    a_path = os.path.join(config['root_path'], 'assignments', year,
+                          assignment_id + '.json')
+    assignment = json.load(open(a_path))[year][assignment_id]['assignment']
+    assignment_name = assignment['name']
+    assignment_creator = assignment['creator']
+    # Set recipients
+    if current_app.debug:
+        recipients = ['cyril.diagne']
+    else:
+        # retrieve entry group ids
+        uids = entry['group'].split('_')
+        group = []
+        for g in assignment['groups']:
+            for u in g:
+                fname = u.split('.')[0]
+                lname = u.split('.')[1]
+                uid = fname[0] + lname
+                if uid in uids and u not in group:
+                    group.append(u)
+        if notification_type == 'new_file_pending':
+            # Send to assignment creator and group members
+            recipients = [assignment_creator] + group
+        elif notification_type == 'entry_reviewed':
+            # Send to group members
+            recipients = group
+    recipients = [e + '@ecal.ch' for e in recipients]
+
+    # Set title
+    title = 'New activity'
+    if notification_type == 'new_file_pending':
+        title = '{} added a file for {}'.format(user_name, assignment_name)
+    elif notification_type == 'entry_reviewed':
+        title = '{} has reviewed your entry'.format(user_name)
+    # Render message
+    msg = Message(title, recipients=recipients)
+    url = os.path.join(config['app_url'], 'a', year, assignment_id,
+                       entry['group'])
+    msg.html = render_template(
+        'emails/' + notification_type + '.html',
+        user=user_name,
+        entry=entry,
+        assignment=assignment_name,
+        file_name=file_name,
+        url=url)
+    msg.send(mail)
+    # print(msg.html)
     return json.dumps({'status': 'success.'})

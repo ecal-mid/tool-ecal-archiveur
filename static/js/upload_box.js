@@ -137,12 +137,18 @@ class UploadBox {
       entry.is_admin = true;
     }
     if (this.el.classList.contains('is-assignment')) {
-      // assignment.data.assignment.entries.push(entry);
       entry.is_assignment = true;
     } else {
       entry.group = assignment.groupId;
       if (!entry.is_admin) {
         entry.status = 'pending';
+        // Send notification
+        api.notify('new_file_pending', {
+          entry: entry,
+          year: assignment.year,
+          user: assignment.userId,
+          assignment: assignment.docId
+        });
       }
     }
     pushEntry(entry);

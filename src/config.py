@@ -10,6 +10,8 @@ if current_app.debug:
 
 config = yaml.load(open(CONFIG_FILE))
 
+current_app.config.update(config)
+
 config_folder = config['config_folder']
 config_file = os.path.join(config_folder, 'config.yaml')
 config.update(yaml.load(open(config_file)))

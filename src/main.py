@@ -73,6 +73,7 @@ def create_new(year):
     template = json.load(open('config/empty_assignment.json'))
     template['assignment']['name'] = request.form['assignment-name']
     template['assignment']['groups'] = groups
+    template['assignment']['creator'] = request.form['creator']
     assignment = {year: {a_id: template}}
     full_path = os.path.join(config['root_path'], 'assignments', year,
                              a_id + '.json')

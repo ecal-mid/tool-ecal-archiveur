@@ -36,6 +36,7 @@
           {% endfor %}
         </select>
         <input type="text" name="assignment-name" class="new-entry-text" placeholder="Assignment Name" />
+        <input type="hidden" name="creator" value={{user.id}}/>
         <button class="btn btn-strong">Create</button>
       </form>
       {% endif %}
@@ -161,6 +162,7 @@ let users = {{ users_dict|tojson|safe }};
 <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
 <!-- scripts -->
 <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+<script src="{{ url_for('static', filename='js/api.js') }}"></script>
 <script src="{{ url_for('static', filename='js/firebase.js') }}"></script>
 <script src="{{ url_for('static', filename='js/upload_box.js') }}"></script>
 <script src="{{ url_for('static', filename='js/entry.js') }}"></script>

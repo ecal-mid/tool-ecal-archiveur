@@ -1,0 +1,9 @@
+{% extends "emails/email_base.html" %}
+
+{% block header %}
+  Your entry has been reviewed
+{% endblock %}
+
+{% block main %}
+  {{ user }} has reviewed your entry <b><a href="{{ entry.file }}" style="color: #365e72;">{{ file_name }}</a></b> for the assignment {{ assignment }}.
+{% endblock %}

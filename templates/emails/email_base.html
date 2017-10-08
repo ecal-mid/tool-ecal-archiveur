@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family:'Roboto', 'Helvetica', sans-serif; background: #f9f9f9;">
+
+  <h2 style="font-size: 1em;
+  font-weight: normal;
+  color: #365e72;">
+    {% block header %}
+    {% endblock %}
+  </h2>
+
+  <p style="margin:2em 0 3em;">
+    {% block main %}
+    {% endblock %}
+  </p>
+
+  <a href="{{ url }}" style="text-decoration:none;
+    padding: 1em 1.5em;
+    margin: 2em 0;
+    background: white;
+    color: #365e72;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.1); ">
+      <span style="color:black;">→ &nbsp;</span><b>View this entry in Archiveur</b>
+  </a>
+
+</body>
+</html>

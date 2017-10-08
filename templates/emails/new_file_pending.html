@@ -1,0 +1,9 @@
+{% extends "emails/email_base.html" %}
+
+{% block header %}
+  A new file is pending review
+{% endblock %}
+
+{% block main %}
+  {{ user }} uploaded <b><a href="{{ entry.file }}" style="color: #365e72;">{{ file_name }}</b></a> for the assignment <span color="#365e72">{{ assignment }}</span>.
+{% endblock %}

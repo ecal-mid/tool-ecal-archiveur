@@ -227,6 +227,13 @@ class Assignment {
         let url = `${this.year}/${this.docId}/entries/${i}/status`;
         let ref = database.ref(url);
         ref.set('reviewed');
+        // Send notification.
+        api.notify('entry_reviewed', {
+          entry: this.entries[i],
+          year: this.year,
+          user: this.userId,
+          assignment: this.docId
+        });
         break;
       }
     }
