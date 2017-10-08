@@ -291,12 +291,22 @@ header .path {
   font-size: .8em;
 }
 
-.module-name {
+.badge {
   padding: 0.4em 0.7em;
   font-size: 0.7em;
-  background: rgba(54, 94, 114, 0.11);
   border-radius: 4px;
+  background: rgba(54, 94, 114, 0.11);
   border: 1px solid rgba(54, 94, 114, 0.15);
+}
+
+.badge.pending {
+  background: rgba(255, 124, 0, 0.29);
+  border: 1px solid rgb(255, 147, 65);
+  color: rgb(255, 110, 1);
+  margin-left: 0.5em;
+}
+
+.module-name {
   margin-right: 0.75em;
 }
 
@@ -319,7 +329,7 @@ header .path {
 }
 
 .entry .entry-content, .new-entry {
-  padding: 0.5em 1em;
+  padding: 0.3em 1em;
   background: white;
   border-radius: 5px;
   border: 1px solid rgba(0,0,0,0.1);
@@ -375,6 +385,8 @@ header .path {
 }
 
 .file-entry a {
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: black;
   flex-grow: 1;
@@ -382,9 +394,6 @@ header .path {
   padding-right: 2em;
   height: 100%;
   transition: all 0.3s;
-}
-
-.file-entry a {
   padding: 1em 0.75em;
   border-radius: 3px;
 }
@@ -394,7 +403,7 @@ header .path {
 }
 
 .file-entry a.entry-content .md-icon {
-  padding: 0.2em 0 0.2em 0.2em;
+  padding: 0.2em 0.5em 0.2em 0;
   display: inline-block;
 }
 
@@ -407,12 +416,13 @@ header .path {
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 1.5em;
+  font-size: 1.2em;
   transition: all 0.2s;
 }
 
 .file-entry a .md-icon {
-  font-size: 2em;
+  font-size: 1.5em;
+  vertical-align: middle;
 }
 
 .assigned-entries {
@@ -485,7 +495,7 @@ body:not([data-group]) .assigned-entries {
 }
 
 .review-btn {
-  padding: 1.6em;
+  padding: 1.3em;
   margin: 0.5em 0 0 0.5em;
   border-radius: 5px;
 }
@@ -594,9 +604,7 @@ body:not([data-group]) .assigned-entries {
   margin-left: -5px;
 }
 
-.groups .group:not([data-num='0'])::after,
-.entry.reviewed .entry-content::after,
-.entry.pending .entry-content::after {
+.groups .group:not([data-num='0'])::after {
   content: attr(data-num);
   position: absolute;
   top: 0.5em;
@@ -612,8 +620,7 @@ body:not([data-group]) .assigned-entries {
   color: white;
 }
 
-.groups .group.pending:not([data-num='0'])::after,
-.entry.pending .entry-content::after {
+.groups .group.pending:not([data-num='0'])::after {
   font-family: 'Material Icons';
   content: 'assignment';
   background: none;
@@ -623,15 +630,8 @@ body:not([data-group]) .assigned-entries {
   top: 4px;
 }
 
-.entry.pending .entry-content .md-icon {
-  color: #ff8d38;
-}
-
-.groups .group.reviewed::after,
-.entry.reviewed .entry-content::after {
+.groups .group.reviewed::after {
   font-family: 'Material Icons';
-  /*content: 'check' !important;
-  background: #365e72 !important;*/
   content: 'assignment_turned_in';
   background: none;
   color: #365e72;
@@ -640,18 +640,22 @@ body:not([data-group]) .assigned-entries {
   top: 4px;
 }
 
-.entry.reviewed .entry-content::after,
+.entry.pending .entry-content .md-icon {
+  color: #ff8d38;
+}
+
+/*.entry.reviewed .entry-content::after,
 .entry.pending .entry-content::after {
   left: -7px;
   top: -7px;
   width: 20px;
   height: 20px;
-}
+}*/
 
 .group-names {
   color: #98a2a6;
   text-align: right;
-  padding: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 

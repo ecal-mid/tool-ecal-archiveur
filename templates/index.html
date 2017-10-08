@@ -50,7 +50,7 @@
 
 <!-- templates -->
 <script type="text/template" id="assignment-tpl">
-  <h2><span class="module-name"><%= module %></span><%= assignment.name %><% if (due) { %><span class="due-date">, due for <%= due %></span> <% } %></h2>
+  <h2><span class="badge module-name"><%= module %></span><%= assignment.name %><% if (due) { %><span class="due-date">, due for <%= due %></span> <% } %></h2>
   <div class="assignment-entries">
     <div class="entries-list">
       <% for(var i=0; i<assignment.entries.length; i++) { %>
@@ -80,9 +80,12 @@
 
   <div class="assigned-entries">
     <div class="group-names">
-      <% if (group) { %>
-        <%= group.join(', ') %>
-      <% } %>
+      <span>
+        <% if (group) { %>
+          <%= group.join(', ') %>
+        <% } %>
+      </span>
+      <!-- <span class="badge pending">pending review</badge> -->
     </div>
       <div class="entries-list">
         <% for(var i=0; i<entries.length; i++) { %>
@@ -104,7 +107,16 @@
         <% if (entry.text) { %>
         <p class="entry-content"><%= entry.text %></p>
         <% } else { %>
-          <a href="<%= entry.file %>" class="entry-content" target="_blank"><%= filename %> <i class="md-icon">file_download</i></a>
+          <a href="<%= entry.file %>" class="entry-content" target="_blank">
+            <% if (entry.status == 'pending') { %>
+              <i class="md-icon">assignment</i>
+            <% } else if (entry.status == 'reviewed') { %>
+              <i class="md-icon">assignment_turned_in</i>
+            <% } else { %>
+              <i class="md-icon">file_download</i>
+            <% } %>
+            <%= filename %>
+          </a>
         <% } %>
         <div class="entry__delete-bt icon-btn"><i class="md-icon">delete</i></div>
     </div>

@@ -275,7 +275,7 @@ class Assignment {
     this.updateAccepBtnVisibility(data);
 
     // Update list of group names.
-    let groupNames = document.body.querySelector('.group-names');
+    let groupNames = document.body.querySelector('.group-names > :first-child');
     let groups = Groups.preprocess(this.data);
     for (let g of groups) {
       if (g.id == this.groupId) {
