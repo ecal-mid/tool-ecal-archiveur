@@ -615,8 +615,8 @@ body:not([data-group]) .assigned-entries {
 }
 
 .groups .group.pending:not([data-num='0'])::after {
-  content: '1';
-  background: #ff3838;;
+  content: '!';
+  background: #ff8d38;;
 }
 
 .groups .group.reviewed::after {
