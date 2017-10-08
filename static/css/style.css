@@ -634,7 +634,7 @@ body:not([data-group]) .assigned-entries {
   font-family: 'Material Icons';
   content: 'assignment_turned_in';
   background: none;
-  color: #365e72;
+  color: #75c09b;
   font-size: 1.3em;
   right: 4px;
   top: 4px;
@@ -642,6 +642,10 @@ body:not([data-group]) .assigned-entries {
 
 .entry.pending .entry-content .md-icon {
   color: #ff8d38;
+}
+
+.entry.reviewed .entry-content .md-icon {
+  color: #75c09b;
 }
 
 /*.entry.reviewed .entry-content::after,
