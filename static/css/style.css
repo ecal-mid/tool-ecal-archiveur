@@ -515,14 +515,11 @@ body:not([data-group]) .assigned-entries {
   position: absolute;
   bottom: 4px;
   right: 0;
-  display: inline-block;
-  width: 3.2em;
-  height: 3.2em;
-  margin-right: 0.5em;
 }
 
 .groups-container > .icon-btn .md-icon {
   margin-right: 0;
+  font-size: 1.5em;
 }
 
 .groups-container::after {
