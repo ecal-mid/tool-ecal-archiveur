@@ -218,3 +218,11 @@ let foldEl = document.body.querySelector('#toggle-menu');
 foldEl.addEventListener('click', () => appEl.classList.toggle('fold'), false);
 
 setup();
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth < 800 && !appEl.classList.contains('fold')) {
+    appEl.classList.add('fold');
+  } else if (window.innerWidth > 800 && appEl.classList.contains('fold')) {
+    appEl.classList.remove('fold');
+  }
+});
