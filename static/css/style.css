@@ -404,7 +404,12 @@ header .path {
   background-color: rgba(0,0,0,0.05);
 }
 
-.file-entry a.download-icon, .icon-btn {
+.file-entry a.entry-content .md-icon {
+  padding: 0.2em 0 0.2em 0.2em;
+  display: inline-block;
+}
+
+.icon-btn {
   padding: 0.5em;
   border-radius: 50%;
   display: inline-block;
@@ -448,12 +453,9 @@ body:not([data-group]) .assigned-entries {
   margin-right: 0;
 }
 
-.entry.pending .entry-content {
-  background-color: #ffdacc;
-}
-
-.entry.reviewed .entry-content{
-  background-color: #ccffcc;
+.entry.pending .entry-content,
+.entry.reviewed .entry-content {
+  position: relative;
 }
 
 
@@ -604,7 +606,9 @@ body:not([data-group]) .assigned-entries {
   margin-left: -5px;
 }
 
-.groups .group:not([data-num='0'])::after {
+.groups .group:not([data-num='0'])::after,
+.entry.reviewed .entry-content::after,
+.entry.pending .entry-content::after {
   content: attr(data-num);
   position: absolute;
   top: 0.5em;
@@ -612,7 +616,7 @@ body:not([data-group]) .assigned-entries {
   font-size: 0.75em;
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  border-radius: 50% 50% 50% 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -620,15 +624,40 @@ body:not([data-group]) .assigned-entries {
   color: white;
 }
 
-.groups .group.pending:not([data-num='0'])::after {
-  content: '!';
-  background: #ff8d38;;
+.groups .group.pending:not([data-num='0'])::after,
+.entry.pending .entry-content::after {
+  font-family: 'Material Icons';
+  content: 'assignment';
+  background: none;
+  color: #ff8d38;
+  font-size: 1.3em;
+  right: 4px;
+  top: 4px;
 }
 
-.groups .group.reviewed::after {
+.entry.pending .entry-content .md-icon {
+  color: #ff8d38;
+}
+
+.groups .group.reviewed::after,
+.entry.reviewed .entry-content::after {
   font-family: 'Material Icons';
-  content: 'check' !important;
-  background: #8cce8c !important;
+  /*content: 'check' !important;
+  background: #365e72 !important;*/
+  content: 'assignment_turned_in';
+  background: none;
+  color: #365e72;
+  font-size: 1.3em;
+  right: 4px;
+  top: 4px;
+}
+
+.entry.reviewed .entry-content::after,
+.entry.pending .entry-content::after {
+  left: -7px;
+  top: -7px;
+  width: 20px;
+  height: 20px;
 }
 
 .group-names {

@@ -103,10 +103,7 @@
         <% if (entry.text) { %>
         <p class="entry-content"><%= entry.text %></p>
         <% } else { %>
-        <p class="entry-content">
-          <a href="<%= entry.file %>" target="_blank"><%= filename %></a>
-          <a class="download-icon" href="<%= entry.file %>" target="_blank"><i class="md-icon">file_download</i></a>
-        </p>
+          <a href="<%= entry.file %>" class="entry-content" target="_blank"><%= filename %> <i class="md-icon">file_download</i></a>
         <% } %>
       <div class="entry__delete-bt">+</div>
     </div>
