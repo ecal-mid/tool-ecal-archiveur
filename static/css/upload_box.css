@@ -35,10 +35,6 @@
   transition: all 0.2s;
 }
 
-.box:hover .md-icon {
-  color: black;
-}
-
 .box__dragndrop,
 .box__icon {
   display: none;

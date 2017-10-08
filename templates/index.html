@@ -105,7 +105,7 @@
         <% } else { %>
           <a href="<%= entry.file %>" class="entry-content" target="_blank"><%= filename %> <i class="md-icon">file_download</i></a>
         <% } %>
-      <div class="entry__delete-bt">+</div>
+        <div class="entry__delete-bt icon-btn"><i class="md-icon">delete</i></div>
     </div>
   </div>
 </script>
@@ -114,7 +114,7 @@
   <div class="entry-row">
     <div class="entry new-entry entry-align-alt <%= classes.join(' ') %>">
       <input class="new-entry-text" type="text" placeholder="Add comment" />
-      <span class="entry__send-text"><i class="md-icon">send</i></span>
+      <span class="entry__send-text icon-btn"><i class="md-icon">send</i></span>
     </div>
     <form method="post" action="/api/upload" enctype="multipart/form-data" novalidate class="box  <%= classes.join(' ') %>">
       <div class="box__input">
