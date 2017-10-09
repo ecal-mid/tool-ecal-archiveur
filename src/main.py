@@ -46,7 +46,7 @@ def assignment(year, assignment_id=None, group_id=None):
         'index.html',
         year=year,
         user=user,
-        users_dict=users_dict,
+        users_dict=config['users'],
         courses=config['courses'],
         is_admin=is_admin,
         assignment=assignment_id,
@@ -65,7 +65,10 @@ def create_new(year):
         return redirect('/a/' + year)
     # Create default groups
     classe_id = request.form['course-id'].split('_')[0]
-    groups = [[u] for u in config['classes'][classe_id]]
+    if classe_id == 'other':
+        groups = []
+    else:
+        groups = [[u] for u in config['classes'][classe_id]]
     # Create the assignment
     a_id = request.form['course-id'] + '-' + request.form['assignment-name']
     a_id = re.sub('[^a-z0-9 -]+', '', a_id.lower())

@@ -123,7 +123,7 @@ class Assignment {
         return {
           user: data.user,
           classes: classe,
-          is_assignment: data.is_assignment
+          is_assignment: data.is_assignment,
         };
 
       case 'entry-tpl':
@@ -201,6 +201,10 @@ class Assignment {
     }
   }
 
+  /**
+   * updateAccepBtnVisibility.
+   * @param  {Object} data Data object.
+   */
   updateAccepBtnVisibility(data) {
     let btn = this.el.querySelector('.review-btn');
     if (btn) {
@@ -232,7 +236,7 @@ class Assignment {
           entry: this.entries[i],
           year: this.year,
           user: this.userId,
-          assignment: this.docId
+          assignment: this.docId,
         });
         break;
       }

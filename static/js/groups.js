@@ -82,6 +82,9 @@ const Groups = (function() {
       gEl.addEventListener('dragleave', () => {
         gEl.classList.remove('dragover');
       }, false);
+      gEl.addEventListener('dragenter', (ev) => {
+        ev.preventDefault();
+      }, false);
       gEl.addEventListener('drop', (ev) => {
         gEl.classList.remove('dragover');
         if (current && current.parentNode != gEl) {
@@ -119,21 +122,39 @@ const Groups = (function() {
     }
     // Show.
     mainEl.append(el);
+    UserFinder.setup(el.querySelector('.student-finder'), (userId) => {
+      hasChanged = true;
+      // Add user to a new group.
+      data.assignment.groups.push([userId]);
+      // Re-render.
+      edit(data);
+    }, false);
+
+    let cancelBt = el.querySelector('.btn-cancel');
+    cancelBt.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      el.remove();
+    }, false);
+
+    let submitBt = el.querySelector('[value="submit"]');
+    submitBt.addEventListener('click', onValidateClicked, false);
   }
 
-  el.addEventListener('click', (ev) => {
-    if (ev.target.classList.contains('modal-container')) {
-      el.remove();
-      if (hasChanged) {
-        mainEl.classList.add('loading');
-        api.update(assignment.year, assignment.docId, assignment.data)
-            .then((data) => {
-              load(true);
-              hasChanged = false;
-            });
-      }
+  /**
+   * onValidateClicked.
+   * @param  {MouseEvent} ev Event
+   */
+  function onValidateClicked(ev) {
+    el.remove();
+    if (hasChanged) {
+      mainEl.classList.add('loading');
+      api.update(assignment.year, assignment.docId, assignment.data)
+          .then((data) => {
+            load(true);
+            hasChanged = false;
+          });
     }
-  }, false);
+  }
 
   return {edit: edit, preprocess: preprocess, getGroupId: getGroupId};
 })();

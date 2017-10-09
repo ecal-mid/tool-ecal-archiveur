@@ -29,15 +29,26 @@
     <main>
       <img src="/static/res/preloader.svg" class="preloader">
       {% if is_admin %}
-      <form method="post" action="/new/{{year}}" class="new-assignment-form">
-        <select name="course-id" class="new-entry-text">
-          {% for k, c in courses.iteritems() %}
-            <option value="{{k}}">{{k}} - {{c}}</option>
-          {% endfor %}
+      <form method="post" action="/new/{{year}}" class="new-assignment-form hidden">
+        <select name="class-id" class="new-entry-text">
+            <option value="" disabled selected>Select a group</option>
+            <option value="1CVmid">1CVmid</option>
+            <option value="2CVmid">2CVmid</option>
+            <option value="3CVmid">3CVmid</option>
+            <option value="other">Other</option>
         </select>
-        <input type="text" name="assignment-name" class="new-entry-text" placeholder="Assignment Name" />
+        <select name="course-id" class="new-entry-text" disabled>
+          <option value="" disabled selected>Select a course</option>
+          {% for k, c in courses.iteritems() %}
+            <option value="{{k}}">{{c}}</option>
+          {% endfor %}
+            <option value="other">Other</option>
+        </select>
+        <input type="text" name="assignment-name" class="new-entry-text disabled" placeholder="Assignment Name" />
         <input type="hidden" name="creator" value={{user.id}}/>
-        <button class="btn btn-strong">Create</button>
+        <div class="form-action">
+          <a href="/a/{{year}}" class="btn btn-cancel">Cancel</a> <button class="btn btn-strong disabled" value="submit">Create</button>
+        </div>
       </form>
       {% endif %}
     </main>
@@ -64,6 +75,9 @@
   {% if is_admin %}
   <div class="groups-container">
     <div class="groups">
+      <% if (groups.length == 0) { %>
+        <p class="notice">Click on the edit button to add people to this assignment <i class="md-icon">arrow_forward</i></p>
+      <% } %>
       <% for(var i=0; i<groups.length; i++) { %>
         <div class="group <%= groups[i].classes.join(' ') %>" data-id="<%= groups[i].id %>" data-num="0">
           <% for(var j=0; j<groups[i].users.length; j++) { %>
@@ -149,6 +163,12 @@
 <script type="text/template" id="edit-groups-tpl">
   <div class="groups-editor modal">
       <h2>Edit groups</h2>
+      <div class="student-finder">
+        <div class="autocomplete-list">
+          <input class="student-input autocomplete-input" placeholder="Add someone" type="text"></input>
+          <ul class="student-list" style="display:none;"></ul>
+        </div>
+      </div>
       <div class="groups-list">
       <% for(var i=0; i<groups.length; i++) { %>
         <div class="group <%= groups[i].classes.join(' ') %>" data-id="<%= groups[i].id %>">
@@ -161,14 +181,29 @@
       <div class="group group-new"><i class="md-icon">group_add</i></div>
       <div class="group group-remove"><i class="md-icon">remove_circle_outline</i></div>
     </div>
+    <div class="form-action">
+      <a href="/a/{{year}}" class="btn btn-cancel">Cancel</a> <button class="btn btn-strong" value="submit">OK</button>
+    </div>
   </div>
 </script>
+
+{% if is_admin %}
+<script type="text/template" id="user-card-tpl">
+    <% if (typeof(img) !== 'undefined') { %>
+      <div class="avatar"><img src="<%= img %>"></div>
+    <% } else { %>
+    <div style="width:50px; height:40px;"></div>
+    <% } %>
+    <p><%= name %></p>
+</script>
+{% endif%}
 
 <script>
 let users = {{ users_dict|tojson|safe }};
 </script>
 
 <!-- third parties -->
+<script src="{{ url_for('static', filename='libs/mobile-drag-drop/index.min.js') }}"></script>
 <script src="{{ url_for('static', filename='libs/qwest.min.js') }}"></script>
 <script src="{{ url_for('static', filename='libs/ejs.min.js') }}"></script>
 <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
@@ -182,6 +217,9 @@ let users = {{ users_dict|tojson|safe }};
 <script src="{{ url_for('static', filename='js/groups.js') }}"></script>
 <script src="{{ url_for('static', filename='js/assignment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+{% if is_admin %}
 <script src="{{ url_for('static', filename='js/new_assignment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/user_finder.js') }}"></script>
+{% endif%}
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}

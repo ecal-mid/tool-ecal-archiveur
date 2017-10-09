@@ -41,6 +41,19 @@ h2 {
   color: #365e72;
 }
 
+select, .autocomplete-input {
+  color: black;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0.5em 0;
+  border-radius: 0;
+  background: white;
+  border-bottom: 2px solid rgba(0,0,0,0.1);
+  position: relative;
+  background: transparent url("/static/res/arrow_drop_down.svg") no-repeat right center;
+}
+
 .btn {
   padding: 12px 50px;
   cursor: pointer;
@@ -54,7 +67,7 @@ h2 {
   text-decoration: none;
 }
 
-.btn:hover {
+.btn:hover, select:hover {
   color: black;
   background-color: rgba(0,0,0,0.05);
 }
@@ -102,6 +115,11 @@ input {
 
 .hidden {
   display: none !important;
+}
+
+.disabled, select:disabled {
+ opacity: 0.5;
+ pointer-events: none;
 }
 
 .preloader {
@@ -184,6 +202,7 @@ nav ul li a.btn {
   padding: 0.7em 1em;
   font-weight: bold;
   margin: 0;
+  width: 100%;
 }
 
 nav ul li a.btn.selected {
@@ -336,6 +355,10 @@ header .path {
   border: 1px solid rgba(0,0,0,0.1);
 }
 
+.entry:not(.file-entry) .entry-content {
+    padding: 0.7em 1em;
+}
+
 .entry .entry-user {
   width: 100px;
   flex-shrink: 0;
@@ -351,6 +374,7 @@ header .path {
 
 .entry .entry-date {
   font-size: 0.75em;
+  color: #d0d0d0;
 }
 
 .entry > p {
@@ -481,9 +505,17 @@ body:not([data-group]) .assigned-entries {
   min-width: 160px;
 }
 
-.assigned-entries .new-entry-text,
-.assigned-entries .new-entry {
+.new-entry-text,
+.new-entry {
   max-width: 100%;
+}
+
+.assignment-entries .new-entry {
+  max-width: 426px;
+}
+
+.assignment-entries .entry-row:last-child {
+  margin-top: 0.5em;
 }
 
 .entry__send-text {
@@ -542,6 +574,7 @@ body:not([data-group]) .assigned-entries {
   -webkit-scrollbar: none;
   overflow-y: hidden;
   margin-right: 4em;
+  min-height: 50px;
 }
 
 .groups .group {
@@ -630,12 +663,23 @@ body:not([data-group]) .assigned-entries {
 
 .groups .group.reviewed::after {
   font-family: 'Material Icons';
-  content: 'assignment_turned_in';
-  background: none;
-  color: #75c09b;
-  font-size: 1.3em;
+  content: 'check';
+  /*background: none;*/
+  background: #75c09b;
+  /*color: #75c09b;*/
+  /*color: white;*/
+  /*font-size: 1.3em;*/
+  border-radius: 50%;
   right: 4px;
   top: 4px;
+}
+
+.groups .notice {
+  color: #98a2a6;
+  align-items: center;
+  justify-content: right;
+  text-align: right;
+  padding: 1em;
 }
 
 .entry.pending .entry-content .md-icon {
@@ -646,14 +690,6 @@ body:not([data-group]) .assigned-entries {
   color: #75c09b;
 }
 
-/*.entry.reviewed .entry-content::after,
-.entry.pending .entry-content::after {
-  left: -7px;
-  top: -7px;
-  width: 20px;
-  height: 20px;
-}*/
-
 .group-names {
   color: #98a2a6;
   text-align: right;
@@ -662,15 +698,34 @@ body:not([data-group]) .assigned-entries {
 
 
 .new-assignment-form {
-  display: none;
   padding: 1em;
-  margin-top: 1em;
+  max-width: 360px;
+  position: absolute;
+  left: 0.5em;
+  transition: all 0.2s;
+  transform: translateX(0);
+  opacity: 1;
+  background: white;
+}
+.new-assignment-form.hidden {
+  display: block !important;
+  pointer-events: none;
+  transform: translateX(-20px);
+  opacity: 0;
 }
 
 .new-assignment-form input {
   margin-top: 0.5em;
   width: 100%;
 }
+
+.form-action {
+  display: flex;
+  margin-top: 1em;
+}
+
+.form-action > * { flex: 1; }
+.form-action [value="submit"] { margin-left: 1em; }
 
 
 .modal-container {
@@ -747,6 +802,10 @@ body:not([data-group]) .assigned-entries {
   pointer-events: all;
 }
 
+.groups-editor .form-action {
+  margin: 0.5em;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width:800px) {
@@ -762,8 +821,8 @@ body:not([data-group]) .assigned-entries {
     display: none;
   }
 
-  .entry .new-entry-text {
-    width: 150px;
+  .entry .entry-content {
+    margin: 0 0.5em;
   }
 
   .assigned-entries .entry .new-entry-text {
@@ -785,7 +844,19 @@ body:not([data-group]) .assigned-entries {
     right: 6em;
   }
 
-  .modal {
-    width: auto;
+  .new-assignment-form {
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
   }
+
+  .modal {
+    width: 100%;
+  }
+}
+
+
+
+.dnd-poly-drag-image {
+  opacity: .5 !important;
 }

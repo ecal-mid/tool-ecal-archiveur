@@ -9,18 +9,14 @@ let database = firebase.database();
 
 // Build full users by id dictionary
 let usersById = {};
-for (let k in users) {
-  if (k) {
-    for (let u in users[k]) {
-      if (u) {
-        let user = usersById[u] = users[k][u];
-        user.id = u;
-        if (user.img == '?') {
-          user.img = '/static/res/user.svg';
-        } else {
-          user.img = 'https://intranet.ecal.ch/img/photo/' + user.img;
-        }
-      }
+for (let u in users) {
+  if (u) {
+    let user = usersById[u] = users[u];
+    user.id = u;
+    if (user.img == '?') {
+      user.img = '/static/res/user.svg';
+    } else {
+      user.img = 'https://intranet.ecal.ch/img/photo/' + user.img;
     }
   }
 }
@@ -207,10 +203,10 @@ function setNav(year, assignment, group) {
   } else {
     delete document.body.dataset['group'];
   }
-  window.history.pushState(
-      {year: year, assignment: assignment, group: group},
-      year + assignment + group,
-      `/a/${year}/${assignment}` + (group ? '/' + group : ''));
+  let state = {year: year, assignment: assignment, group: group};
+  let url = `/a/${year}/${assignment}` + (group ? '/' + group : '');
+  window.history.pushState(state, url, url);
+  window.parent.postMessage({a: state, b: url, c: url}, '*');
   load();
 }
 
@@ -225,4 +221,9 @@ window.addEventListener('resize', () => {
   } else if (window.innerWidth > 800 && appEl.classList.contains('fold')) {
     appEl.classList.remove('fold');
   }
+});
+
+MobileDragDrop.polyfill({
+  dragImageTranslateOverride:
+      MobileDragDrop.scrollBehaviourDragImageTranslateOverride,
 });
