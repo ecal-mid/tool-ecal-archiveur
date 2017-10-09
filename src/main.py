@@ -83,6 +83,12 @@ def create_new(year):
     return redirect('/a/' + year + '/' + a_id)
 
 
+@bp.route('/robots.txt')
+def robots():
+    """Prevents search engine from indexing the page."""
+    return 'User-agent: * \nDisallow: /'
+
+
 @bp.route('/')
 @flask_login.login_required
 def index():
