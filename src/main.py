@@ -46,6 +46,7 @@ def assignment(year, assignment_id=None, group_id=None):
         year=year,
         user=user,
         users_dict=config['users'],
+        users_img_prefix=config['users_img_prefix'],
         courses=config['courses'],
         is_admin=is_admin,
         assignment=assignment_id,

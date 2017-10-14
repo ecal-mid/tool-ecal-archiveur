@@ -1,5 +1,7 @@
 'use strict';
 
+const USER_PHOTOS_URL = document.body.dataset['usersImgPrefix'];
+
 let appEl = document.querySelector('.app');
 let mainEl = appEl.querySelector('.app main');
 let assignment = new Assignment();
@@ -16,7 +18,7 @@ for (let u in users) {
     if (user.img == '?') {
       user.img = '/static/res/user.svg';
     } else {
-      user.img = 'https://intranet.ecal.ch/img/photo/' + user.img;
+      user.img = USER_PHOTOS_URL + user.img;
     }
   }
 }

@@ -17,6 +17,7 @@
 </head>
 
 <body class="js"
+  data-users-img-prefix="{{users_img_prefix}}"
   {% if user is defined %} data-user-id="{{user.id}}" {% endif %}
   {% if year is defined %} data-year="{{year}}" {% endif %}
   {% if assignment is not none %} data-assignment="{{assignment}}" {% endif %}

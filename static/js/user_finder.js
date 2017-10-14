@@ -129,7 +129,7 @@ const UserFinder = (function() {
             if (u.img == '?') {
               u.img = '/static/res/user.svg';
             } else {
-              u.img = 'https://intranet.ecal.ch/img/photo/' + u.img;
+              u.img = USER_PHOTOS_URL + u.img;
             }
             usersById[u.id] = {
               id: u.id,
