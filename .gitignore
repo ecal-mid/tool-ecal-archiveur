@@ -4,3 +4,4 @@ venv
 config
 static/data/2017-2018/imgs
 temp
+scripts/static
