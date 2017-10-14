@@ -94,10 +94,12 @@ class Assignment {
         break;
       }
     }
+    let module = this.docId.split('_');
+    module = module[0] + module[1];
     // Return our processed data object
     return {
       assignment: data.assignment,
-      module: this.docId.split('-')[0],
+      module: module,
       entries: data.entries,
       groups: groups,
       group: group ? group.users.map((u) => u.name) : null,

@@ -29,24 +29,27 @@ users_dict['admins'] = {u: config['users'][u] for u in config['admins']}
 def load_assignments(year):
     """Retrieves list of assignments available on the server."""
     full_path = os.path.join(config['root_path'], 'assignments', year)
-    config['assignments'] = os.listdir(full_path)
-    # Remove .json extension
-    config['assignments'] = [a[:-5] for a in config['assignments']]
-
-
-def load_users_assignments_access(year):
-    full_path = os.path.join(config['root_path'], 'assignments', year)
-    config['assignments_access'] = cfg = {}
-    for a_file in config['assignments']:
-        a = json.load(open(os.path.join(full_path, a_file + '.json')))
-        a_id = a[year].keys()[0]
-        cfg[a_id] = []
-        groups = a[year][a_id]['assignment']['groups']
+    assignments_files = os.listdir(full_path)
+    print assignments_files
+    config['assignments'] = {}
+    for a_file in assignments_files:
+        if a_file == '.DS_Store': continue
+        a = json.load(open(os.path.join(full_path, a_file)))
+        a_id = a_file[:-5]
+        a_data = a[year][a_id]['assignment']
+        # Retrieve access list
+        access = []
+        groups = a_data['groups']
         for g in groups:
             for u in g:
-                cfg[a_id].append(u)
-        cfg[a_id] = sorted(set(cfg[a_id]))
+                access.append(u)
+        access = sorted(set(access))  # Remove duplicates
+        # set in global object
+        config['assignments'][a_id] = {
+            'id': a_id,
+            'access': access,
+            'data': a_data
+        }
 
 
 load_assignments('2017-2018')
-load_users_assignments_access('2017-2018')

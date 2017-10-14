@@ -6,7 +6,7 @@ import login
 import os
 import re
 import json
-from .config import config, users_dict
+from .config import config, users_dict, load_assignments
 
 bp = Blueprint(
     'index',
@@ -24,27 +24,28 @@ def assignment(year, assignment_id=None, group_id=None):
     user = login.get_current_user_infos()
     # Look if user is admin
     is_admin = user['id'] in config['admins']
-
-    assignments = config['assignments']
-
     # Detect if assignment exists
+    assignments = config['assignments']
     if assignment_id and assignment_id not in assignments:
         return redirect('/a/' + year)
     # Add a few restrictions if the user is not admin
     if not is_admin:
-        # Filter accessible assignments using the assignments_access dict
-        assignments = [
-            a for a in assignments
-            if user['id'] in config['assignments_access'][a]
-        ]
-        # Discard assignment if it's not accessible by this user
+        # Filter accessible assignments using the assignments access dict
+        assignments = {k: a for k, a in assignments if user['id'] in a.access}
+        # Redirect if user is not supposed to access
         if assignment_id and assignment_id not in assignments:
             return redirect('/a/' + year)
+    # Organize assignments per class
+    assignments_per_class = {}
+    for k, a in assignments.iteritems():
+        classe = k.split('_')[0]
+        assignments_per_class[classe] = assignments_per_class[
+            classe] if classe in assignments_per_class else {}
+        assignments_per_class[classe][a['id']] = a
     # Process the template
     return render_template(
         'index.html',
-        # is_dev=current_app.debug,
-        is_dev=False,
+        is_dev=current_app.debug,
         year=year,
         user=user,
         users_dict=config['users'],
@@ -54,7 +55,7 @@ def assignment(year, assignment_id=None, group_id=None):
         is_admin=is_admin,
         assignment=assignment_id,
         group=group_id,
-        assignments=assignments)
+        assignments=assignments_per_class)
 
 
 @bp.route('/new/<year>', methods=['POST'])
@@ -67,15 +68,16 @@ def create_new(year):
     if not is_admin:
         return redirect('/a/' + year)
     # Create default groups
-    classe_id = request.form['course-id'].split('_')[0]
+    classe_id = request.form['class-id']
     if classe_id == 'other':
         groups = []
     else:
         groups = [[u] for u in config['classes'][classe_id]]
     # Create the assignment
-    a_id = request.form['course-id'] + '-' + request.form['assignment-name']
-    a_id = re.sub('[^a-z0-9 -]+', '', a_id.lower())
-    a_id = a_id.replace(' ', '-')
+    c_id = re.sub('[^a-z0-9 -_]+', '', request.form['course-id'].lower())
+    a_name = re.sub('[^a-z0-9 -]+', '', request.form['assignment-name'].lower())
+    a_id = c_id + '_' + a_name
+    c_id = c_id.replace(' ', '-')
     template = json.load(open('config/empty_assignment.json'))
     template['assignment']['name'] = request.form['assignment-name']
     template['assignment']['groups'] = groups
@@ -87,7 +89,7 @@ def create_new(year):
         return 'assignment already exists'
     json.dump(assignment, open(full_path, 'w'), indent=2)
     # Reload list of assignments
-    load_assignments()
+    load_assignments(year)
     return redirect('/a/' + year + '/' + a_id)
 
 

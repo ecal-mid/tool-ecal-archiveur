@@ -21,8 +21,11 @@
       {% endif %}
       <h1>2017-2018</h1>
       <ul>
-        {% for a in assignments %}
-          <li><a href="/a/{{year}}/{{a}}" class="btn {% if assignment == a %}selected{% endif %}" data-year={{year}} data-assignment-id="{{a}}">{{ a }}</a></li>
+        {% for c_id, classe in assignments.iteritems() %}
+          <h2>{{ c_id }}</h2>
+          {% for k, a in classe.iteritems() %}
+            <li><a href="/a/{{year}}/{{k}}" class="btn {% if assignment == k %}selected{% endif %}" data-year={{year}} data-assignment-id="{{k}}">{{ a['data']['name'] }}</a></li>
+          {% endfor %}
         {% endfor %}
       </ul>
     </nav>
