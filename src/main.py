@@ -24,10 +24,9 @@ def assignment(year, assignment_id=None, group_id=None):
     user = login.get_current_user_infos()
     # Look if user is admin
     is_admin = user['id'] in config['admins']
-    # Retrieve list of assignments available on the server
-    full_path = os.path.join(config['root_path'], 'assignments', year)
-    assignments = os.listdir(full_path)
-    assignments = [a[:-5] for a in assignments]
+
+    assignments = config['assignments']
+
     # Detect if assignment exists
     if assignment_id and assignment_id not in assignments:
         return redirect('/a/' + year)
@@ -83,6 +82,8 @@ def create_new(year):
     if os.path.exists(full_path):
         return 'assignment already exists'
     json.dump(assignment, open(full_path, 'w'), indent=2)
+    # Reload list of assignments
+    load_assignments()
     return redirect('/a/' + year + '/' + a_id)
 
 

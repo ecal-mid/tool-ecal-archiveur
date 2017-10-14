@@ -25,14 +25,20 @@ for k, v in config['classes'].iteritems():
 users_dict['admins'] = {u: config['users'][u] for u in config['admins']}
 
 
+# Load assignments
+def load_assignments(year):
+    """Retrieves list of assignments available on the server."""
+    full_path = os.path.join(config['root_path'], 'assignments', year)
+    config['assignments'] = os.listdir(full_path)
+    # Remove .json extension
+    config['assignments'] = [a[:-5] for a in config['assignments']]
+
+
 def load_users_assignments_access(year):
     full_path = os.path.join(config['root_path'], 'assignments', year)
-    assignments = os.listdir(full_path)
-
     config['assignments_access'] = cfg = {}
-
-    for a_file in assignments:
-        a = json.load(open(os.path.join(full_path, a_file)))
+    for a_file in config['assignments']:
+        a = json.load(open(os.path.join(full_path, a_file + '.json')))
         a_id = a[year].keys()[0]
         cfg[a_id] = []
         groups = a[year][a_id]['assignment']['groups']
@@ -42,4 +48,5 @@ def load_users_assignments_access(year):
         cfg[a_id] = sorted(set(cfg[a_id]))
 
 
+load_assignments('2017-2018')
 load_users_assignments_access('2017-2018')
