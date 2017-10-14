@@ -205,11 +205,11 @@
 let users = {{ users_dict|tojson|safe }};
 </script>
 
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
 {% if is_dev %}
   <script src="/static/libs/mobile-drag-drop/index.min.js"></script>
   <script src="/static/libs/qwest.min.js"></script>
   <script src="/static/libs/ejs.min.js"></script>
-  <script src="/static/libs/firebase.js"></script>
   <script src="/static/js/utils.js"></script>
   <script src="/static/js/api.js"></script>
   <script src="/static/js/firebase.js"></script>
