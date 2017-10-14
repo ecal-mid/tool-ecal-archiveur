@@ -1,6 +1,6 @@
 """ Main """
 
-from flask import Blueprint, render_template, url_for, redirect, request
+from flask import Blueprint, render_template, url_for, redirect, request, current_app
 import flask_login
 import login
 import os
@@ -43,6 +43,8 @@ def assignment(year, assignment_id=None, group_id=None):
     # Process the template
     return render_template(
         'index.html',
+        # is_dev=current_app.debug,
+        is_dev=False,
         year=year,
         user=user,
         users_dict=config['users'],

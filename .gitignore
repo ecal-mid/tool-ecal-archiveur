@@ -3,3 +3,4 @@ venv
 *.DS_Store
 config
 static/data/2017-2018/imgs
+temp

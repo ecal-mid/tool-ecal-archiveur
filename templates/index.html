@@ -202,24 +202,27 @@
 let users = {{ users_dict|tojson|safe }};
 </script>
 
-<!-- third parties -->
-<script src="{{ url_for('static', filename='libs/mobile-drag-drop/index.min.js') }}"></script>
-<script src="{{ url_for('static', filename='libs/qwest.min.js') }}"></script>
-<script src="{{ url_for('static', filename='libs/ejs.min.js') }}"></script>
-<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-<!-- scripts -->
-<script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-<script src="{{ url_for('static', filename='js/api.js') }}"></script>
-<script src="{{ url_for('static', filename='js/firebase.js') }}"></script>
-<script src="{{ url_for('static', filename='js/upload_box.js') }}"></script>
-<script src="{{ url_for('static', filename='js/entry.js') }}"></script>
-<script src="{{ url_for('static', filename='js/new_entry.js') }}"></script>
-<script src="{{ url_for('static', filename='js/groups.js') }}"></script>
-<script src="{{ url_for('static', filename='js/assignment.js') }}"></script>
-<script src="{{ url_for('static', filename='js/nav.js') }}"></script>
-{% if is_admin %}
-<script src="{{ url_for('static', filename='js/new_assignment.js') }}"></script>
-<script src="{{ url_for('static', filename='js/user_finder.js') }}"></script>
-{% endif%}
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% if is_dev %}
+  <script src="/static/libs/mobile-drag-drop/index.min.js"></script>
+  <script src="/static/libs/qwest.min.js"></script>
+  <script src="/static/libs/ejs.min.js"></script>
+  <script src="/static/libs/firebase.js"></script>
+  <script src="/static/js/utils.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/firebase.js"></script>
+  <script src="/static/js/upload_box.js"></script>
+  <script src="/static/js/entry.js"></script>
+  <script src="/static/js/new_entry.js"></script>
+  <script src="/static/js/groups.js"></script>
+  <script src="/static/js/assignment.js"></script>
+  <script src="/static/js/nav.js"></script>
+  {% if is_admin %}
+    <script src="/static/js/new_assignment.js"></script>
+    <script src="/static/js/user_finder.js"></script>
+  {% endif %}
+  <script src="/static/js/main.js"></script>
+{% else %}
+  <script src="/static/main.min.js"></script>
+{% endif %}
+
 {% endblock %}
