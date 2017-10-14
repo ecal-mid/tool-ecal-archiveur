@@ -29,7 +29,7 @@
         {% endfor %}
       </ul>
     </nav>
-    <main>
+    <main class="loading">
       <img src="{{static_files}}/res/preloader.svg" class="preloader">
       {% if is_admin %}
       <form method="post" action="/new/{{year}}" class="new-assignment-form hidden">
