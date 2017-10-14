@@ -77,7 +77,7 @@ def create_new(year):
     c_id = re.sub('[^a-z0-9 -_]+', '', request.form['course-id'].lower())
     a_name = re.sub('[^a-z0-9 -]+', '', request.form['assignment-name'].lower())
     a_id = c_id + '_' + a_name
-    c_id = c_id.replace(' ', '-')
+    a_id = a_id.replace(' ', '-')
     template = json.load(open('config/empty_assignment.json'))
     template['assignment']['name'] = request.form['assignment-name']
     template['assignment']['groups'] = groups
