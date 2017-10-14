@@ -4,7 +4,7 @@
 
   <header>
     <button class="btn" id="toggle-menu">☰</button>
-    <img class="logo" src="/static/res/logo.svg">
+    <img class="logo" src="{{static_files}}/res/logo.svg">
     <div class="path"></div>
     <div class="avatar"><img src="{{users_img_prefix}}/{{user.img}}"></div>
   </header>
@@ -27,7 +27,7 @@
       </ul>
     </nav>
     <main>
-      <img src="/static/res/preloader.svg" class="preloader">
+      <img src="{{static_files}}/res/preloader.svg" class="preloader">
       {% if is_admin %}
       <form method="post" action="/new/{{year}}" class="new-assignment-form hidden">
         <select name="class-id" class="new-entry-text">
@@ -222,7 +222,7 @@ let users = {{ users_dict|tojson|safe }};
   {% endif %}
   <script src="/static/js/main.js"></script>
 {% else %}
-  <script src="/static/main.min.js"></script>
+  <script src="{{static_files}}/main.min.js"></script>
 {% endif %}
 
 {% endblock %}

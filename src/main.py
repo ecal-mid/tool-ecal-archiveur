@@ -43,11 +43,11 @@ def assignment(year, assignment_id=None, group_id=None):
     # Process the template
     return render_template(
         'index.html',
-        # is_dev=current_app.debug,
-        is_dev=False,
+        is_dev=current_app.debug,
         year=year,
         user=user,
         users_dict=config['users'],
+        static_files=config['static_files'],
         users_img_prefix=config['users_img_prefix'],
         courses=config['courses'],
         is_admin=is_admin,
