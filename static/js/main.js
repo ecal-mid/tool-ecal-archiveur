@@ -37,6 +37,8 @@ function setup() {
   let groupId = document.body.dataset['group'];
   if (!docId) {
     appEl.classList.remove('fold');
+    mainEl.classList.remove('loading');
+    mainEl.classList.add('no-assignment-selected');
     return;
   }
   setNav(year, docId, groupId);
@@ -47,6 +49,8 @@ function setup() {
  * @param  {Boolean} force Force re-rendering of the assignment.
  */
 function load(force) {
+  mainEl.classList.remove('no-assignment-selected');
+
   // Year
   assignment.year = document.body.dataset['year'];
   if (!assignment.year) {

@@ -172,11 +172,11 @@ nav {
   border-right: 1px solid rgba(0,0,0,0.1);
   height: 100%;
   transition: all 0.2s;
-  width: 250px;
+  width: 300px;
 }
 
 .fold nav {
-  margin-left: -250px;
+  margin-left: -300px;
 }
 
 nav .btn-new {
@@ -238,6 +238,15 @@ h1 {
 	display: flex;
   justify-content: center;
   position: relative;
+}
+
+.app main.no-assignment-selected::before {
+  content: 'No assignment selected';
+  height: 100%;
+  margin-top: 30%;
+  color: #b4b4b0;
+  position: absolute;
+  top: 0;
 }
 
 .login {
