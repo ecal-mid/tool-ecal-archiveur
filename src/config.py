@@ -18,6 +18,13 @@ config.update(yaml.load(open(config_file)))
 users_file = os.path.join(config_folder, 'users.yaml')
 config.update(yaml.load(open(users_file)))
 
+# Add short user ids
+short_ids = {}
+for k, v in config['users'].iteritems():
+    if len(k) > 15:
+        short_ids[k[:15]] = k
+config['short_ids'] = short_ids
+
 # Replace user ids by dicts with full data
 users_dict = {}
 for k, v in config['classes'].iteritems():

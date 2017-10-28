@@ -22,13 +22,12 @@ class User(flask_login.UserMixin):
 
 
 def get_current_user_infos():
-    infos = config['users'][flask_login.current_user.id]
+    uid = flask_login.current_user.id
+    if uid in config['short_ids']:
+        uid = config['short_ids'][uid]
+    infos = config['users'][uid]
     # url = config['users_img_prefix'] + '/' + infos['img']
-    return {
-        'name': infos['name'],
-        'img': infos['img'],
-        'id': flask_login.current_user.id
-    }
+    return {'name': infos['name'], 'img': infos['img'], 'id': uid}
 
 
 @login_manager.user_loader
