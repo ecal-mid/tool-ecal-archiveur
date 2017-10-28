@@ -11,7 +11,8 @@ from .config import config
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
-uploaded_files = UploadSet('uploads', ('zip', 'pdf', 'jpg', 'png', 'mov'))
+uploaded_files = UploadSet('uploads', ('zip', 'pdf', 'jpg', 'png', 'mov',
+                                       'mp4'))
 
 mail = Mail(current_app)
 
