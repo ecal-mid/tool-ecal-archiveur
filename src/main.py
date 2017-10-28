@@ -31,7 +31,10 @@ def assignment(year, assignment_id=None, group_id=None):
     # Add a few restrictions if the user is not admin
     if not is_admin:
         # Filter accessible assignments using the assignments access dict
-        assignments = {k: a for k, a in assignments if user['id'] in a.access}
+        assignments = {
+            k: a
+            for k, a in assignments.iteritems() if user['id'] in a['access']
+        }
         # Redirect if user is not supposed to access
         if assignment_id and assignment_id not in assignments:
             return redirect('/a/' + year)
