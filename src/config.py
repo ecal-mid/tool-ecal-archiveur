@@ -30,7 +30,6 @@ def load_assignments(year):
     """Retrieves list of assignments available on the server."""
     full_path = os.path.join(config['root_path'], 'assignments', year)
     assignments_files = os.listdir(full_path)
-    print assignments_files
     config['assignments'] = {}
     for a_file in assignments_files:
         if a_file == '.DS_Store': continue
