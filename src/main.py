@@ -45,10 +45,12 @@ def assignment(year, assignment_id=None, group_id=None):
         assignments_per_class[classe] = assignments_per_class[
             classe] if classe in assignments_per_class else {}
         assignments_per_class[classe][a['id']] = a
+    if 'dev' in request.args:
+        print 'serving dev files'
     # Process the template
     return render_template(
         'index.html',
-        is_dev=current_app.debug,
+        is_dev=current_app.debug or 'dev' in request.args,
         year=year,
         user=user,
         users_dict=config['users'],
