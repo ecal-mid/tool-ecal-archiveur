@@ -50,7 +50,7 @@ def assignment(year, assignment_id=None, group_id=None):
     # Process the template
     return render_template(
         'index.html',
-        is_dev=current_app.debug or 'dev' in request.args,
+        is_dev=True or current_app.debug or 'dev' in request.args,
         year=year,
         user=user,
         users_dict=config['users'],
