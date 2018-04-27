@@ -61,13 +61,17 @@ def request_loader(request):
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return render_template('login.html')
+        return render_template(
+            'login.html', static_files=config['static_files'])
 
     user = request_loader(request)
     if user is not None:
         flask_login.login_user(user)
         return redirect(url_for('index.index'))
-    return render_template('login.html', error='Invalid login/password.')
+    return render_template(
+        'login.html',
+        static_files=config['static_files'],
+        error='Invalid login/password.')
 
 
 @bp.route('/logout')
