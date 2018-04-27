@@ -4,7 +4,10 @@ const UserFinder = (function() {
   let el = null;
   let users = null;
   let year = document.body.dataset['year'];
-  let template = document.getElementById('user-card-tpl').innerHTML;
+  let template = document.getElementById('user-card-tpl');
+  if (template) {
+    template = template.innerHTML;
+  };
   let inputEl;
   let listEl;
   let callback = null;
@@ -118,6 +121,9 @@ const UserFinder = (function() {
    * @param  {Function} cb Function called when a user is selected;
    */
   function setup(containerEl, cb) {
+    if (!template) {
+      return;
+    }
     el = containerEl;
     callback = cb;
     // request the users list then setup the finder.
