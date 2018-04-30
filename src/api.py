@@ -30,6 +30,7 @@ def upload():
             folder = request.form.get('path')
             result_filename = uploaded_files.save(rfile, folder=folder)
             url = uploaded_files.url(result_filename)
+            print 'New file uploaded in ' + folder + '.'
             return json.dumps({'success': True, 'url': url})
         except UploadNotAllowed as err:
             ext = os.path.splitext(rfile.filename)[1][1:]
