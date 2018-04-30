@@ -110,9 +110,9 @@ def mail_test(notification_type):
     # Set title
     title = 'New activity'
     if notification_type == 'new_file_pending':
-        title = '{} added a file for {}'.format(user_name, assignment_name)
+        title = u'{} added a file for {}'.format(user_name, assignment_name)
     elif notification_type == 'entry_reviewed':
-        title = '{} has reviewed your entry'.format(user_name)
+        title = u'{} has reviewed your entry'.format(user_name)
     # Render message
     msg = Message(title, recipients=recipients)
     url = os.path.join(config['app_url'], 'a', year, assignment_id,
