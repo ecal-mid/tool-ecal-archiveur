@@ -24,7 +24,9 @@ for k, v in config['users'].iteritems():
     if len(k) > 15:
         try:
             # No _ or - characters
-            firstname, lastname = [x.replace('_', '') for x in k.split('.')]
+            firstname, lastname = [
+                x.replace('_', '').replace('-', '') for x in k.split('.')
+            ]
             # Lastname or firstname can't be longer than 8 characters
             short_id = firstname[:8] + '.' + lastname[:8]
             short_ids[short_id] = k
