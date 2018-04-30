@@ -22,7 +22,15 @@ config.update(yaml.load(open(users_file)))
 short_ids = {}
 for k, v in config['users'].iteritems():
     if len(k) > 15:
-        short_ids[k[:15]] = k
+        try:
+            # No _ or - characters
+            firstname, lastname = [x.replace('_', '') for x in k.split('.')]
+            # Lastname or firstname can't be longer than 8 characters
+            short_id = firstname[:8] + '.' + lastname[:8]
+            short_ids[short_id] = k
+        except Exception as e:
+            continue
+
 config['short_ids'] = short_ids
 
 # Replace user ids by dicts with full data

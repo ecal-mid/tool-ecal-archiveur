@@ -47,14 +47,24 @@ def request_loader(request):
         return None
     try:
         if not current_app.debug:
+            # Make sure the id matches what ECAL rules:
+            # No _ or - characters
+            firstname, lastname = [
+                x.replace('_', '') for x in user_id.split('.')
+            ]
+            # Lastname or firstname can't be longer than 8 characters
+            user_id = firstname[:8] + '.' + lastname[:8]
+            # Connect to LDAP
             conn = ldap3.Connection(
                 ldap_server,
                 'ade\\' + user_id,
                 request.form.get('pw'),
                 auto_bind=True)
+            print user_id + ' succesfully logged in.'
         return user
     except ldap3.core.exceptions.LDAPBindError as e:
         print(e)
+        print user_id + ' could not log in.'
         return None
 
 
