@@ -48,7 +48,7 @@
             <option value="other">Other</option>
         </select>
         <input type="text" name="assignment-name" class="new-entry-text disabled" placeholder="Assignment Name" />
-        <input type="hidden" name="creator" value={{user.id}}/>
+        <input type="hidden" name="creator" value="{{user.id}}" />
         <div class="form-action">
           <a href="/a/{{year}}" class="btn btn-cancel">Cancel</a> <button class="btn btn-strong disabled" value="submit">Create</button>
         </div>
